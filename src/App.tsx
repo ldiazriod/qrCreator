@@ -73,7 +73,7 @@ const App: React.FC = () => {
 								<InputField
 									name='bgColor'
 									type='color'
-									defaultValue='#ffffff'
+									defaultValue='transparent'
 									handleChange={handleChange}
 								/>
 								<InputField
@@ -258,6 +258,7 @@ const App: React.FC = () => {
 						logoOnLoad={() => console.log('logo loaded')}
 						{...{
 							...state,
+              bgColor: "transparent",
 							eyeRadius: [ // build eyeRadius manually
 								{
 									outer: [state.eyeradius_0_outer_0, state.eyeradius_0_outer_1, state.eyeradius_0_outer_2, state.eyeradius_0_outer_3],
