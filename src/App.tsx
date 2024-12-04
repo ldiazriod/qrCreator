@@ -1,17 +1,24 @@
 import React, { useState } from 'react';
 import InputField from './components/InputField';
 import { QRCode } from 'react-qrcode-logo';
-import SelectField  from './components/SelectField';
-import  TextArea from './components/TextArea';
-import  ImageUploadField  from './components/ImageUploadField';
-import  CheckboxField  from './components/CheckboxField';
+import SelectField from './components/SelectField';
+import TextArea from './components/TextArea';
+import ImageUploadField from './components/ImageUploadField';
+import CheckboxField from './components/CheckboxField';
 import html2canvas from 'html2canvas';
+import styled from 'styled-components';
+import Tabs from './components/Tabs';
+import MainOptions from './components/MainOptions';
+import AdvancedOptions from './components/AdvancedOptions';
+
 
 const App: React.FC = () => {
+	const [activeTab, setActiveTab] = useState('main')
 	const [state, setState] = useState<{ [key: string]: any }>({});
 
 	const handleChange = ({ target }: any) => {
 		setState(prevState => ({ ...prevState, [target.name]: target.value }))
+		console.log(state)
 	}
 
 	const handleDownload = () => {
@@ -38,8 +45,17 @@ const App: React.FC = () => {
 
 	return (
 		<div className='app'>
+			<h1 style={{ fontSize: "2rem", margin: "1rem"}}>QR Code Generator</h1>
 			<div style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap' }}>
-				<div style={{ display: 'flex', flexDirection: 'column', flexWrap: 'wrap' }}>
+				<div style={{ display: 'flex', flexDirection: 'column', flexWrap: 'wrap', gap: "0.7rem" }}>
+					<Card>
+						<CardContent>
+							<Tabs activeTab={activeTab} setActiveTab={setActiveTab} />
+							{activeTab === 'main' && <MainOptions state={state} handleChange={handleChange} />}
+							{activeTab === 'advanced' && <AdvancedOptions state={state} handleChange={handleChange} />}
+						</CardContent>
+					</Card>
+					<h3>---------- Refactor ----------</h3>
 					<div style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap' }}>
 						<div style={{ width: '240px', display: 'flex', flexDirection: 'column', padding: '15px' }}>
 							<TextArea
@@ -299,3 +315,15 @@ const App: React.FC = () => {
 }
 
 export default App;
+
+export const Card = styled.div`
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  flex: 1;
+`;
+
+export const CardContent = styled.div`
+  padding: 1rem;
+`;
