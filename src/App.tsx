@@ -14,11 +14,23 @@ import AdvancedOptions from './components/AdvancedOptions';
 
 const App: React.FC = () => {
 	const [activeTab, setActiveTab] = useState('main')
-	const [state, setState] = useState<{ [key: string]: any }>({});
+	const [state, setState] = useState<{ [key: string]: any }>(
+		{
+        value: 'https://v0.dev',
+        size: 300,
+		ecLevel: 'M',
+        quietZone: 20,
+        bgColor: '#FFFFFF',
+        fgColor: '#000000',
+        logoImage: '',
+        logoWidth: 50,
+        logoHeight: 50,
+        logoOpacity: 1,
+        qrStyle: 'squares',
+      });
 
 	const handleChange = ({ target }: any) => {
 		setState(prevState => ({ ...prevState, [target.name]: target.value }))
-		console.log(state)
 	}
 
 	const handleDownload = () => {
@@ -51,7 +63,7 @@ const App: React.FC = () => {
 					<Card>
 						<CardContent>
 							<Tabs activeTab={activeTab} setActiveTab={setActiveTab} />
-							{activeTab === 'main' && <MainOptions state={state} handleChange={handleChange} />}
+							{activeTab === 'main' && <MainOptions state={state} handleChange={handleChange} setState={setState} />}
 							{activeTab === 'advanced' && <AdvancedOptions state={state} handleChange={handleChange} />}
 						</CardContent>
 					</Card>
@@ -89,7 +101,7 @@ const App: React.FC = () => {
 								<InputField
 									name='bgColor'
 									type='color'
-									defaultValue='transparent'
+									defaultValue='#000000'
 									handleChange={handleChange}
 								/>
 								<InputField

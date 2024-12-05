@@ -10,13 +10,13 @@ const Tabs: React.FC<TabsProps> = ({ activeTab, setActiveTab }) => {
   return (
     <TabContainer>
       <TabButton
-        active={activeTab === 'main'}
+        $active={activeTab === 'main'}
         onClick={() => setActiveTab('main')}
       >
         Main Options
       </TabButton>
       <TabButton
-        active={activeTab === 'advanced'}
+        $active={activeTab === 'advanced'}
         onClick={() => setActiveTab('advanced')}
       >
         Advanced Options
@@ -32,10 +32,10 @@ const TabContainer = styled.div`
   margin-bottom: 1rem;
 `;
 
-const TabButton = styled.button<{ active: boolean }>`
+const TabButton = styled.button<{ $active: boolean }>`
   padding: 0.5rem 1rem;
-  background-color: ${props => props.active ? '#3B82F6' : '#E5E7EB'};
-  color: ${props => props.active ? 'white' : 'black'};
+  background-color: ${props => props.$active ? '#3B82F6' : '#E5E7EB'};
+  color: ${props => props.$active ? 'white' : 'black'};
   border: none;
   cursor: pointer;
   transition: background-color 0.3s;

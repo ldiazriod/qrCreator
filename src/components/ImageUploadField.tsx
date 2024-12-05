@@ -1,4 +1,4 @@
-import React from "react";
+import { styled } from "styled-components";
 
 type IImageUploadFieldProps = {
     name: string;
@@ -25,7 +25,7 @@ const ImageUploadField = ({ name, handleChange }: IImageUploadFieldProps) => {
 
     return (
         <div style={{ display: 'flex', flexDirection: 'column', marginBottom: '6px' }}>
-            <label>{name}</label>
+            <Label>Logo Image</Label>
             <input
                 type='file'
                 accept='image/*'
@@ -36,3 +36,9 @@ const ImageUploadField = ({ name, handleChange }: IImageUploadFieldProps) => {
 }
 
 export default ImageUploadField
+
+const Label = styled.label`
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: medium;
+`;
