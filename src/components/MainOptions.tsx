@@ -12,11 +12,6 @@ interface MainOptionsProps {
 
 const MainOptions: React.FC<MainOptionsProps> = ({ state, handleChange, setState }) => {
 
-    const handleDeleteLogo = () => {
-        console.log('delete logo');
-        setState(prevState => ({ ...prevState, logoImage: '' }));
-    };
-
     return (
         <div>
             <OptionContainer>
@@ -57,12 +52,7 @@ const MainOptions: React.FC<MainOptionsProps> = ({ state, handleChange, setState
                 />
             </OptionContainer>
             <OptionContainer>
-                <div style={{ display: "flex", flexDirection: "row", alignItems: "center", flex: 1 }}>
-                    <ImageUploadField name='logoImage' handleChange={handleChange} />
-                    <DeleteButton onClick={handleDeleteLogo} style={{ height: "30px", width: "30px", alignSelf: "flex-end" }}>
-                        <img src="/xicon.svg" alt="Delete"></img >
-                    </DeleteButton>
-                </div>
+                <ImageUploadField name='logoImage' handleChange={handleChange} />
             </OptionContainer>
             <OptionContainer>
                 <Label htmlFor="logoWidth">Logo Width</Label>
@@ -159,21 +149,4 @@ const RangeInput = styled.input`
 
 const RangeValue = styled.span`
   min-width: 2.5rem;
-`;
-
-const DeleteButton = styled.button`
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0;
-    &:hover {
-    background: rgba(0, 0, 0, 0.1); /* Add a background color on hover */
-    }
-    &:hover img {
-        filter: brightness(0.8);
-    }
-    img {
-        width: 20px;
-        height: 20px;
-    }
 `;
