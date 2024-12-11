@@ -39,7 +39,7 @@ const ImageUploadField: React.FC<IImageUploadFieldProps> = ({ name, handleChange
     return (
         <div style={{ display: 'flex', flexDirection: 'column', marginBottom: '6px' }}>
             <Label>Logo Image</Label>
-            <div style={{ display: "flex", flexDirection: "row", alignItems: "center", flex: 1 }}>
+            <div style={{ display: "flex", flexDirection: "row", alignItems: "center", flex: 1, justifyContent: "space-between" }}>
                 <input
                     type='file'
                     accept='image/*'
@@ -47,7 +47,7 @@ const ImageUploadField: React.FC<IImageUploadFieldProps> = ({ name, handleChange
                     ref={fileInputRef}
                     onChange={e => retrievePathFile(e.target.files)}
                 />
-                <DeleteButton onClick={handleDeleteLogo} style={{ height: "30px", width: "30px", alignSelf: "flex-end" }}>
+                <DeleteButton onClick={handleDeleteLogo}>
                     <img src="/xicon.svg" alt="Delete" />
                 </DeleteButton>
             </div>
@@ -75,6 +75,7 @@ const DeleteButton = styled.button`
   border: none;
   cursor: pointer;
   padding: 0;
+  align-self: flex-end;
   &:hover {
     background: rgba(0, 0, 0, 0.1); /* Add a background color on hover */
   }
