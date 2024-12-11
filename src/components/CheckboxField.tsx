@@ -3,9 +3,10 @@ import React from "react";
 type ICheckboxFieldProps = {
 	name: string;
 	handleChange: (target: any) => void;
+	label?: string;
 }
 
-const CheckboxField = ({ name, handleChange }: ICheckboxFieldProps) => {
+const CheckboxField = ({ name, handleChange, label }: ICheckboxFieldProps) => {
 	const handleCheckboxToggle = (e: any) => {
 		const target = {
 			name,
@@ -15,11 +16,14 @@ const CheckboxField = ({ name, handleChange }: ICheckboxFieldProps) => {
 	};
 	return (
 		<div style={{ display: 'flex', flexDirection: 'row', marginBottom: '6px', alignItems: 'center', paddingTop: '6px', paddingBottom: '6px' }}>
-			<input
+			<input style={{ marginRight: '0.5rem'}}
+
 				type='checkbox'
 				name={name}
 				onChange={handleCheckboxToggle}
 			/>
+			{//ToDo - Change name to label
+			}
 			<label htmlFor={name}>{name}</label>
 		</div>
 	);

@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import TextArea from './TextArea'
 import SelectField from './SelectField'
 import ImageUploadField from './ImageUploadField'
+import InputField from './InputField'
 
 interface MainOptionsProps {
     state: { [key: string]: any }
@@ -49,6 +50,7 @@ const MainOptions: React.FC<MainOptionsProps> = ({ state, handleChange, setState
                     options={['L', 'M', 'Q', 'H']}
                     handleChange={handleChange}
                     defaultValue={'M'}
+                    label="Error Correction Level"
                 />
             </OptionContainer>
             <OptionContainer>
@@ -102,17 +104,30 @@ const MainOptions: React.FC<MainOptionsProps> = ({ state, handleChange, setState
                     <RangeValue>{state.logoOpacity}</RangeValue>
                 </RangeContainer>
             </OptionContainer>
+            <div style={{ display: 'flex', flexDirection: 'row', marginTop: '4px', justifyContent: 'space-around' }}>
+                <InputField
+                    name='fgColor'
+                    label='Foreground Color'
+                    type='color'
+                    defaultValue='#000000'
+                    handleChange={handleChange}
+                />
+                <InputField
+                    name='bgColor'
+                    label='Background Color'
+                    type='color'
+                    defaultValue='#000000'
+                    handleChange={handleChange}
+                />
+            </div>
             <OptionContainer>
-                <Label htmlFor="qrStyle">QR Style</Label>
-                <Select
-                    id="qrStyle"
-                    name="qrStyle"
-                    value={state.qrStyle}
-                    onChange={handleChange}
-                >
-                    <option value="squares">Squares</option>
-                    <option value="dots">Dots</option>
-                </Select>
+                <SelectField
+                    name='qrStyle'
+                    options={['squares', 'dots']}
+                    handleChange={handleChange}
+                    defaultValue={'state.qrStyle'}
+                    label="QR Style"
+                />
             </OptionContainer>
         </div>
     )
@@ -128,13 +143,6 @@ const Label = styled.label`
   display: block;
   margin-bottom: 0.5rem;
   font-weight: medium;
-`;
-
-const Select = styled.select`
-  width: 100%;
-  padding: 0.5rem;
-  border: 1px solid #D1D5DB;
-  border-radius: 0.25rem;
 `;
 
 const RangeContainer = styled.div`

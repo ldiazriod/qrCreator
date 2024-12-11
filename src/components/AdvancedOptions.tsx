@@ -1,5 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
+import CheckboxField from './CheckboxField'
+import InputField from './InputField'
 
 interface AdvancedOptionsProps {
   state: { [key: string]: any }
@@ -7,6 +9,19 @@ interface AdvancedOptionsProps {
 }
 
 const AdvancedOptions: React.FC<AdvancedOptionsProps> = ({ state, handleChange }) => {
+
+  const buildEyeRadiusInput = (id: string) => {
+		return <InputField
+			name={id}
+			type='range'
+			handleChange={handleChange}
+			min={0}
+			max={50}
+			hideLabel
+			defaultValue={(state as any)[id] || 0}
+		/>
+	};
+
   return (
     <div>
       <OptionContainer>
@@ -24,15 +39,11 @@ const AdvancedOptions: React.FC<AdvancedOptionsProps> = ({ state, handleChange }
         </Select>
       </OptionContainer>
       <OptionContainer>
-        <Label>
-          <Checkbox
-            type="checkbox"
+          <CheckboxField
             name="enableCORS"
-            checked={state.enableCORS}
-            onChange={handleChange}
-          />
-          Enable CORS
-        </Label>
+            label="Enable CORS"
+            handleChange={handleChange}
+            />
       </OptionContainer>
       <OptionContainer>
         <Label htmlFor="quietZone">Quiet Zone</Label>
@@ -51,35 +62,11 @@ const AdvancedOptions: React.FC<AdvancedOptionsProps> = ({ state, handleChange }
         </RangeContainer>
       </OptionContainer>
       <OptionContainer>
-        <Label htmlFor="bgColor">Background Color</Label>
-        <Input
-          type="color"
-          id="bgColor"
-          name="bgColor"
-          value={state.bgColor}
-          onChange={handleChange}
-        />
-      </OptionContainer>
-      <OptionContainer>
-        <Label htmlFor="fgColor">Foreground Color</Label>
-        <Input
-          type="color"
-          id="fgColor"
-          name="fgColor"
-          value={state.fgColor}
-          onChange={handleChange}
-        />
-      </OptionContainer>
-      <OptionContainer>
-        <Label>
-          <Checkbox
-            type="checkbox"
+          <CheckboxField
             name="removeQrCodeBehindLogo"
-            checked={state.removeQrCodeBehindLogo}
-            onChange={handleChange}
+            label="Remove QR Code Behind Logo"
+            handleChange={handleChange}
           />
-          Remove QR Code Behind Logo
-        </Label>
       </OptionContainer>
       <OptionContainer>
         <Label htmlFor="logoPadding">Logo Padding</Label>
@@ -109,7 +96,116 @@ const AdvancedOptions: React.FC<AdvancedOptionsProps> = ({ state, handleChange }
           <option value="circle">Circle</option>
         </Select>
       </OptionContainer>
-    </div>
+      <OptionContainer>
+
+      </OptionContainer>
+      <div style={{ padding: '15px' }}>
+						<p>eyeRadius</p>
+						<div style={{ display: 'flex', flexDirection: 'row' }}>
+							<div>
+								<p style={{ fontSize: 14 }}>Top left eye</p>
+								<p style={{ fontSize: 12 }}>Outer</p>
+								{buildEyeRadiusInput('eyeradius_0_outer_0')}
+								{buildEyeRadiusInput('eyeradius_0_outer_1')}
+								{buildEyeRadiusInput('eyeradius_0_outer_2')}
+								{buildEyeRadiusInput('eyeradius_0_outer_3')}
+								<p style={{ fontSize: 12 }}>Inner</p>
+								{buildEyeRadiusInput('eyeradius_0_inner_0')}
+								{buildEyeRadiusInput('eyeradius_0_inner_1')}
+								{buildEyeRadiusInput('eyeradius_0_inner_2')}
+								{buildEyeRadiusInput('eyeradius_0_inner_3')}
+							</div>
+							<div>
+								<p style={{ fontSize: 14 }}>Top right eye</p>
+								<p style={{ fontSize: 12 }}>Outer</p>
+								{buildEyeRadiusInput('eyeradius_1_outer_0')}
+								{buildEyeRadiusInput('eyeradius_1_outer_1')}
+								{buildEyeRadiusInput('eyeradius_1_outer_2')}
+								{buildEyeRadiusInput('eyeradius_1_outer_3')}
+								<p style={{ fontSize: 12 }}>Inner</p>
+								{buildEyeRadiusInput('eyeradius_1_inner_0')}
+								{buildEyeRadiusInput('eyeradius_1_inner_1')}
+								{buildEyeRadiusInput('eyeradius_1_inner_2')}
+								{buildEyeRadiusInput('eyeradius_1_inner_3')}
+							</div>
+							<div>
+								<p style={{ fontSize: 14 }}>Bottom left eye</p>
+								<p style={{ fontSize: 12 }}>Outer</p>
+								{buildEyeRadiusInput('eyeradius_2_outer_0')}
+								{buildEyeRadiusInput('eyeradius_2_outer_1')}
+								{buildEyeRadiusInput('eyeradius_2_outer_2')}
+								{buildEyeRadiusInput('eyeradius_2_outer_3')}
+								<p style={{ fontSize: 12 }}>Inner</p>
+								{buildEyeRadiusInput('eyeradius_2_inner_0')}
+								{buildEyeRadiusInput('eyeradius_2_inner_1')}
+								{buildEyeRadiusInput('eyeradius_2_inner_2')}
+								{buildEyeRadiusInput('eyeradius_2_inner_3')}
+							</div>
+						</div>
+					</div>
+					<div style={{ padding: '15px' }}>
+						<p>eyeColor</p>
+						<div style={{ display: 'flex', flexDirection: 'row' }}>
+							<div>
+								<p style={{ fontSize: 14 }}>Top left eye</p>
+								<p style={{ fontSize: 12 }}>Outer</p>
+								<InputField
+									name='eyecolor_0_outer'
+									type='color'
+									defaultValue={state.fgColor ?? '#000000'}
+									handleChange={handleChange}
+									hideLabel={true}
+								/>
+								<p style={{ fontSize: 12 }}>Inner</p>
+								<InputField
+									name='eyecolor_0_inner'
+									type='color'
+									defaultValue={state.fgColor ?? '#000000'}
+									handleChange={handleChange}
+									hideLabel={true}
+								/>
+							</div>
+							<div>
+								<p style={{ fontSize: 14 }}>Top right eye</p>
+								<p style={{ fontSize: 12 }}>Outer</p>
+								<InputField
+									name='eyecolor_1_outer'
+									type='color'
+									defaultValue={state.fgColor ?? '#000000'}
+									handleChange={handleChange}
+									hideLabel={true}
+								/>
+								<p style={{ fontSize: 12 }}>Inner</p>
+								<InputField
+									name='eyecolor_1_inner'
+									type='color'
+									defaultValue={state.fgColor ?? '#000000'}
+									handleChange={handleChange}
+									hideLabel={true}
+								/>
+							</div>
+							<div>
+								<p style={{ fontSize: 14 }}>Bottom left eye</p>
+								<p style={{ fontSize: 12 }}>Outer</p>
+								<InputField
+									name='eyecolor_2_outer'
+									type='color'
+									defaultValue={state.fgColor ?? '#000000'}
+									handleChange={handleChange}
+									hideLabel={true}
+								/>
+								<p style={{ fontSize: 12 }}>Inner</p>
+								<InputField
+									name='eyecolor_2_inner'
+									type='color'
+									defaultValue={state.fgColor ?? '#000000'}
+									handleChange={handleChange}
+									hideLabel={true}
+								/>
+							</div>
+						</div>
+					</div>
+</div>
   )
 }
 
@@ -125,22 +221,13 @@ const Label = styled.label`
   font-weight: medium;
 `;
 
-const Input = styled.input`
-  width: 100%;
-  padding: 0.5rem;
-  border: 1px solid #D1D5DB;
-  border-radius: 0.25rem;
-`;
+
 
 const Select = styled.select`
   width: 100%;
   padding: 0.5rem;
   border: 1px solid #D1D5DB;
   border-radius: 0.25rem;
-`;
-
-const Checkbox = styled.input`
-  margin-right: 0.5rem;
 `;
 
 const RangeContainer = styled.div`
