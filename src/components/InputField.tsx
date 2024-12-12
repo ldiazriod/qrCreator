@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { styled } from "styled-components";
+import { Label } from "../styles/styledComponents";
 
 type IInputFieldProps = {
 	name: string;
@@ -28,10 +30,10 @@ const InputField: React.FC<IInputFieldProps> = ({ name, type, handleChange, min,
 	};
 
 	return (
-		<div style={{ display: 'flex', flexDirection: 'column', marginBottom: '6px', alignItems: "center", gap: "0.3rem", flexGrow: "1", marginRight: "1rem" }}>
-			{!hideLabel && <label>{label || name}</label>}
-			<div style={{ display: 'flex', flexDirection: 'row' }}>
-				<input
+		<>
+			{!hideLabel && <Label>{label || name}</Label>}
+			<RangeContainer>
+				<RangeInput
 					type={type}
 					id={name}
 					name={name}
@@ -45,9 +47,20 @@ const InputField: React.FC<IInputFieldProps> = ({ name, type, handleChange, min,
 				{type === "range" &&
 					<span style={{ minWidth: "2.5rem" }}>{inputValue}px</span>
 				}
-			</div>
-		</div>
+			</RangeContainer>
+		</>
 	);
 };
 
 export default InputField;
+
+
+const RangeContainer = styled.div`
+	display: flex;
+	align-items: center;
+`;
+
+const RangeInput = styled.input`
+	flex-grow: 1;
+	margin-right: 1rem;
+`;
