@@ -1,10 +1,5 @@
 import React, { useState } from 'react';
-import InputField from './components/InputField';
 import { QRCode } from 'react-qrcode-logo';
-import SelectField from './components/SelectField';
-import TextArea from './components/TextArea';
-import ImageUploadField from './components/ImageUploadField';
-import CheckboxField from './components/CheckboxField';
 import html2canvas from 'html2canvas';
 import styled from 'styled-components';
 import Tabs from './components/Tabs';
@@ -42,18 +37,6 @@ const App: React.FC = () => {
 				link.click();
 			});
 	}
-
-	const buildEyeRadiusInput = (id: string) => {
-		return <InputField
-			name={id}
-			type='range'
-			handleChange={handleChange}
-			min={0}
-			max={50}
-			hideLabel
-			defaultValue={(state as any)[id]}
-		/>
-	};
 
 	return (
 		<div className='app'>
