@@ -31,7 +31,7 @@ const InputField: React.FC<IInputFieldProps> = ({ name, type, handleChange, min,
 
 	return (
 		<>
-			{!hideLabel && <Label>{label || name}</Label>}
+			{!hideLabel && <Label style={{ marginRight: '0.3rem'}}>{label || name}</Label>}
 			<RangeContainer>
 				<RangeInput
 					type={type}

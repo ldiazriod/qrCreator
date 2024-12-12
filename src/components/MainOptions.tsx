@@ -45,15 +45,6 @@ const MainOptions: React.FC<MainOptionsProps> = ({ state, handleChange, setState
                 </RangeContainer>
             </OptionContainer>
             <OptionContainer>
-                <SelectField
-                    name='ecLevel'
-                    options={['L', 'M', 'Q', 'H']}
-                    handleChange={handleChange}
-                    defaultValue={'M'}
-                    label="Error Correction Level"
-                />
-            </OptionContainer>
-            <OptionContainer>
                 <ImageUploadField name='logoImage' handleChange={handleChange} />
             </OptionContainer>
             <OptionContainer>
@@ -109,14 +100,12 @@ const MainOptions: React.FC<MainOptionsProps> = ({ state, handleChange, setState
                     name='fgColor'
                     label='Foreground Color'
                     type='color'
-                    defaultValue='#000000'
                     handleChange={handleChange}
                 />
                 <InputField
                     name='bgColor'
                     label='Background Color'
                     type='color'
-                    defaultValue='#000000'
                     handleChange={handleChange}
                 />
             </div>

@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import CheckboxField from './CheckboxField'
 import InputField from './InputField'
 import { Label } from '../styles/styledComponents'
+import { Card, CardContent } from '../App'
 
 interface AdvancedOptionsProps {
 	state: { [key: string]: any }
@@ -89,112 +90,116 @@ const AdvancedOptions: React.FC<AdvancedOptionsProps> = ({ state, handleChange }
 					<option value="circle">Circle</option>
 				</Select>
 			</OptionContainer>
-			<div style={{ padding: '15px' }}>
-				<p>eyeRadius</p>
-				<div style={{ display: 'flex', flexDirection: 'row' }}>
-					<div>
-						<p style={{ fontSize: 14 }}>Top left eye</p>
-						<p style={{ fontSize: 12 }}>Outer</p>
-						{buildEyeRadiusInput('eyeradius_0_outer_0')}
-						{buildEyeRadiusInput('eyeradius_0_outer_1')}
-						{buildEyeRadiusInput('eyeradius_0_outer_2')}
-						{buildEyeRadiusInput('eyeradius_0_outer_3')}
-						<p style={{ fontSize: 12 }}>Inner</p>
-						{buildEyeRadiusInput('eyeradius_0_inner_0')}
-						{buildEyeRadiusInput('eyeradius_0_inner_1')}
-						{buildEyeRadiusInput('eyeradius_0_inner_2')}
-						{buildEyeRadiusInput('eyeradius_0_inner_3')}
+			<Card>
+				<CardContent>
+					<div style={{ fontWeight: 'bold' }}>Eye Radius</div>
+					<div style={{ display: 'flex', flexDirection: 'row' }}>
+						<div>
+							<p style={{ fontSize: 14 }}>Top left eye</p>
+							<p style={{ fontSize: 12 }}>Outer</p>
+							{buildEyeRadiusInput('eyeradius_0_outer_0')}
+							{buildEyeRadiusInput('eyeradius_0_outer_1')}
+							{buildEyeRadiusInput('eyeradius_0_outer_2')}
+							{buildEyeRadiusInput('eyeradius_0_outer_3')}
+							<p style={{ fontSize: 12 }}>Inner</p>
+							{buildEyeRadiusInput('eyeradius_0_inner_0')}
+							{buildEyeRadiusInput('eyeradius_0_inner_1')}
+							{buildEyeRadiusInput('eyeradius_0_inner_2')}
+							{buildEyeRadiusInput('eyeradius_0_inner_3')}
+						</div>
+						<div>
+							<p style={{ fontSize: 14 }}>Top right eye</p>
+							<p style={{ fontSize: 12 }}>Outer</p>
+							{buildEyeRadiusInput('eyeradius_1_outer_0')}
+							{buildEyeRadiusInput('eyeradius_1_outer_1')}
+							{buildEyeRadiusInput('eyeradius_1_outer_2')}
+							{buildEyeRadiusInput('eyeradius_1_outer_3')}
+							<p style={{ fontSize: 12 }}>Inner</p>
+							{buildEyeRadiusInput('eyeradius_1_inner_0')}
+							{buildEyeRadiusInput('eyeradius_1_inner_1')}
+							{buildEyeRadiusInput('eyeradius_1_inner_2')}
+							{buildEyeRadiusInput('eyeradius_1_inner_3')}
+						</div>
+						<div>
+							<p style={{ fontSize: 14 }}>Bottom left eye</p>
+							<p style={{ fontSize: 12 }}>Outer</p>
+							{buildEyeRadiusInput('eyeradius_2_outer_0')}
+							{buildEyeRadiusInput('eyeradius_2_outer_1')}
+							{buildEyeRadiusInput('eyeradius_2_outer_2')}
+							{buildEyeRadiusInput('eyeradius_2_outer_3')}
+							<p style={{ fontSize: 12 }}>Inner</p>
+							{buildEyeRadiusInput('eyeradius_2_inner_0')}
+							{buildEyeRadiusInput('eyeradius_2_inner_1')}
+							{buildEyeRadiusInput('eyeradius_2_inner_2')}
+							{buildEyeRadiusInput('eyeradius_2_inner_3')}
+						</div>
 					</div>
-					<div>
-						<p style={{ fontSize: 14 }}>Top right eye</p>
-						<p style={{ fontSize: 12 }}>Outer</p>
-						{buildEyeRadiusInput('eyeradius_1_outer_0')}
-						{buildEyeRadiusInput('eyeradius_1_outer_1')}
-						{buildEyeRadiusInput('eyeradius_1_outer_2')}
-						{buildEyeRadiusInput('eyeradius_1_outer_3')}
-						<p style={{ fontSize: 12 }}>Inner</p>
-						{buildEyeRadiusInput('eyeradius_1_inner_0')}
-						{buildEyeRadiusInput('eyeradius_1_inner_1')}
-						{buildEyeRadiusInput('eyeradius_1_inner_2')}
-						{buildEyeRadiusInput('eyeradius_1_inner_3')}
+				</CardContent>
+			</Card>
+			<Card style={{marginTop: '0.7rem'}}>
+				<CardContent>
+					<div>Eye Color</div>
+					<div style={{ display: 'flex', flexDirection: 'row' }}>
+						<div>
+							<p style={{ fontSize: 14 }}>Top left eye</p>
+							<p style={{ fontSize: 12 }}>Outer</p>
+							<InputField
+								name='eyecolor_0_outer'
+								type='color'
+								defaultValue={state.fgColor ?? '#000000'}
+								handleChange={handleChange}
+								hideLabel={true}
+							/>
+							<p style={{ fontSize: 12 }}>Inner</p>
+							<InputField
+								name='eyecolor_0_inner'
+								type='color'
+								defaultValue={state.fgColor ?? '#000000'}
+								handleChange={handleChange}
+								hideLabel={true}
+							/>
+						</div>
+						<div>
+							<p style={{ fontSize: 14 }}>Top right eye</p>
+							<p style={{ fontSize: 12 }}>Outer</p>
+							<InputField
+								name='eyecolor_1_outer'
+								type='color'
+								defaultValue={state.fgColor ?? '#000000'}
+								handleChange={handleChange}
+								hideLabel={true}
+							/>
+							<p style={{ fontSize: 12 }}>Inner</p>
+							<InputField
+								name='eyecolor_1_inner'
+								type='color'
+								defaultValue={state.fgColor ?? '#000000'}
+								handleChange={handleChange}
+								hideLabel={true}
+							/>
+						</div>
+						<div>
+							<p style={{ fontSize: 14 }}>Bottom left eye</p>
+							<p style={{ fontSize: 12 }}>Outer</p>
+							<InputField
+								name='eyecolor_2_outer'
+								type='color'
+								defaultValue={state.fgColor ?? '#000000'}
+								handleChange={handleChange}
+								hideLabel={true}
+							/>
+							<p style={{ fontSize: 12 }}>Inner</p>
+							<InputField
+								name='eyecolor_2_inner'
+								type='color'
+								defaultValue={state.fgColor ?? '#000000'}
+								handleChange={handleChange}
+								hideLabel={true}
+							/>
+						</div>
 					</div>
-					<div>
-						<p style={{ fontSize: 14 }}>Bottom left eye</p>
-						<p style={{ fontSize: 12 }}>Outer</p>
-						{buildEyeRadiusInput('eyeradius_2_outer_0')}
-						{buildEyeRadiusInput('eyeradius_2_outer_1')}
-						{buildEyeRadiusInput('eyeradius_2_outer_2')}
-						{buildEyeRadiusInput('eyeradius_2_outer_3')}
-						<p style={{ fontSize: 12 }}>Inner</p>
-						{buildEyeRadiusInput('eyeradius_2_inner_0')}
-						{buildEyeRadiusInput('eyeradius_2_inner_1')}
-						{buildEyeRadiusInput('eyeradius_2_inner_2')}
-						{buildEyeRadiusInput('eyeradius_2_inner_3')}
-					</div>
-				</div>
-			</div>
-			<div style={{ padding: '15px' }}>
-				<p>eyeColor</p>
-				<div style={{ display: 'flex', flexDirection: 'row' }}>
-					<div>
-						<p style={{ fontSize: 14 }}>Top left eye</p>
-						<p style={{ fontSize: 12 }}>Outer</p>
-						<InputField
-							name='eyecolor_0_outer'
-							type='color'
-							defaultValue={state.fgColor ?? '#000000'}
-							handleChange={handleChange}
-							hideLabel={true}
-						/>
-						<p style={{ fontSize: 12 }}>Inner</p>
-						<InputField
-							name='eyecolor_0_inner'
-							type='color'
-							defaultValue={state.fgColor ?? '#000000'}
-							handleChange={handleChange}
-							hideLabel={true}
-						/>
-					</div>
-					<div>
-						<p style={{ fontSize: 14 }}>Top right eye</p>
-						<p style={{ fontSize: 12 }}>Outer</p>
-						<InputField
-							name='eyecolor_1_outer'
-							type='color'
-							defaultValue={state.fgColor ?? '#000000'}
-							handleChange={handleChange}
-							hideLabel={true}
-						/>
-						<p style={{ fontSize: 12 }}>Inner</p>
-						<InputField
-							name='eyecolor_1_inner'
-							type='color'
-							defaultValue={state.fgColor ?? '#000000'}
-							handleChange={handleChange}
-							hideLabel={true}
-						/>
-					</div>
-					<div>
-						<p style={{ fontSize: 14 }}>Bottom left eye</p>
-						<p style={{ fontSize: 12 }}>Outer</p>
-						<InputField
-							name='eyecolor_2_outer'
-							type='color'
-							defaultValue={state.fgColor ?? '#000000'}
-							handleChange={handleChange}
-							hideLabel={true}
-						/>
-						<p style={{ fontSize: 12 }}>Inner</p>
-						<InputField
-							name='eyecolor_2_inner'
-							type='color'
-							defaultValue={state.fgColor ?? '#000000'}
-							handleChange={handleChange}
-							hideLabel={true}
-						/>
-					</div>
-				</div>
-			</div>
+				</CardContent>
+			</Card>
 		</div>
 	)
 }
@@ -210,18 +215,4 @@ const Select = styled.select`
   padding: 0.5rem;
   border: 1px solid #D1D5DB;
   border-radius: 0.25rem;
-`;
-
-const RangeContainer = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
-const RangeInput = styled.input`
-  flex-grow: 1;
-  margin-right: 1rem;
-`;
-
-const RangeValue = styled.span`
-  min-width: 2.5rem;
 `;
