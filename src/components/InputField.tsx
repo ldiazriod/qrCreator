@@ -8,15 +8,14 @@ type IInputFieldProps = {
 	min?: number;
 	max?: number;
 	step?: number;
-	defaultValue?: string | number;
 	handleChange: (target: any) => void;
 	hideLabel?: boolean;
 	value?: string | number;
 	label?: string;
 }
 
-const InputField: React.FC<IInputFieldProps> = ({ name, type, handleChange, min, max, step, defaultValue, hideLabel, value, label }) => {
-	const [inputValue, setInputValue] = useState<string | number | undefined>(defaultValue);
+const InputField: React.FC<IInputFieldProps> = ({ name, type, handleChange, min, max, step, hideLabel, value, label }) => {
+	const [inputValue, setInputValue] = useState<string | number | undefined>(value);
 
 	useEffect(() => {
 		if (value !== undefined) {
@@ -41,8 +40,7 @@ const InputField: React.FC<IInputFieldProps> = ({ name, type, handleChange, min,
 					min={min}
 					max={max}
 					step={step || 1}
-					defaultValue={0}
-					value={inputValue}
+					value={inputValue !== undefined ? inputValue : undefined}
 				/>
 				{type === "range" &&
 					<span style={{ minWidth: "2.5rem" }}>{inputValue}px</span>

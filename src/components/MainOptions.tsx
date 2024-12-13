@@ -100,12 +100,14 @@ const MainOptions: React.FC<MainOptionsProps> = ({ state, handleChange, setState
                     name='fgColor'
                     label='Foreground Color'
                     type='color'
+                    value={state.fgColor}
                     handleChange={handleChange}
                 />
                 <InputField
                     name='bgColor'
                     label='Background Color'
                     type='color'
+                    value={state.bgColor}
                     handleChange={handleChange}
                 />
             </div>

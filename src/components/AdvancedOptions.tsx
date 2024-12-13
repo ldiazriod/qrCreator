@@ -20,7 +20,7 @@ const AdvancedOptions: React.FC<AdvancedOptionsProps> = ({ state, handleChange }
 			min={0}
 			max={50}
 			hideLabel
-			defaultValue={(state as any)[id] || 0}
+			value={(state as any)[id] || 0}
 		/>
 	};
 
@@ -92,42 +92,52 @@ const AdvancedOptions: React.FC<AdvancedOptionsProps> = ({ state, handleChange }
 			</OptionContainer>
 			<Card>
 				<CardContent>
-					<div style={{ fontWeight: 'bold' }}>Eye Radius</div>
+					<h3 style={{ fontWeight: 'bold' }}>Eye Radius</h3>
+					<h6 style={{ fontSize: 15, fontWeight: 'bold', marginTop: '0.7rem', marginBottom: '0.5rem' }}>Top left eye</h6>
 					<div style={{ display: 'flex', flexDirection: 'row' }}>
 						<div>
-							<p style={{ fontSize: 14 }}>Top left eye</p>
-							<p style={{ fontSize: 12 }}>Outer</p>
+							<div style={{ fontSize: 12 }}>Outer</div>
 							{buildEyeRadiusInput('eyeradius_0_outer_0')}
 							{buildEyeRadiusInput('eyeradius_0_outer_1')}
 							{buildEyeRadiusInput('eyeradius_0_outer_2')}
 							{buildEyeRadiusInput('eyeradius_0_outer_3')}
-							<p style={{ fontSize: 12 }}>Inner</p>
+						</div>
+						<div>
+							<div style={{ fontSize: 12 }}>Inner</div>
 							{buildEyeRadiusInput('eyeradius_0_inner_0')}
 							{buildEyeRadiusInput('eyeradius_0_inner_1')}
 							{buildEyeRadiusInput('eyeradius_0_inner_2')}
 							{buildEyeRadiusInput('eyeradius_0_inner_3')}
 						</div>
+					</div>
+					<div style={{ fontSize: 15, fontWeight:'bold', marginTop: '1rem', marginBottom: '0.5rem' }}>Top right eye</div>
+					<div style={{ display: 'flex', flexDirection: 'row' }}>
 						<div>
-							<p style={{ fontSize: 14 }}>Top right eye</p>
-							<p style={{ fontSize: 12 }}>Outer</p>
+							<div style={{ fontSize: 12 }}>Outer</div>
 							{buildEyeRadiusInput('eyeradius_1_outer_0')}
 							{buildEyeRadiusInput('eyeradius_1_outer_1')}
 							{buildEyeRadiusInput('eyeradius_1_outer_2')}
 							{buildEyeRadiusInput('eyeradius_1_outer_3')}
-							<p style={{ fontSize: 12 }}>Inner</p>
+						</div>
+						<div>
+							<div style={{ fontSize: 12 }}>Inner</div>
 							{buildEyeRadiusInput('eyeradius_1_inner_0')}
 							{buildEyeRadiusInput('eyeradius_1_inner_1')}
 							{buildEyeRadiusInput('eyeradius_1_inner_2')}
 							{buildEyeRadiusInput('eyeradius_1_inner_3')}
 						</div>
+					</div>
+					<div style={{ fontSize: 15, fontWeight:'bold', marginTop: '1rem', marginBottom: '0.5rem' }}>Bottom left eye</div>
+					<div style={{ display: 'flex', flexDirection: 'row' }}>
 						<div>
-							<p style={{ fontSize: 14 }}>Bottom left eye</p>
-							<p style={{ fontSize: 12 }}>Outer</p>
+							<div style={{ fontSize: 12 }}>Outer</div>
 							{buildEyeRadiusInput('eyeradius_2_outer_0')}
 							{buildEyeRadiusInput('eyeradius_2_outer_1')}
 							{buildEyeRadiusInput('eyeradius_2_outer_2')}
 							{buildEyeRadiusInput('eyeradius_2_outer_3')}
-							<p style={{ fontSize: 12 }}>Inner</p>
+						</div>
+						<div>
+							<div style={{ fontSize: 12 }}>Inner</div>
 							{buildEyeRadiusInput('eyeradius_2_inner_0')}
 							{buildEyeRadiusInput('eyeradius_2_inner_1')}
 							{buildEyeRadiusInput('eyeradius_2_inner_2')}
@@ -146,7 +156,7 @@ const AdvancedOptions: React.FC<AdvancedOptionsProps> = ({ state, handleChange }
 							<InputField
 								name='eyecolor_0_outer'
 								type='color'
-								defaultValue={state.fgColor ?? '#000000'}
+								value={state.fgColor ?? '#000000'}
 								handleChange={handleChange}
 								hideLabel={true}
 							/>
@@ -154,7 +164,7 @@ const AdvancedOptions: React.FC<AdvancedOptionsProps> = ({ state, handleChange }
 							<InputField
 								name='eyecolor_0_inner'
 								type='color'
-								defaultValue={state.fgColor ?? '#000000'}
+								value={state.fgColor ?? '#000000'}
 								handleChange={handleChange}
 								hideLabel={true}
 							/>
@@ -165,7 +175,7 @@ const AdvancedOptions: React.FC<AdvancedOptionsProps> = ({ state, handleChange }
 							<InputField
 								name='eyecolor_1_outer'
 								type='color'
-								defaultValue={state.fgColor ?? '#000000'}
+								value={state.fgColor ?? '#000000'}
 								handleChange={handleChange}
 								hideLabel={true}
 							/>
@@ -173,7 +183,7 @@ const AdvancedOptions: React.FC<AdvancedOptionsProps> = ({ state, handleChange }
 							<InputField
 								name='eyecolor_1_inner'
 								type='color'
-								defaultValue={state.fgColor ?? '#000000'}
+								value={state.fgColor ?? '#000000'}
 								handleChange={handleChange}
 								hideLabel={true}
 							/>
@@ -184,7 +194,7 @@ const AdvancedOptions: React.FC<AdvancedOptionsProps> = ({ state, handleChange }
 							<InputField
 								name='eyecolor_2_outer'
 								type='color'
-								defaultValue={state.fgColor ?? '#000000'}
+								value={state.fgColor ?? '#000000'}
 								handleChange={handleChange}
 								hideLabel={true}
 							/>
@@ -192,7 +202,7 @@ const AdvancedOptions: React.FC<AdvancedOptionsProps> = ({ state, handleChange }
 							<InputField
 								name='eyecolor_2_inner'
 								type='color'
-								defaultValue={state.fgColor ?? '#000000'}
+								value={state.fgColor ?? '#000000'}
 								handleChange={handleChange}
 								hideLabel={true}
 							/>
