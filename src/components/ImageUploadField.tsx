@@ -10,7 +10,7 @@ const ImageUploadField: React.FC<IImageUploadFieldProps> = ({ name, handleChange
     const [fileName, setFileName] = useState<string | null>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
 
-    const retrievePathFile = (files: any) => {
+    const handleImageUpload = (files: any) => {
         const file = files[0];
         if (file.type !== 'image/png' && file.type !== 'image/jpeg') {
             console.error('Only png and jpg/jpeg allowed.');
@@ -39,18 +39,18 @@ const ImageUploadField: React.FC<IImageUploadFieldProps> = ({ name, handleChange
     return (
         <div style={{ display: 'flex', flexDirection: 'column', marginBottom: '6px' }}>
             <Label>Logo Image</Label>
-            <div style={{ display: "flex", flexDirection: "row", alignItems: "center", flex: 1, justifyContent: "space-between" }}>
+            <InputContainer>
                 <input
                     type='file'
                     accept='image/*'
                     name={name}
                     ref={fileInputRef}
-                    onChange={e => retrievePathFile(e.target.files)}
+                    onChange={e => handleImageUpload(e.target.files)}
                 />
                 <DeleteButton onClick={handleDeleteLogo}>
                     <img src="/xicon.svg" alt="Delete" />
                 </DeleteButton>
-            </div>
+            </InputContainer>
             {fileName && <FileName>{fileName}</FileName>} {/* Display the file name */}
         </div>
     );
@@ -62,6 +62,15 @@ const Label = styled.label`
   display: block;
   margin-bottom: 0.5rem;
   font-weight: medium;
+`;
+
+const InputContainer = styled.div`
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
 `;
 
 const FileName = styled.span`
