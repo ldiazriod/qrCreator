@@ -4,6 +4,7 @@ import TextArea from './TextArea'
 import SelectField from './SelectField'
 import ImageUploadField from './ImageUploadField'
 import InputField from './InputField'
+import { Label } from '../styles/styledComponents'
 
 interface MainOptionsProps {
     state: { [key: string]: any }
@@ -16,17 +17,11 @@ const MainOptions: React.FC<MainOptionsProps> = ({ state, handleChange, setState
     return (
         <div>
             <OptionContainer>
-                <Label htmlFor="value">QR Code Content (value)</Label>
                 <TextArea
                     name='value'
+                    label='QR Code Content (value)'
                     handleChange={handleChange}
                 />
-                {/*<Input
-                    id="value"
-                    name="value"
-                    value={state.value}
-                    onChange={handleChange}
-                />*/}
             </OptionContainer>
             <OptionContainer>
                 <Label htmlFor="size">Size</Label>
@@ -64,36 +59,27 @@ const MainOptions: React.FC<MainOptionsProps> = ({ state, handleChange, setState
                 </RangeContainer>
             </OptionContainer>
             <OptionContainer>
-                <Label htmlFor="logoHeight">Logo Height</Label>
-                <RangeContainer>
-                    <RangeInput
-                        type="range"
-                        id="logoHeight"
-                        name="logoHeight"
-                        min={20}
-                        max={200}
-                        step={5}
-                        value={state.logoHeight}
-                        onChange={handleChange}
-                    />
-                    <RangeValue>{state.logoHeight}px</RangeValue>
-                </RangeContainer>
+                <InputField
+                    type="range"
+                    name="logoHeight"
+                    min={20}
+                    max={200}
+                    step={5}
+                    value={state.logoHeight}
+                    handleChange={handleChange}
+                />
+
             </OptionContainer>
             <OptionContainer>
-                <Label htmlFor="logoOpacity">Logo Opacity</Label>
-                <RangeContainer>
-                    <RangeInput
-                        type="range"
-                        id="logoOpacity"
-                        name="logoOpacity"
-                        min={0}
-                        max={1}
-                        step={0.1}
-                        value={state.logoOpacity}
-                        onChange={handleChange}
-                    />
-                    <RangeValue>{state.logoOpacity}</RangeValue>
-                </RangeContainer>
+                <InputField
+                    type="range"
+                    name="logoOpacity"
+                    min={0}
+                    max={1}
+                    step={0.1}
+                    value={state.logoOpacity}
+                    handleChange={handleChange}
+                />
             </OptionContainer>
             <div style={{ display: 'flex', flexDirection: 'row', marginTop: '4px', justifyContent: 'space-around' }}>
                 <InputField
@@ -128,12 +114,6 @@ export default MainOptions
 
 const OptionContainer = styled.div`
   margin-bottom: 1rem;
-`;
-
-const Label = styled.label`
-  display: block;
-  margin-bottom: 0.5rem;
-  font-weight: medium;
 `;
 
 const RangeContainer = styled.div`

@@ -22,9 +22,7 @@ const CheckboxField = ({ name, handleChange, label }: ICheckboxFieldProps) => {
 				name={name}
 				onChange={handleCheckboxToggle}
 			/>
-			{//ToDo - Change name to label
-			}
-			<label htmlFor={name}>{name}</label>
+			<label htmlFor={name}>{label}</label>
 		</div>
 	);
 }

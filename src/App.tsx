@@ -54,7 +54,7 @@ const App: React.FC = () => {
 				<div style={{
 					width: 550,
 					height: 550,
-					marginLeft: '20px',
+					marginLeft: '10px',
 					display: 'flex',
 					justifyContent: 'center',
 					alignItems: 'center',
