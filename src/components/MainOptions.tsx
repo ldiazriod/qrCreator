@@ -44,43 +44,49 @@ const MainOptions: React.FC<MainOptionsProps> = ({ state, handleChange, setState
                 <ImageUploadField name='logoImage' handleChange={handleChange} maintainAspectRatio={state.maintainAspectRatio} qrSize={state.size} />
             </OptionContainer>
             <OptionContainer>
-				<CheckboxField
-					name="maintainAspectRatio"
-					label="Aspect Ratio"
-					handleChange={handleChange}
+                <CheckboxField
+                    name="maintainAspectRatio"
+                    label="Aspect Ratio"
+                    handleChange={handleChange}
                     checked={state.maintainAspectRatio}
                     disabled={!state.logoImage}
-				/>
-			</OptionContainer>
+                />
+            </OptionContainer>
             <OptionContainer>
-                <Label htmlFor="logoWidth">Logo Width</Label>
-                <RangeContainer>
-                    <RangeInput
-                        type="range"
-                        id="logoWidth"
-                        name="logoWidth"
-                        min={20}
-                        max={200}
-                        step={5}
-                        value={state.logoWidth}
-                        onChange={handleChange}
-                        disabled={!state.logoImage}
-                    />
-                    <RangeValue>{state.logoWidth}px</RangeValue>
-                </RangeContainer>
+                <InputField
+                    type="range"
+                    name="logoWidth"
+                    label='Logo Width'
+                    min={20}
+                    max={state.size / 3}
+                    step={5}
+                    value={state.logoWidth}
+                    handleChange={handleChange}
+                    disabled={!state.logoImage}
+                    logoParams={{
+                        maintainAspectRatio: state.maintainAspectRatio,
+                        logoWidth: state.logoWidth,
+                        logoHeight: state.logoHeight
+                    }}
+                />
             </OptionContainer>
             <OptionContainer>
                 <InputField
                     type="range"
                     name="logoHeight"
+                    label='Logo Height'
                     min={20}
-                    max={200}
+                    max={state.size / 3}
                     step={5}
                     value={state.logoHeight}
                     handleChange={handleChange}
                     disabled={!state.logoImage}
+                    logoParams={{
+                        maintainAspectRatio: state.maintainAspectRatio,
+                        logoWidth: state.logoWidth,
+                        logoHeight: state.logoHeight
+                    }}
                 />
-
             </OptionContainer>
             <OptionContainer>
                 <InputField

@@ -23,7 +23,7 @@ const ImageUploadField: React.FC<IImageUploadFieldProps> = ({ name, handleChange
             reader.onloadend = e => {
                 const img = new Image();
                 img.onload = () => {
-                    const maxSize = qrSize / 4;
+                    const maxSize = qrSize / 3;
                     const aspectRatio = img.width / img.height;
                     let newWidth, newHeight;
 
