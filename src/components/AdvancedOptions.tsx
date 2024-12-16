@@ -45,6 +45,7 @@ const AdvancedOptions: React.FC<AdvancedOptionsProps> = ({ state, handleChange }
 					name="enableCORS"
 					label="Enable CORS"
 					handleChange={handleChange}
+					checked={state.enableCORS}
 				/>
 			</OptionContainer>
 			<OptionContainer>
@@ -64,6 +65,9 @@ const AdvancedOptions: React.FC<AdvancedOptionsProps> = ({ state, handleChange }
 					name="removeQrCodeBehindLogo"
 					label="Remove QR Code Behind Logo"
 					handleChange={handleChange}
+					checked={state.removeQrCodeBehindLogo}
+					disabled={!state.logoImage}
+
 				/>
 			</OptionContainer>
 			<OptionContainer>

@@ -4,9 +4,11 @@ type ICheckboxFieldProps = {
 	name: string;
 	handleChange: (target: any) => void;
 	label?: string;
+	checked: boolean;
+	disabled?: boolean;
 }
 
-const CheckboxField = ({ name, handleChange, label }: ICheckboxFieldProps) => {
+const CheckboxField = ({ name, handleChange, label, checked, disabled }: ICheckboxFieldProps) => {
 	const handleCheckboxToggle = (e: any) => {
 		const target = {
 			name,
@@ -21,6 +23,8 @@ const CheckboxField = ({ name, handleChange, label }: ICheckboxFieldProps) => {
 				type='checkbox'
 				name={name}
 				onChange={handleCheckboxToggle}
+				checked={checked}
+				disabled={disabled}
 			/>
 			<label htmlFor={name}>{label}</label>
 		</div>

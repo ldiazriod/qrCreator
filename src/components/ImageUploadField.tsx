@@ -4,9 +4,11 @@ import styled from 'styled-components';
 interface IImageUploadFieldProps {
     name: string;
     handleChange: ({ target }: any) => void;
+    maintainAspectRatio: boolean;
+    qrSize: number;
 }
 
-const ImageUploadField: React.FC<IImageUploadFieldProps> = ({ name, handleChange }) => {
+const ImageUploadField: React.FC<IImageUploadFieldProps> = ({ name, handleChange, maintainAspectRatio, qrSize }) => {
     const [fileName, setFileName] = useState<string | null>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -19,11 +21,32 @@ const ImageUploadField: React.FC<IImageUploadFieldProps> = ({ name, handleChange
             const reader = new FileReader();
             reader.readAsDataURL(file);
             reader.onloadend = e => {
-                target.name = name;
-                target.value = reader.result;
-                target.logoName = file.name;
-                handleChange({ target });
-                setFileName(file.name); // Update the state with the file name
+                const img = new Image();
+                img.onload = () => {
+                    const maxSize = qrSize / 4;
+                    const aspectRatio = img.width / img.height;
+                    let newWidth, newHeight;
+
+                    if (maintainAspectRatio) {
+                        if (img.width > img.height) {
+                            newWidth = Math.min(img.width, maxSize);
+                            newHeight = newWidth / aspectRatio;
+                        } else {
+                            newHeight = Math.min(img.height, maxSize);
+                            newWidth = newHeight * aspectRatio;
+                        }
+                    } else {
+                        newWidth = maxSize;
+                        newHeight = maxSize;
+                    }
+                    target.name = name;
+                    target.value = reader.result;
+                    handleChange({ target });
+                    handleChange({ target: { name: 'logoWidth', value: Math.round(newWidth) } });
+                    handleChange({ target: { name: 'logoHeight', value: Math.round(newHeight) } });
+                    setFileName(file.name);
+                };
+                img.src = reader.result as string;
             };
         }
     };
@@ -47,9 +70,11 @@ const ImageUploadField: React.FC<IImageUploadFieldProps> = ({ name, handleChange
                     ref={fileInputRef}
                     onChange={e => handleImageUpload(e.target.files)}
                 />
-                <DeleteButton onClick={handleDeleteLogo}>
-                    <img src="/xicon.svg" alt="Delete" />
-                </DeleteButton>
+                {fileName &&
+                    <DeleteButton onClick={handleDeleteLogo}>
+                        <img src="/xicon.svg" alt="Delete" />
+                    </DeleteButton>
+                }
             </InputContainer>
             {fileName && <FileName>{fileName}</FileName>} {/* Display the file name */}
         </div>

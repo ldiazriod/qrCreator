@@ -5,6 +5,7 @@ import SelectField from './SelectField'
 import ImageUploadField from './ImageUploadField'
 import InputField from './InputField'
 import { Label } from '../styles/styledComponents'
+import CheckboxField from './CheckboxField'
 
 interface MainOptionsProps {
     state: { [key: string]: any }
@@ -40,8 +41,17 @@ const MainOptions: React.FC<MainOptionsProps> = ({ state, handleChange, setState
                 </RangeContainer>
             </OptionContainer>
             <OptionContainer>
-                <ImageUploadField name='logoImage' handleChange={handleChange} />
+                <ImageUploadField name='logoImage' handleChange={handleChange} maintainAspectRatio={state.maintainAspectRatio} qrSize={state.size} />
             </OptionContainer>
+            <OptionContainer>
+				<CheckboxField
+					name="maintainAspectRatio"
+					label="Aspect Ratio"
+					handleChange={handleChange}
+                    checked={state.maintainAspectRatio}
+                    disabled={!state.logoImage}
+				/>
+			</OptionContainer>
             <OptionContainer>
                 <Label htmlFor="logoWidth">Logo Width</Label>
                 <RangeContainer>
@@ -54,6 +64,7 @@ const MainOptions: React.FC<MainOptionsProps> = ({ state, handleChange, setState
                         step={5}
                         value={state.logoWidth}
                         onChange={handleChange}
+                        disabled={!state.logoImage}
                     />
                     <RangeValue>{state.logoWidth}px</RangeValue>
                 </RangeContainer>
@@ -67,6 +78,7 @@ const MainOptions: React.FC<MainOptionsProps> = ({ state, handleChange, setState
                     step={5}
                     value={state.logoHeight}
                     handleChange={handleChange}
+                    disabled={!state.logoImage}
                 />
 
             </OptionContainer>
@@ -79,6 +91,8 @@ const MainOptions: React.FC<MainOptionsProps> = ({ state, handleChange, setState
                     step={0.1}
                     value={state.logoOpacity}
                     handleChange={handleChange}
+                    disabled={!state.logoImage}
+
                 />
             </OptionContainer>
             <div style={{ display: 'flex', flexDirection: 'row', marginTop: '4px', justifyContent: 'space-around' }}>
