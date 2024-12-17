@@ -11,7 +11,6 @@ const App: React.FC = () => {
 	const [activeTab, setActiveTab] = useState('main')
 	const [state, setState] = useState<{ [key: string]: any }>(
 		{
-        value: 'https://v0.dev',
         size: 300,
 		ecLevel: 'M',
         quietZone: 20,

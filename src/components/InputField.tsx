@@ -13,12 +13,13 @@ type IInputFieldProps = {
 	value?: string | number;
 	label?: string;
 	disabled?: boolean;
-	logoParams?: { 
+	logoParams?: {
+		qrSize: number;
 		maintainAspectRatio: boolean;
 		logoWidth: number;
 		logoHeight: number;
 	}
-}
+};
 
 const InputField: React.FC<IInputFieldProps> = ({ name, type, handleChange, min, max, step, hideLabel, value, label, disabled, logoParams }) => {
 	const [inputValue, setInputValue] = useState<string | number | undefined>(value);
@@ -30,21 +31,27 @@ const InputField: React.FC<IInputFieldProps> = ({ name, type, handleChange, min,
 	}, [value]);
 
 	const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setInputValue(e.target.value);
+		const value = e.target.value;
+		setInputValue(value);
 		handleChange(e);
 		if (logoParams) {
-			const { maintainAspectRatio, logoWidth, logoHeight } = logoParams;
+			const { maintainAspectRatio, logoWidth, logoHeight, qrSize } = logoParams;
 			if (e.target.name === 'logoWidth' && maintainAspectRatio) {
-			  handleChange({ target: { name: 'logoHeight', value: Math.round(Number(e.target.value) / (logoWidth / logoHeight)) } });
+				handleChange({ target: { name: 'logoHeight', value: Math.round(Number(e.target.value) / (logoWidth / logoHeight)) } });
 			} else if (e.target.name === 'logoHeight' && maintainAspectRatio) {
-			  handleChange({ target: { name: 'logoWidth', value: Math.round(Number(e.target.value) * (logoWidth / logoHeight)) } });
+				handleChange({ target: { name: 'logoWidth', value: Math.round(Number(e.target.value) * (logoWidth / logoHeight)) } });
+			} else if (e.target.name === 'size') {
+				const width = (Number(value) * (logoWidth / qrSize));
+				const height = (Number(value) * (logoHeight / qrSize));
+				handleChange({ target: { name: 'logoWidth', value: width } });
+				handleChange({ target: { name: 'logoHeight', value: height } });
 			}
-		  }
+		}
 	};
 
 	return (
 		<>
-			{!hideLabel && <Label style={{ marginRight: '0.3rem'}}>{label || name}</Label>}
+			{!hideLabel && <Label style={{ marginRight: '0.3rem' }}>{label || name}</Label>}
 			<RangeContainer>
 				<RangeInput
 					type={type}
@@ -58,7 +65,7 @@ const InputField: React.FC<IInputFieldProps> = ({ name, type, handleChange, min,
 					disabled={disabled}
 				/>
 				{type === "range" &&
-					<span style={{ minWidth: "2.5rem" }}>{inputValue}px</span>
+					<span style={{ minWidth: "2.5rem" }}>{Math.round(Number(inputValue))}px</span>
 				}
 			</RangeContainer>
 		</>

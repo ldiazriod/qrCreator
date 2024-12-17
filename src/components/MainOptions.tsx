@@ -4,7 +4,6 @@ import TextArea from './TextArea'
 import SelectField from './SelectField'
 import ImageUploadField from './ImageUploadField'
 import InputField from './InputField'
-import { Label } from '../styles/styledComponents'
 import CheckboxField from './CheckboxField'
 
 interface MainOptionsProps {
@@ -22,23 +21,26 @@ const MainOptions: React.FC<MainOptionsProps> = ({ state, handleChange, setState
                     name='value'
                     label='QR Code Content (value)'
                     handleChange={handleChange}
+                    value={state.value}
                 />
             </OptionContainer>
             <OptionContainer>
-                <Label htmlFor="size">Size</Label>
-                <RangeContainer>
-                    <RangeInput
+                    <InputField
                         type="range"
-                        id="size"
                         name="size"
+                        label="Size"
                         min={100}
                         max={500}
-                        step={10}
+                        step={5}
                         value={state.size}
-                        onChange={handleChange}
+                        handleChange={handleChange}
+                        logoParams={{
+                            maintainAspectRatio: state.maintainAspectRatio,
+                            logoWidth: state.logoWidth,
+                            logoHeight: state.logoHeight,
+                            qrSize: state.size
+                        }}
                     />
-                    <RangeValue>{state.size}px</RangeValue>
-                </RangeContainer>
             </OptionContainer>
             <OptionContainer>
                 <ImageUploadField name='logoImage' handleChange={handleChange} maintainAspectRatio={state.maintainAspectRatio} qrSize={state.size} />
@@ -58,15 +60,16 @@ const MainOptions: React.FC<MainOptionsProps> = ({ state, handleChange, setState
                     name="logoWidth"
                     label='Logo Width'
                     min={20}
-                    max={state.size / 3}
-                    step={5}
+                    max={Math.round(state.size/15)*5}
+                    step={1}
                     value={state.logoWidth}
                     handleChange={handleChange}
                     disabled={!state.logoImage}
                     logoParams={{
                         maintainAspectRatio: state.maintainAspectRatio,
                         logoWidth: state.logoWidth,
-                        logoHeight: state.logoHeight
+                        logoHeight: state.logoHeight,
+                        qrSize: state.size
                     }}
                 />
             </OptionContainer>
@@ -76,15 +79,16 @@ const MainOptions: React.FC<MainOptionsProps> = ({ state, handleChange, setState
                     name="logoHeight"
                     label='Logo Height'
                     min={20}
-                    max={state.size / 3}
-                    step={5}
+                    max={Math.round(state.size/15)*5}
+                    step={1}
                     value={state.logoHeight}
                     handleChange={handleChange}
                     disabled={!state.logoImage}
                     logoParams={{
                         maintainAspectRatio: state.maintainAspectRatio,
                         logoWidth: state.logoWidth,
-                        logoHeight: state.logoHeight
+                        logoHeight: state.logoHeight,
+                        qrSize: state.size
                     }}
                 />
             </OptionContainer>
@@ -134,18 +138,4 @@ export default MainOptions
 
 const OptionContainer = styled.div`
   margin-bottom: 1rem;
-`;
-
-const RangeContainer = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
-const RangeInput = styled.input`
-  flex-grow: 1;
-  margin-right: 1rem;
-`;
-
-const RangeValue = styled.span`
-  min-width: 2.5rem;
 `;
