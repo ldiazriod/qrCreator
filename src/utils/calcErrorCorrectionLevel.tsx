@@ -5,7 +5,6 @@ const calculateErrorCorrectionLevel = (logoWidth: number, logoHeight: number, qr
     const logoArea = logoWidth * logoHeight;
     const qrArea = qrSize * qrSize;
     const logoPercentage = (logoArea / qrArea) * 100;
-    console.log(logoPercentage);
     // Determine error correction level based on logo size
     if (logoPercentage > 15) {
       return 'H';  // 30% error correction for large logos
