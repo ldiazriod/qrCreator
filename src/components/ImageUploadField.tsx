@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
+import calculateErrorCorrectionLevel from '../utils/calcErrorCorrectionLevel';
 
 interface IImageUploadFieldProps {
     name: string;
@@ -26,7 +27,6 @@ const ImageUploadField: React.FC<IImageUploadFieldProps> = ({ name, handleChange
                     const maxSize = qrSize / 3;
                     const aspectRatio = img.width / img.height;
                     let newWidth, newHeight;
-
                     if (maintainAspectRatio) {
                         if (img.width > img.height) {
                             newWidth = Math.min(img.width, maxSize);
@@ -42,8 +42,11 @@ const ImageUploadField: React.FC<IImageUploadFieldProps> = ({ name, handleChange
                     target.name = name;
                     target.value = reader.result;
                     handleChange({ target });
+                    handleChange({ target: { name: 'enableCORS', value: true } });
                     handleChange({ target: { name: 'logoWidth', value: Math.round(newWidth) } });
                     handleChange({ target: { name: 'logoHeight', value: Math.round(newHeight) } });
+                    const ecLevel = calculateErrorCorrectionLevel(newWidth, newHeight, qrSize);
+                    handleChange({ target: { name: 'ecLevel', value: ecLevel } });
                     setFileName(file.name);
                 };
                 img.src = reader.result as string;
@@ -57,6 +60,7 @@ const ImageUploadField: React.FC<IImageUploadFieldProps> = ({ name, handleChange
         }
         setFileName(null); // Clear the file name state
         handleChange({ target: { name, value: '' } }); // Clear the state in the parent component
+        handleChange({ target: { name: 'enableCORS', value: false } });
     };
 
     return (
@@ -76,7 +80,6 @@ const ImageUploadField: React.FC<IImageUploadFieldProps> = ({ name, handleChange
                     </DeleteButton>
                 }
             </InputContainer>
-            {fileName && <FileName>{fileName}</FileName>} {/* Display the file name */}
         </div>
     );
 };
@@ -96,12 +99,6 @@ const InputContainer = styled.div`
     justify-content: space-between;
     padding: 0.5rem;
     border: 1px solid #ccc;
-`;
-
-const FileName = styled.span`
-  margin-top: 0.5rem;
-  font-size: 0.875rem;
-  color: #555;
 `;
 
 const DeleteButton = styled.button`

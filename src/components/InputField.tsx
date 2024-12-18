@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { styled } from "styled-components";
 import { Label } from "../styles/styledComponents";
+import calculateErrorCorrectionLevel from "../utils/calcErrorCorrectionLevel";
 
 type IInputFieldProps = {
 	name: string;
@@ -36,15 +37,21 @@ const InputField: React.FC<IInputFieldProps> = ({ name, type, handleChange, min,
 		handleChange(e);
 		if (logoParams) {
 			const { maintainAspectRatio, logoWidth, logoHeight, qrSize } = logoParams;
-			if (e.target.name === 'logoWidth' && maintainAspectRatio) {
-				handleChange({ target: { name: 'logoHeight', value: Math.round(Number(e.target.value) / (logoWidth / logoHeight)) } });
-			} else if (e.target.name === 'logoHeight' && maintainAspectRatio) {
-				handleChange({ target: { name: 'logoWidth', value: Math.round(Number(e.target.value) * (logoWidth / logoHeight)) } });
-			} else if (e.target.name === 'size') {
+			if (e.target.name === 'size') {
 				const width = (Number(value) * (logoWidth / qrSize));
 				const height = (Number(value) * (logoHeight / qrSize));
 				handleChange({ target: { name: 'logoWidth', value: width } });
 				handleChange({ target: { name: 'logoHeight', value: height } });
+				handleChange({ target: { name: 'ecLevel', value: calculateErrorCorrectionLevel(width, height, Number(value)) } });
+
+			} else if (e.target.name === 'logoWidth' && maintainAspectRatio) {
+				handleChange({ target: { name: 'logoHeight', value: Math.round(Number(value) / (logoWidth / logoHeight)) } });
+				handleChange({ target: { name: 'ecLevel', value: calculateErrorCorrectionLevel(Number(value), logoHeight, qrSize) } });
+			} else if (e.target.name === 'logoHeight' && maintainAspectRatio) {
+				calculateErrorCorrectionLevel(logoWidth, Number(value), qrSize);
+				handleChange({ target: { name: 'logoWidth', value: Math.round(Number(value) * (logoWidth / logoHeight)) } });
+				handleChange({ target: { name: 'ecLevel', value: calculateErrorCorrectionLevel(logoWidth, Number(value), qrSize) } });
+
 			}
 		}
 	};

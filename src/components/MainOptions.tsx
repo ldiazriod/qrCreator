@@ -25,25 +25,30 @@ const MainOptions: React.FC<MainOptionsProps> = ({ state, handleChange, setState
                 />
             </OptionContainer>
             <OptionContainer>
-                    <InputField
-                        type="range"
-                        name="size"
-                        label="Size"
-                        min={100}
-                        max={500}
-                        step={5}
-                        value={state.size}
-                        handleChange={handleChange}
-                        logoParams={{
-                            maintainAspectRatio: state.maintainAspectRatio,
-                            logoWidth: state.logoWidth,
-                            logoHeight: state.logoHeight,
-                            qrSize: state.size
-                        }}
-                    />
+                <InputField
+                    type="range"
+                    name="size"
+                    label="Size"
+                    min={100}
+                    max={500}
+                    step={5}
+                    value={state.size}
+                    handleChange={handleChange}
+                    logoParams={{
+                        maintainAspectRatio: state.maintainAspectRatio,
+                        logoWidth: state.logoWidth,
+                        logoHeight: state.logoHeight,
+                        qrSize: state.size
+                    }}
+                />
             </OptionContainer>
             <OptionContainer>
-                <ImageUploadField name='logoImage' handleChange={handleChange} maintainAspectRatio={state.maintainAspectRatio} qrSize={state.size} />
+                <ImageUploadField
+                    name='logoImage'
+                    handleChange={handleChange}
+                    maintainAspectRatio={state.maintainAspectRatio}
+                    qrSize={state.size}
+                />
             </OptionContainer>
             <OptionContainer>
                 <CheckboxField
@@ -60,7 +65,7 @@ const MainOptions: React.FC<MainOptionsProps> = ({ state, handleChange, setState
                     name="logoWidth"
                     label='Logo Width'
                     min={20}
-                    max={Math.round(state.size/15)*5}
+                    max={Math.round(state.size / 15) * 5}
                     step={1}
                     value={state.logoWidth}
                     handleChange={handleChange}
@@ -79,7 +84,7 @@ const MainOptions: React.FC<MainOptionsProps> = ({ state, handleChange, setState
                     name="logoHeight"
                     label='Logo Height'
                     min={20}
-                    max={Math.round(state.size/15)*5}
+                    max={Math.round(state.size / 15) * 5}
                     step={1}
                     value={state.logoHeight}
                     handleChange={handleChange}
