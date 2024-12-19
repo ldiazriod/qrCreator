@@ -25,7 +25,7 @@ const AdvancedOptions: React.FC<AdvancedOptionsProps> = ({ state, handleChange }
 	};
 
 	return (
-		<div>
+		<div style={{ maxWidth: '450px' }}>
 			<OptionContainer>
 				<Label htmlFor="ecLevel">Error Correction Level</Label>
 				<Select

@@ -14,7 +14,7 @@ interface MainOptionsProps {
 const MainOptions: React.FC<MainOptionsProps> = ({ state, handleChange }) => {
 
     return (
-        <div>
+        <div style={{ maxWidth: '450px' }}>
             <OptionContainer>
                 <TextArea
                     name='value'

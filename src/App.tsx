@@ -42,8 +42,8 @@ const App: React.FC = () => {
 		<div className='app'>
 			<h1 style={{ fontSize: "2rem", margin: "1rem"}}>QR Code Generator</h1>
 			<div style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap' }}>
-				<div style={{ display: 'flex', flexDirection: 'column', flexWrap: 'wrap', gap: "0.7rem" }}>
-					<Card style={{ margin: '0.7rem' }}>
+				<div style={{ display: 'flex', flexDirection: 'column', flexWrap: 'wrap', gap: "0.7rem", flex: 1, marginRight: '10px' }}>
+					<Card style={{ margin: '0.7rem'}}>
 						<CardContent>
 							<Tabs activeTab={activeTab} setActiveTab={setActiveTab} />
 							{activeTab === 'main' && <MainOptions state={state} handleChange={handleChange} />}
@@ -54,16 +54,13 @@ const App: React.FC = () => {
 				<div style={{
 					width: 550,
 					height: 550,
-					marginLeft: '10px',
+					margin: '5px',
 					display: 'flex',
 					justifyContent: 'center',
 					alignItems: 'center',
-					border: '1px solid #d4fafc',
-					borderRadius: '50px',
 					backgroundColor: state.bgColor
 				}}>
 					<QRCode
-						logoOnLoad={() => console.log('logo loaded')}
 						{...{
 							...state,
               bgColor: "transparent",
@@ -114,6 +111,7 @@ export const Card = styled.div`
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   flex: 1;
+  width: 100%;
 `;
 
 export const CardContent = styled.div`
