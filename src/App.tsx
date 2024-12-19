@@ -42,8 +42,8 @@ const App: React.FC = () => {
 		<div className='app'>
 			<h1 style={{ fontSize: "2rem", margin: "1rem"}}>QR Code Generator</h1>
 			<div style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap' }}>
-				<div style={{ display: 'flex', flexDirection: 'column', flexWrap: 'wrap', gap: "0.7rem", flex: 1, marginRight: '10px' }}>
-					<Card style={{ margin: '0.7rem'}}>
+				<div style={{ display: 'flex', flexDirection: 'column', flexWrap: 'wrap', gap: "0.7rem", flex: 1, marginRight: '0px' }}>
+					<Card style={{ margin: '0.7rem', backgroundColor: '#F9FAFB' }}>
 						<CardContent>
 							<Tabs activeTab={activeTab} setActiveTab={setActiveTab} />
 							{activeTab === 'main' && <MainOptions state={state} handleChange={handleChange} />}

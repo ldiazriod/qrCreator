@@ -58,7 +58,8 @@ const InputField: React.FC<IInputFieldProps> = ({ name, type, handleChange, min,
 
 	return (
 		<>
-			{!hideLabel && <Label style={{ marginRight: '0.3rem' }}>{label || name}</Label>}
+			{!hideLabel && type	!== 'color' && <Label style={{ marginRight: '0.3rem' }}>{label || name}</Label>}
+			{!hideLabel && type === 'color' && <ColorLabel style={{ marginRight: '0.3rem' }}>{label || name}</ColorLabel>}
 			<RangeContainer>
 				<RangeInput
 					type={type}
@@ -90,4 +91,12 @@ const RangeContainer = styled.div`
 const RangeInput = styled.input`
 	flex-grow: 1;
 	margin-right: 1rem;
+`;
+
+const ColorLabel = styled.label`
+	display: flex;
+	text-align: center;
+	align-items: center;
+	justify-content: center;
+	font-weight: medium;
 `;
