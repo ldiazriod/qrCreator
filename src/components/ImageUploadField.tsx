@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import calculateErrorCorrectionLevel from '../utils/calcErrorCorrectionLevel';
 
@@ -7,11 +7,21 @@ interface IImageUploadFieldProps {
     handleChange: ({ target }: any) => void;
     maintainAspectRatio: boolean;
     qrSize: number;
+    logoFile: FileList;
 }
 
-const ImageUploadField: React.FC<IImageUploadFieldProps> = ({ name, handleChange, maintainAspectRatio, qrSize }) => {
-    const [fileName, setFileName] = useState<string | null>(null);
+const ImageUploadField: React.FC<IImageUploadFieldProps> = ({ name, handleChange, maintainAspectRatio, qrSize, logoFile }) => {
     const fileInputRef = useRef<HTMLInputElement>(null);
+
+    useEffect(() => {
+        if (fileInputRef.current && logoFile) {
+            const dataTransfer = new DataTransfer();
+            Array.from(logoFile).forEach(file => {
+                dataTransfer.items.add(file);
+            });
+            fileInputRef.current.files = dataTransfer.files;
+        }
+    }, [logoFile]);
 
     const handleImageUpload = (files: any) => {
         const file = files[0];
@@ -41,13 +51,17 @@ const ImageUploadField: React.FC<IImageUploadFieldProps> = ({ name, handleChange
                     }
                     target.name = name;
                     target.value = reader.result;
-                    handleChange({ target });
+                    handleChange({ target: { name: 'logoImage', value: reader.result } });
+                    handleChange({ target: { name: 'logoName', value: file.name } });
                     handleChange({ target: { name: 'enableCORS', value: true } });
                     handleChange({ target: { name: 'logoWidth', value: Math.round(newWidth) } });
                     handleChange({ target: { name: 'logoHeight', value: Math.round(newHeight) } });
                     const ecLevel = calculateErrorCorrectionLevel(newWidth, newHeight, qrSize);
                     handleChange({ target: { name: 'ecLevel', value: ecLevel } });
-                    setFileName(file.name);
+                    // Store the File object in state
+                    const fileList = new DataTransfer();
+                    fileList.items.add(file);
+                    handleChange({ target: { name: 'logoFile', value: fileList.files } });
                 };
                 img.src = reader.result as string;
             };
@@ -58,8 +72,9 @@ const ImageUploadField: React.FC<IImageUploadFieldProps> = ({ name, handleChange
         if (fileInputRef.current) {
             fileInputRef.current.value = ''; // Reset the file input field
         }
-        setFileName(null); // Clear the file name state
-        handleChange({ target: { name, value: '' } }); // Clear the state in the parent component
+        handleChange({ target: { name: 'logoName', value: '' } });
+        handleChange({ target: { name: 'logoImage', value: '' } });
+        handleChange({ target: { name: 'logoFile', value: null } });
         handleChange({ target: { name: 'enableCORS', value: false } });
     };
 
@@ -74,7 +89,7 @@ const ImageUploadField: React.FC<IImageUploadFieldProps> = ({ name, handleChange
                     ref={fileInputRef}
                     onChange={e => handleImageUpload(e.target.files)}
                 />
-                {fileName &&
+                {logoFile &&
                     <DeleteButton onClick={handleDeleteLogo}>
                         <img src="/xicon.svg" alt="Delete" />
                     </DeleteButton>

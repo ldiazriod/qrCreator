@@ -9,10 +9,9 @@ import CheckboxField from './CheckboxField'
 interface MainOptionsProps {
     state: { [key: string]: any }
     handleChange: ({ target }: any) => void
-    setState: React.Dispatch<React.SetStateAction<{ [key: string]: any }>>;
 }
 
-const MainOptions: React.FC<MainOptionsProps> = ({ state, handleChange, setState }) => {
+const MainOptions: React.FC<MainOptionsProps> = ({ state, handleChange }) => {
 
     return (
         <div>
@@ -48,6 +47,7 @@ const MainOptions: React.FC<MainOptionsProps> = ({ state, handleChange, setState
                     handleChange={handleChange}
                     maintainAspectRatio={state.maintainAspectRatio}
                     qrSize={state.size}
+                    logoFile={state.logoFile}
                 />
             </OptionContainer>
             <OptionContainer>

@@ -46,7 +46,7 @@ const App: React.FC = () => {
 					<Card style={{ margin: '0.7rem' }}>
 						<CardContent>
 							<Tabs activeTab={activeTab} setActiveTab={setActiveTab} />
-							{activeTab === 'main' && <MainOptions state={state} handleChange={handleChange} setState={setState} />}
+							{activeTab === 'main' && <MainOptions state={state} handleChange={handleChange} />}
 							{activeTab === 'advanced' && <AdvancedOptions state={state} handleChange={handleChange} />}
 						</CardContent>
 					</Card>
