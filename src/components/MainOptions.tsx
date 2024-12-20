@@ -110,7 +110,7 @@ const MainOptions: React.FC<MainOptionsProps> = ({ state, handleChange }) => {
 
                 />
             </OptionContainer>
-            <div style={{ display: 'flex', flexDirection: 'row', marginTop: '4px', justifyContent: 'space-around' }}>
+            <div style={{ display: 'flex', flexDirection: 'row', marginTop: '20px', marginBottom: '20px', justifyContent: 'space-around' }}>
                 <InputField
                     name='fgColor'
                     label='Foreground Color'

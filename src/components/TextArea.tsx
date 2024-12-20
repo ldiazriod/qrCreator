@@ -1,4 +1,3 @@
-import React from "react";
 import { Label } from "../styles/styledComponents";
 type ITextAreaProps = {
 	name: string;
@@ -10,9 +9,20 @@ type ITextAreaProps = {
 	hideLabel?: boolean;
 	label?: string;
 	value?: string | number;
-}
+};
 
 const TextArea = ({ name, handleChange, role, rows, cols, defaultValue, hideLabel, value, label }: ITextAreaProps) => {
+
+	const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+		handleChange(e);
+		if (e.target.value.includes('http://') || e.target.value.includes('https://')) {
+			handleChange({ target: { name: 'enableCORS', value: true} });
+		} else {
+			handleChange({ target: { name: 'enableCORS', value: false} });
+		}
+	};
+
+
 	return (
 		<div style={{ display: 'flex', flexDirection: 'column', marginBottom: '6px', whiteSpace:'pre-line' }}>
 			{!hideLabel && <Label>{label}</Label>}
@@ -20,7 +30,7 @@ const TextArea = ({ name, handleChange, role, rows, cols, defaultValue, hideLabe
 				style={{ padding: '0.5rem', marginBottom: '0.5rem', borderRadius: '0.3rem', border: '1px solid #ccc' }}
 				id={name}
 				name={name}
-				onChange={handleChange}
+				onChange={onChange}
                 rows={rows}
                 cols={cols}
                 role={role}

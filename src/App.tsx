@@ -11,18 +11,18 @@ const App: React.FC = () => {
 	const [activeTab, setActiveTab] = useState('main')
 	const [state, setState] = useState<{ [key: string]: any }>(
 		{
-        size: 300,
-		ecLevel: 'M',
-        quietZone: 20,
-        bgColor: '#FFFFFF',
-        fgColor: '#000000',
-        logoImage: '',
-        logoWidth: 50,
-        logoHeight: 50,
-        logoOpacity: 1,
-        qrStyle: 'squares',
-		maintainAspectRatio: true,
-      });
+			size: 300,
+			ecLevel: 'M',
+			quietZone: 20,
+			bgColor: '#FFFFFF',
+			fgColor: '#000000',
+			logoImage: '',
+			logoWidth: 50,
+			logoHeight: 50,
+			logoOpacity: 1,
+			qrStyle: 'squares',
+			maintainAspectRatio: true,
+		});
 
 	const handleChange = ({ target }: any) => {
 		setState(prevState => ({ ...prevState, [target.name]: target.value }))
@@ -40,7 +40,7 @@ const App: React.FC = () => {
 
 	return (
 		<div className='app'>
-			<h1 style={{ fontSize: "2rem", margin: "1rem"}}>QR Code Generator</h1>
+			<h1 style={{ fontSize: "2rem", margin: "1rem" }}>QR Code Generator</h1>
 			<div style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap' }}>
 				<div style={{ display: 'flex', flexDirection: 'column', flexWrap: 'wrap', gap: "0.7rem", flex: 1, marginRight: '0px' }}>
 					<Card style={{ margin: '0.7rem', backgroundColor: '#F9FAFB' }}>
@@ -52,18 +52,22 @@ const App: React.FC = () => {
 					</Card>
 				</div>
 				<div style={{
+					position: 'sticky',
+					top: '2rem',
 					width: 550,
 					height: 550,
 					margin: '5px',
 					display: 'flex',
+					flexDirection: 'column',
 					justifyContent: 'center',
 					alignItems: 'center',
-					backgroundColor: state.bgColor
+					backgroundColor: state.bgColor,
+					alignSelf: 'flex-start'
 				}}>
 					<QRCode
 						{...{
 							...state,
-              bgColor: "transparent",
+							bgColor: "transparent",
 							eyeRadius: [ // build eyeRadius manually
 								{
 									outer: [state.eyeradius_0_outer_0, state.eyeradius_0_outer_1, state.eyeradius_0_outer_2, state.eyeradius_0_outer_3],
@@ -94,11 +98,14 @@ const App: React.FC = () => {
 							]
 						}}
 					/>
+					<StyledButton
+						type='button'
+						onClick={handleDownload}
+					>
+						DOWNLOAD QR
+					</StyledButton>
 				</div>
 			</div>
-			<button type='button'  onClick={handleDownload}
-				style={{ margin: '20px' }}>Download QR Code</button>
-
 		</div>
 	);
 }
@@ -116,4 +123,38 @@ export const Card = styled.div`
 
 export const CardContent = styled.div`
   padding: 1rem;
+`;
+
+export const StyledButton = styled.button`
+  background-color: #3b82f6;
+  color: white;
+  font-size: 1.125rem;
+  padding: 1rem 2rem;
+  border-radius: 0.5rem;
+  border: none;
+  width: 300px;
+  margin: 1rem auto;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+  display: block;
+  font-weight: 500;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+  &:hover {
+    background-color: #2563eb;
+  }
+
+  &:active {
+    background-color: #1d4ed8;
+  }
+
+  &:focus {
+    outline: 2px solid #60a5fa;
+    outline-offset: 2px;
+  }
+
+  &:disabled {
+    background-color: #93c5fd;
+    cursor: not-allowed;
+  }
 `;

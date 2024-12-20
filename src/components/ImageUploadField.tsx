@@ -53,7 +53,6 @@ const ImageUploadField: React.FC<IImageUploadFieldProps> = ({ name, handleChange
                     target.value = reader.result;
                     handleChange({ target: { name: 'logoImage', value: reader.result } });
                     handleChange({ target: { name: 'logoName', value: file.name } });
-                    handleChange({ target: { name: 'enableCORS', value: true } });
                     handleChange({ target: { name: 'logoWidth', value: Math.round(newWidth) } });
                     handleChange({ target: { name: 'logoHeight', value: Math.round(newHeight) } });
                     const ecLevel = calculateErrorCorrectionLevel(newWidth, newHeight, qrSize);
@@ -75,7 +74,6 @@ const ImageUploadField: React.FC<IImageUploadFieldProps> = ({ name, handleChange
         handleChange({ target: { name: 'logoName', value: '' } });
         handleChange({ target: { name: 'logoImage', value: '' } });
         handleChange({ target: { name: 'logoFile', value: null } });
-        handleChange({ target: { name: 'enableCORS', value: false } });
     };
 
     return (
