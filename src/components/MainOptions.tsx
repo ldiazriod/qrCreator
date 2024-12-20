@@ -39,6 +39,7 @@ const MainOptions: React.FC<MainOptionsProps> = ({ state, handleChange }) => {
                         logoHeight: state.logoHeight,
                         qrSize: state.size
                     }}
+                    custom={state.custom}
                 />
             </OptionContainer>
             <OptionContainer>
@@ -48,6 +49,7 @@ const MainOptions: React.FC<MainOptionsProps> = ({ state, handleChange }) => {
                     maintainAspectRatio={state.maintainAspectRatio}
                     qrSize={state.size}
                     logoFile={state.logoFile}
+                    custom={state.custom}
                 />
             </OptionContainer>
             <OptionContainer>
@@ -76,6 +78,7 @@ const MainOptions: React.FC<MainOptionsProps> = ({ state, handleChange }) => {
                         logoHeight: state.logoHeight,
                         qrSize: state.size
                     }}
+                    custom={state.custom}
                 />
             </OptionContainer>
             <OptionContainer>
@@ -95,6 +98,7 @@ const MainOptions: React.FC<MainOptionsProps> = ({ state, handleChange }) => {
                         logoHeight: state.logoHeight,
                         qrSize: state.size
                     }}
+                    custom={state.custom}
                 />
             </OptionContainer>
             <OptionContainer>

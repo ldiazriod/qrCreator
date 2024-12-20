@@ -21,11 +21,20 @@ const AdvancedOptions: React.FC<AdvancedOptionsProps> = ({ state, handleChange }
 			max={50}
 			hideLabel
 			value={(state as any)[id] || 0}
+			custom={state.custom}
 		/>
 	};
 
 	return (
 		<div style={{ maxWidth: '450px' }}>
+			<OptionContainer>
+				<CheckboxField
+					name="custom"
+					label="Customize Settings (Disable auto-adjust)"
+					handleChange={handleChange}
+					checked={state.custom}
+				/>
+			</OptionContainer>
 			<OptionContainer>
 				<Label htmlFor="ecLevel">Error Correction Level</Label>
 				<Select

@@ -8,9 +8,10 @@ interface IImageUploadFieldProps {
     maintainAspectRatio: boolean;
     qrSize: number;
     logoFile: FileList;
+    custom: boolean;
 }
 
-const ImageUploadField: React.FC<IImageUploadFieldProps> = ({ name, handleChange, maintainAspectRatio, qrSize, logoFile }) => {
+const ImageUploadField: React.FC<IImageUploadFieldProps> = ({ name, handleChange, maintainAspectRatio, qrSize, logoFile, custom }) => {
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
@@ -55,8 +56,10 @@ const ImageUploadField: React.FC<IImageUploadFieldProps> = ({ name, handleChange
                     handleChange({ target: { name: 'logoName', value: file.name } });
                     handleChange({ target: { name: 'logoWidth', value: Math.round(newWidth) } });
                     handleChange({ target: { name: 'logoHeight', value: Math.round(newHeight) } });
-                    const ecLevel = calculateErrorCorrectionLevel(newWidth, newHeight, qrSize);
-                    handleChange({ target: { name: 'ecLevel', value: ecLevel } });
+                    if (!custom) {
+                        const ecLevel = calculateErrorCorrectionLevel(newWidth, newHeight, qrSize);
+                        handleChange({ target: { name: 'ecLevel', value: ecLevel } });
+                    }
                     // Store the File object in state
                     const fileList = new DataTransfer();
                     fileList.items.add(file);
@@ -70,6 +73,9 @@ const ImageUploadField: React.FC<IImageUploadFieldProps> = ({ name, handleChange
     const handleDeleteLogo = () => {
         if (fileInputRef.current) {
             fileInputRef.current.value = ''; // Reset the file input field
+        }
+        if (!custom) {
+            handleChange({ target: { name: 'ecLevel', value: 'M' } });
         }
         handleChange({ target: { name: 'logoName', value: '' } });
         handleChange({ target: { name: 'logoImage', value: '' } });

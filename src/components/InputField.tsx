@@ -20,9 +20,10 @@ type IInputFieldProps = {
 		logoWidth: number;
 		logoHeight: number;
 	}
+	custom?: boolean;
 };
 
-const InputField: React.FC<IInputFieldProps> = ({ name, type, handleChange, min, max, step, hideLabel, value, label, disabled, logoParams }) => {
+const InputField: React.FC<IInputFieldProps> = ({ name, type, handleChange, min, max, step, hideLabel, value, label, disabled, logoParams, custom }) => {
 	const [inputValue, setInputValue] = useState<string | number | undefined>(value);
 
 	useEffect(() => {
@@ -42,15 +43,21 @@ const InputField: React.FC<IInputFieldProps> = ({ name, type, handleChange, min,
 				const height = (Number(value) * (logoHeight / qrSize));
 				handleChange({ target: { name: 'logoWidth', value: width } });
 				handleChange({ target: { name: 'logoHeight', value: height } });
-				handleChange({ target: { name: 'ecLevel', value: calculateErrorCorrectionLevel(width, height, Number(value)) } });
+				if (!custom) {
+					handleChange({ target: { name: 'ecLevel', value: calculateErrorCorrectionLevel(width, height, Number(value)) } });
+				}
 
 			} else if (e.target.name === 'logoWidth' && maintainAspectRatio) {
 				handleChange({ target: { name: 'logoHeight', value: Math.round(Number(value) / (logoWidth / logoHeight)) } });
-				handleChange({ target: { name: 'ecLevel', value: calculateErrorCorrectionLevel(Number(value), logoHeight, qrSize) } });
+				if (!custom) {
+					handleChange({ target: { name: 'ecLevel', value: calculateErrorCorrectionLevel(Number(value), logoHeight, qrSize) } });
+				}
 			} else if (e.target.name === 'logoHeight' && maintainAspectRatio) {
 				calculateErrorCorrectionLevel(logoWidth, Number(value), qrSize);
 				handleChange({ target: { name: 'logoWidth', value: Math.round(Number(value) * (logoWidth / logoHeight)) } });
-				handleChange({ target: { name: 'ecLevel', value: calculateErrorCorrectionLevel(logoWidth, Number(value), qrSize) } });
+				if (!custom) {
+					handleChange({ target: { name: 'ecLevel', value: calculateErrorCorrectionLevel(logoWidth, Number(value), qrSize) } });
+				}
 
 			}
 		}
