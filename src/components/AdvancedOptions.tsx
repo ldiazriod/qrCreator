@@ -26,7 +26,7 @@ const AdvancedOptions: React.FC<AdvancedOptionsProps> = ({ state, handleChange }
 	};
 
 	return (
-		<div style={{ maxWidth: '450px' }}>
+		<div>
 			<OptionContainer>
 				<CheckboxField
 					name="custom"
@@ -104,121 +104,121 @@ const AdvancedOptions: React.FC<AdvancedOptionsProps> = ({ state, handleChange }
 				</Select>
 			</OptionContainer>
 			<Card>
-				<CardContent>
-					<h3 style={{ fontWeight: 'bold' }}>Eye Radius</h3>
-					<h6 style={{ fontSize: 15, fontWeight: 'bold', marginTop: '0.7rem', marginBottom: '0.5rem' }}>Top left eye</h6>
-					<div style={{ display: 'flex', flexDirection: 'row' }}>
-						<div>
-							<div style={{ fontSize: 12 }}>Outer</div>
-							{buildEyeRadiusInput('eyeradius_0_outer_0')}
-							{buildEyeRadiusInput('eyeradius_0_outer_1')}
-							{buildEyeRadiusInput('eyeradius_0_outer_2')}
-							{buildEyeRadiusInput('eyeradius_0_outer_3')}
+				<CardContent style={{ display: 'flex', flexDirection: 'row', gap: '2rem', flexWrap: 'wrap', maxWidth: '100%' }}>
+					<div>
+						<h3 style={{ fontWeight: 'bold' }}>Eye Radius</h3>
+						<div style={{ fontSize: 15, fontWeight: 'bold', marginTop: '0.7rem', marginBottom: '0.5rem' }}>Top left eye</div>
+						<div style={{ display: 'flex', flexDirection: 'row' }}>
+							<div>
+								<div style={{ fontSize: 12 }}>Outer</div>
+								{buildEyeRadiusInput('eyeradius_0_outer_0')}
+								{buildEyeRadiusInput('eyeradius_0_outer_1')}
+								{buildEyeRadiusInput('eyeradius_0_outer_2')}
+								{buildEyeRadiusInput('eyeradius_0_outer_3')}
+							</div>
+							<div>
+								<div style={{ fontSize: 12 }}>Inner</div>
+								{buildEyeRadiusInput('eyeradius_0_inner_0')}
+								{buildEyeRadiusInput('eyeradius_0_inner_1')}
+								{buildEyeRadiusInput('eyeradius_0_inner_2')}
+								{buildEyeRadiusInput('eyeradius_0_inner_3')}
+							</div>
 						</div>
-						<div>
-							<div style={{ fontSize: 12 }}>Inner</div>
-							{buildEyeRadiusInput('eyeradius_0_inner_0')}
-							{buildEyeRadiusInput('eyeradius_0_inner_1')}
-							{buildEyeRadiusInput('eyeradius_0_inner_2')}
-							{buildEyeRadiusInput('eyeradius_0_inner_3')}
+						<div style={{ fontSize: 15, fontWeight: 'bold', marginTop: '1rem', marginBottom: '0.5rem' }}>Top right eye</div>
+						<div style={{ display: 'flex', flexDirection: 'row' }}>
+							<div>
+								<div style={{ fontSize: 12 }}>Outer</div>
+								{buildEyeRadiusInput('eyeradius_1_outer_0')}
+								{buildEyeRadiusInput('eyeradius_1_outer_1')}
+								{buildEyeRadiusInput('eyeradius_1_outer_2')}
+								{buildEyeRadiusInput('eyeradius_1_outer_3')}
+							</div>
+							<div>
+								<div style={{ fontSize: 12 }}>Inner</div>
+								{buildEyeRadiusInput('eyeradius_1_inner_0')}
+								{buildEyeRadiusInput('eyeradius_1_inner_1')}
+								{buildEyeRadiusInput('eyeradius_1_inner_2')}
+								{buildEyeRadiusInput('eyeradius_1_inner_3')}
+							</div>
+						</div>
+						<div style={{ fontSize: 15, fontWeight: 'bold', marginTop: '1rem', marginBottom: '0.5rem' }}>Bottom left eye</div>
+						<div style={{ display: 'flex', flexDirection: 'row' }}>
+							<div>
+								<div style={{ fontSize: 12 }}>Outer</div>
+								{buildEyeRadiusInput('eyeradius_2_outer_0')}
+								{buildEyeRadiusInput('eyeradius_2_outer_1')}
+								{buildEyeRadiusInput('eyeradius_2_outer_2')}
+								{buildEyeRadiusInput('eyeradius_2_outer_3')}
+							</div>
+							<div>
+								<div style={{ fontSize: 12 }}>Inner</div>
+								{buildEyeRadiusInput('eyeradius_2_inner_0')}
+								{buildEyeRadiusInput('eyeradius_2_inner_1')}
+								{buildEyeRadiusInput('eyeradius_2_inner_2')}
+								{buildEyeRadiusInput('eyeradius_2_inner_3')}
+							</div>
 						</div>
 					</div>
-					<div style={{ fontSize: 15, fontWeight:'bold', marginTop: '1rem', marginBottom: '0.5rem' }}>Top right eye</div>
-					<div style={{ display: 'flex', flexDirection: 'row' }}>
-						<div>
-							<div style={{ fontSize: 12 }}>Outer</div>
-							{buildEyeRadiusInput('eyeradius_1_outer_0')}
-							{buildEyeRadiusInput('eyeradius_1_outer_1')}
-							{buildEyeRadiusInput('eyeradius_1_outer_2')}
-							{buildEyeRadiusInput('eyeradius_1_outer_3')}
-						</div>
-						<div>
-							<div style={{ fontSize: 12 }}>Inner</div>
-							{buildEyeRadiusInput('eyeradius_1_inner_0')}
-							{buildEyeRadiusInput('eyeradius_1_inner_1')}
-							{buildEyeRadiusInput('eyeradius_1_inner_2')}
-							{buildEyeRadiusInput('eyeradius_1_inner_3')}
-						</div>
-					</div>
-					<div style={{ fontSize: 15, fontWeight:'bold', marginTop: '1rem', marginBottom: '0.5rem' }}>Bottom left eye</div>
-					<div style={{ display: 'flex', flexDirection: 'row' }}>
-						<div>
-							<div style={{ fontSize: 12 }}>Outer</div>
-							{buildEyeRadiusInput('eyeradius_2_outer_0')}
-							{buildEyeRadiusInput('eyeradius_2_outer_1')}
-							{buildEyeRadiusInput('eyeradius_2_outer_2')}
-							{buildEyeRadiusInput('eyeradius_2_outer_3')}
-						</div>
-						<div>
-							<div style={{ fontSize: 12 }}>Inner</div>
-							{buildEyeRadiusInput('eyeradius_2_inner_0')}
-							{buildEyeRadiusInput('eyeradius_2_inner_1')}
-							{buildEyeRadiusInput('eyeradius_2_inner_2')}
-							{buildEyeRadiusInput('eyeradius_2_inner_3')}
-						</div>
-					</div>
-				</CardContent>
-			</Card>
-			<Card style={{marginTop: '0.7rem'}}>
-				<CardContent>
-					<div>Eye Color</div>
-					<div style={{ display: 'flex', flexDirection: 'row' }}>
-						<div>
-							<p style={{ fontSize: 14 }}>Top left eye</p>
-							<p style={{ fontSize: 12 }}>Outer</p>
-							<InputField
-								name='eyecolor_0_outer'
-								type='color'
-								value={state.fgColor ?? '#000000'}
-								handleChange={handleChange}
-								hideLabel={true}
-							/>
-							<p style={{ fontSize: 12 }}>Inner</p>
-							<InputField
-								name='eyecolor_0_inner'
-								type='color'
-								value={state.fgColor ?? '#000000'}
-								handleChange={handleChange}
-								hideLabel={true}
-							/>
-						</div>
-						<div>
-							<p style={{ fontSize: 14 }}>Top right eye</p>
-							<p style={{ fontSize: 12 }}>Outer</p>
-							<InputField
-								name='eyecolor_1_outer'
-								type='color'
-								value={state.fgColor ?? '#000000'}
-								handleChange={handleChange}
-								hideLabel={true}
-							/>
-							<p style={{ fontSize: 12 }}>Inner</p>
-							<InputField
-								name='eyecolor_1_inner'
-								type='color'
-								value={state.fgColor ?? '#000000'}
-								handleChange={handleChange}
-								hideLabel={true}
-							/>
-						</div>
-						<div>
-							<p style={{ fontSize: 14 }}>Bottom left eye</p>
-							<p style={{ fontSize: 12 }}>Outer</p>
-							<InputField
-								name='eyecolor_2_outer'
-								type='color'
-								value={state.fgColor ?? '#000000'}
-								handleChange={handleChange}
-								hideLabel={true}
-							/>
-							<p style={{ fontSize: 12 }}>Inner</p>
-							<InputField
-								name='eyecolor_2_inner'
-								type='color'
-								value={state.fgColor ?? '#000000'}
-								handleChange={handleChange}
-								hideLabel={true}
-							/>
+					<div style={{ display: 'flex', flexDirection: 'column', flexWrap: 'wrap', marginLeft: '1rem' }}>
+						<h3 style={{ fontWeight: 'bold' }}>Eye Color</h3>
+						<div style={{ display: 'flex', flexDirection: 'row' }}>
+							<div style={{ marginRight: '1rem', gap: '0.7rem' }}>
+								<div style={{ fontSize: 15, fontWeight: 'bold', marginTop: '0.7rem', marginBottom: '0.5rem' }}>Top left eye</div>
+								<div style={{ fontSize: 12 }}>Outer</div>
+								<InputField
+									name='eyecolor_0_outer'
+									type='color'
+									value={state.fgColor ?? '#000000'}
+									handleChange={handleChange}
+									hideLabel={true}
+								/>
+								<div style={{ fontSize: 12, marginTop: '0.7rem' }}>Inner</div>
+								<InputField
+									name='eyecolor_0_inner'
+									type='color'
+									value={state.fgColor ?? '#000000'}
+									handleChange={handleChange}
+									hideLabel={true}
+								/>
+							</div>
+							<div style={{ marginRight: '1rem', gap: '0.7rem' }}>
+								<div style={{ fontSize: 15, fontWeight: 'bold', marginTop: '0.7rem', marginBottom: '0.5rem' }}>Top right eye</div>
+								<div style={{ fontSize: 12 }}>Outer</div>
+								<InputField
+									name='eyecolor_1_outer'
+									type='color'
+									value={state.fgColor ?? '#000000'}
+									handleChange={handleChange}
+									hideLabel={true}
+								/>
+								<div style={{ fontSize: 12, marginTop: '0.7rem' }}>Inner</div>
+								<InputField
+									name='eyecolor_1_inner'
+									type='color'
+									value={state.fgColor ?? '#000000'}
+									handleChange={handleChange}
+									hideLabel={true}
+								/>
+							</div>
+							<div>
+								<div style={{ fontSize: 15, fontWeight: 'bold', marginTop: '0.7rem', marginBottom: '0.5rem' }}>Bottom left eye</div>
+								<div style={{ fontSize: 12 }}>Outer</div>
+								<InputField
+									name='eyecolor_2_outer'
+									type='color'
+									value={state.fgColor ?? '#000000'}
+									handleChange={handleChange}
+									hideLabel={true}
+								/>
+								<div style={{ fontSize: 12, marginTop: '0.7rem' }}>Inner</div>
+								<InputField
+									name='eyecolor_2_inner'
+									type='color'
+									value={state.fgColor ?? '#000000'}
+									handleChange={handleChange}
+									hideLabel={true}
+								/>
+							</div>
 						</div>
 					</div>
 				</CardContent>

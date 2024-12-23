@@ -14,11 +14,11 @@ interface MainOptionsProps {
 const MainOptions: React.FC<MainOptionsProps> = ({ state, handleChange }) => {
 
     return (
-        <div style={{ maxWidth: '450px' }}>
+        <div>
             <OptionContainer>
                 <TextArea
                     name='value'
-                    label='QR Code Content (value)'
+                    label='URL'
                     handleChange={handleChange}
                     value={state.value}
                 />
