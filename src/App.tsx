@@ -22,7 +22,8 @@ const App: React.FC = () => {
 			logoOpacity: 1,
 			qrStyle: 'squares',
 			maintainAspectRatio: true,
-			custom: false
+			custom: false,
+			removeQrCodeBehindLogo: false
 		});
 
 	const handleChange = ({ target }: any) => {
