@@ -23,11 +23,12 @@ const App: React.FC = () => {
 			qrStyle: 'squares',
 			maintainAspectRatio: true,
 			custom: false,
-			removeQrCodeBehindLogo: false
+			removeQrCodeBehindLogo: true
 		});
 
 	const handleChange = ({ target }: any) => {
 		setState(prevState => ({ ...prevState, [target.name]: target.value }))
+		console.log(state)
 	}
 
 	const handleDownload = () => {
@@ -66,7 +67,7 @@ const App: React.FC = () => {
 					backgroundColor: state.bgColor,
 					alignSelf: 'flex-start'
 				}}>
-					<QRCode
+					{/*<QRCode
 						{...{
 							...state,
 							bgColor: "transparent",
@@ -99,7 +100,23 @@ const App: React.FC = () => {
 								},
 							]
 						}}
-					/>
+					/>*/}
+					<QRCode
+						value={state.value}
+						size={state.size}
+						quietZone={state.quietZone}
+						bgColor={state.bgColor}
+						fgColor={state.fgColor}
+						logoImage={state.logoImage}
+						logoWidth={state.logoWidth}
+						logoHeight={state.logoHeight}
+						logoOpacity={state.logoOpacity}
+						qrStyle={state.qrStyle}
+						eyeRadius={state.eyeRadius}
+						eyeColor={state.eyeColor}
+						removeQrCodeBehindLogo={state.removeQrCodeBehindLogo}
+						ecLevel="H" // Add high error correction when using logo
+              		/>
 					<StyledButton
 						type='button'
 						onClick={handleDownload}
