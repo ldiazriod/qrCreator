@@ -23,12 +23,11 @@ const App: React.FC = () => {
 			qrStyle: 'squares',
 			maintainAspectRatio: true,
 			custom: false,
-			removeQrCodeBehindLogo: true
+			removeQrCodeBehindLogo: true,
 		});
 
 	const handleChange = ({ target }: any) => {
 		setState(prevState => ({ ...prevState, [target.name]: target.value }))
-		console.log(state)
 	}
 
 	const handleDownload = () => {
@@ -54,76 +53,56 @@ const App: React.FC = () => {
 						</CardContent>
 					</Card>
 				</div>
-				<div style={{
-					position: 'sticky',
-					top: '2rem',
-					width: 550,
-					height: 550,
-					margin: '5px',
-					display: 'flex',
-					flexDirection: 'column',
-					justifyContent: 'center',
-					alignItems: 'center',
-					backgroundColor: state.bgColor,
-					alignSelf: 'flex-start'
-				}}>
-					{/*<QRCode
-						{...{
-							...state,
-							bgColor: "transparent",
-							eyeRadius: [ // build eyeRadius manually
-								{
-									outer: [state.eyeradius_0_outer_0, state.eyeradius_0_outer_1, state.eyeradius_0_outer_2, state.eyeradius_0_outer_3],
-									inner: [state.eyeradius_0_inner_0, state.eyeradius_0_inner_1, state.eyeradius_0_inner_2, state.eyeradius_0_inner_3],
-								},
-								{
-									outer: [state.eyeradius_1_outer_0, state.eyeradius_1_outer_1, state.eyeradius_1_outer_2, state.eyeradius_1_outer_3],
-									inner: [state.eyeradius_1_inner_0, state.eyeradius_1_inner_1, state.eyeradius_1_inner_2, state.eyeradius_1_inner_3],
-								},
-								{
-									outer: [state.eyeradius_2_outer_0, state.eyeradius_2_outer_1, state.eyeradius_2_outer_2, state.eyeradius_2_outer_3],
-									inner: [state.eyeradius_2_inner_0, state.eyeradius_2_inner_1, state.eyeradius_2_inner_2, state.eyeradius_2_inner_3],
-								}
-							],
-							eyeColor: [ // build eyeColor manually
-								{
-									outer: state.eyecolor_0_outer ?? state.fgColor ?? '#000000',
-									inner: state.eyecolor_0_inner ?? state.fgColor ?? '#000000'
-								},
-								{
-									outer: state.eyecolor_1_outer ?? state.fgColor ?? '#000000',
-									inner: state.eyecolor_1_inner ?? state.fgColor ?? '#000000'
-								},
-								{
-									outer: state.eyecolor_2_outer ?? state.fgColor ?? '#000000',
-									inner: state.eyecolor_2_inner ?? state.fgColor ?? '#000000'
-								},
-							]
-						}}
-					/>*/}
+				<QRWrapper $totalSize={state.size + state.quietZone * 2}>
 					<QRCode
 						value={state.value}
 						size={state.size}
 						quietZone={state.quietZone}
-						bgColor={state.bgColor}
 						fgColor={state.fgColor}
+						bgColor={state.bgColor}
 						logoImage={state.logoImage}
 						logoWidth={state.logoWidth}
 						logoHeight={state.logoHeight}
 						logoOpacity={state.logoOpacity}
 						qrStyle={state.qrStyle}
-						eyeRadius={state.eyeRadius}
-						eyeColor={state.eyeColor}
 						removeQrCodeBehindLogo={state.removeQrCodeBehindLogo}
-						ecLevel="H" // Add high error correction when using logo
-              		/>
+						ecLevel={state.ecLevel}
+						enableCORS={state.enableCORS}
+						logoPadding={state.logoPadding}
+						logoPaddingStyle={state.logoPaddingStyle}
+						eyeRadius={[{
+							outer: [state.eyeradius_0_outer_0, state.eyeradius_0_outer_1, state.eyeradius_0_outer_2, state.eyeradius_0_outer_3],
+							inner: [state.eyeradius_0_inner_0, state.eyeradius_0_inner_1, state.eyeradius_0_inner_2, state.eyeradius_0_inner_3],
+						},
+						{
+							outer: [state.eyeradius_1_outer_0, state.eyeradius_1_outer_1, state.eyeradius_1_outer_2, state.eyeradius_1_outer_3],
+							inner: [state.eyeradius_1_inner_0, state.eyeradius_1_inner_1, state.eyeradius_1_inner_2, state.eyeradius_1_inner_3],
+						},
+						{
+							outer: [state.eyeradius_2_outer_0, state.eyeradius_2_outer_1, state.eyeradius_2_outer_2, state.eyeradius_2_outer_3],
+							inner: [state.eyeradius_2_inner_0, state.eyeradius_2_inner_1, state.eyeradius_2_inner_2, state.eyeradius_2_inner_3],
+						}]}
+						eyeColor={[{
+							outer: state.eyecolor_0_outer ?? state.fgColor ?? '#000000',
+							inner: state.eyecolor_0_inner ?? state.fgColor ?? '#000000'
+						},
+						{
+							outer: state.eyecolor_1_outer ?? state.fgColor ?? '#000000',
+							inner: state.eyecolor_1_inner ?? state.fgColor ?? '#000000'
+						},
+						{
+							outer: state.eyecolor_2_outer ?? state.fgColor ?? '#000000',
+							inner: state.eyecolor_2_inner ?? state.fgColor ?? '#000000'
+						}]}
+
+					/>
 					<StyledButton
 						type='button'
 						onClick={handleDownload}
 					>
 						DOWNLOAD QR
 					</StyledButton>
-				</div>
+				</QRWrapper>
 			</div>
 		</div>
 	);
@@ -142,6 +121,27 @@ export const Card = styled.div`
 
 export const CardContent = styled.div`
   padding: 1rem;
+`;
+
+export const QRWrapper = styled.div<{ $totalSize: number }>`
+	position: sticky;
+	top: 2rem;
+	min-width: 400px;
+  	max-width: 800px;
+	width: 100%;
+	height: calc(100% - 80px);
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	margin: 5px auto;
+	> div {
+		width: ${props => Math.min(Math.max(props.$totalSize, 400), 800)}px;
+		height: ${props => Math.min(Math.max(props.$totalSize, 550), 800)}px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
 `;
 
 export const StyledButton = styled.button`
@@ -177,3 +177,4 @@ export const StyledButton = styled.button`
     cursor: not-allowed;
   }
 `;
+
