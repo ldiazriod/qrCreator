@@ -11,7 +11,7 @@ const App: React.FC = () => {
 	const [activeTab, setActiveTab] = useState('main')
 	const [state, setState] = useState<{ [key: string]: any }>(() => {
 		if (typeof window !== 'undefined') {
-			const saved = localStorage.getItem('qrCodeState');
+			const saved = localStorage.getItem('qrPreferences');
 			return saved ? JSON.parse(saved) : {
 				size: 300,
 				ecLevel: 'M',
@@ -32,7 +32,7 @@ const App: React.FC = () => {
 	});
 
 	useEffect(() => {
-		localStorage.setItem('qrCodeState', JSON.stringify(state))
+		localStorage.setItem('qrPreferences', JSON.stringify(state))
 	}, [state]);
 
 	const handleChange = ({ target }: any) => {
