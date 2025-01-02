@@ -168,7 +168,7 @@ const AdvancedOptions: React.FC<AdvancedOptionsProps> = ({ state, handleChange }
 								<InputField
 									name='eyecolor_0_outer'
 									type='color'
-									value={state.fgColor ?? '#000000'}
+									value={state.eyecolor_0_outer ?? state.fgColor}
 									handleChange={handleChange}
 									hideLabel={true}
 								/>
@@ -176,7 +176,7 @@ const AdvancedOptions: React.FC<AdvancedOptionsProps> = ({ state, handleChange }
 								<InputField
 									name='eyecolor_0_inner'
 									type='color'
-									value={state.fgColor ?? '#000000'}
+									value={state.eyecolor_0_inner ?? state.fgColor}
 									handleChange={handleChange}
 									hideLabel={true}
 								/>
@@ -187,7 +187,7 @@ const AdvancedOptions: React.FC<AdvancedOptionsProps> = ({ state, handleChange }
 								<InputField
 									name='eyecolor_1_outer'
 									type='color'
-									value={state.fgColor ?? '#000000'}
+									value={state.eyecolor_1_outer ?? state.fgColor}
 									handleChange={handleChange}
 									hideLabel={true}
 								/>
@@ -195,7 +195,7 @@ const AdvancedOptions: React.FC<AdvancedOptionsProps> = ({ state, handleChange }
 								<InputField
 									name='eyecolor_1_inner'
 									type='color'
-									value={state.fgColor ?? '#000000'}
+									value={state.eyecolor_1_inner ?? state.fgColor}
 									handleChange={handleChange}
 									hideLabel={true}
 								/>
@@ -206,7 +206,7 @@ const AdvancedOptions: React.FC<AdvancedOptionsProps> = ({ state, handleChange }
 								<InputField
 									name='eyecolor_2_outer'
 									type='color'
-									value={state.fgColor ?? '#000000'}
+									value={state.eyecolor_2_outer ?? state.fgColor}
 									handleChange={handleChange}
 									hideLabel={true}
 								/>
@@ -214,7 +214,7 @@ const AdvancedOptions: React.FC<AdvancedOptionsProps> = ({ state, handleChange }
 								<InputField
 									name='eyecolor_2_inner'
 									type='color'
-									value={state.fgColor ?? '#000000'}
+									value={state.eyecolor_2_inner ?? state.fgColor}
 									handleChange={handleChange}
 									hideLabel={true}
 								/>
