@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { QRCode } from 'react-qrcode-logo';
 import html2canvas from 'html2canvas';
 import styled from 'styled-components';
@@ -9,22 +9,31 @@ import AdvancedOptions from './components/AdvancedOptions';
 
 const App: React.FC = () => {
 	const [activeTab, setActiveTab] = useState('main')
-	const [state, setState] = useState<{ [key: string]: any }>(
-		{
-			size: 300,
-			ecLevel: 'M',
-			quietZone: 20,
-			bgColor: '#FFFFFF',
-			fgColor: '#000000',
-			logoImage: '',
-			logoWidth: 50,
-			logoHeight: 50,
-			logoOpacity: 1,
-			qrStyle: 'squares',
-			maintainAspectRatio: true,
-			custom: false,
-			removeQrCodeBehindLogo: true,
-		});
+	const [state, setState] = useState<{ [key: string]: any }>(() => {
+		if (typeof window !== 'undefined') {
+			const saved = localStorage.getItem('qrCodeState');
+			return saved ? JSON.parse(saved) : {
+				size: 300,
+				ecLevel: 'M',
+				quietZone: 20,
+				bgColor: '#FFFFFF',
+				fgColor: '#000000',
+				logoImage: '',
+				logoWidth: 50,
+				logoHeight: 50,
+				logoOpacity: 1,
+				qrStyle: 'squares',
+				maintainAspectRatio: true,
+				custom: false,
+				removeQrCodeBehindLogo: true,
+			};
+		}
+		return {}
+	});
+
+	useEffect(() => {
+		localStorage.setItem('qrCodeState', JSON.stringify(state))
+	  }, [state])
 
 	const handleChange = ({ target }: any) => {
 		setState(prevState => ({ ...prevState, [target.name]: target.value }))
