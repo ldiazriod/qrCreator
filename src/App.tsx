@@ -33,7 +33,7 @@ const App: React.FC = () => {
 
 	useEffect(() => {
 		localStorage.setItem('qrCodeState', JSON.stringify(state))
-	  }, [state])
+	}, [state]);
 
 	const handleChange = ({ target }: any) => {
 		setState(prevState => ({ ...prevState, [target.name]: target.value }))
