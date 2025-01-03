@@ -33,13 +33,32 @@ const App: React.FC = () => {
 
 	useEffect(() => {
 		localStorage.setItem('qrPreferences', JSON.stringify(state))
+
 	}, [state]);
+
+	useEffect(() => {
+		if (state.logoImage && state.logoName) {
+		  // Convert base64 back to File object
+		  fetch(state.logoImage)
+			.then(res => res.blob())
+			.then(blob => {
+			  const file = new File([blob], state.logoName, { type: blob.type });
+			  const dataTransfer = new DataTransfer();
+			  dataTransfer.items.add(file);
+			  setState(prevState => ({
+				...prevState,
+				logoFile: dataTransfer.files
+			  }));
+			});
+		}
+	  }, [state.logoImage, state.logoName]);
 
 	const handleChange = ({ target }: any) => {
 		setState(prevState => ({ ...prevState, [target.name]: target.value }))
 	}
 
 	const handleDownload = () => {
+		console.log(state)
 		html2canvas(document.querySelector('#react-qrcode-logo') as any)
 			.then(function (canvas) {
 				const link = document.createElement('a');
