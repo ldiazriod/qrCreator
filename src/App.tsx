@@ -92,7 +92,7 @@ const App: React.FC = () => {
 										{ label: 'Main Options', value: 'main' },
 										{ label: 'Advanced Options', value: 'advanced' }
 									]}
-								/>								
+								/>
 								<ResetButton onClick={handleReset}>Reset Settings</ResetButton>
 							</div>
 							{activeTab === 'main' && <MainOptions state={state} handleChange={handleChange} />}
