@@ -21,6 +21,7 @@ const MainOptions: React.FC<MainOptionsProps> = ({ state, handleChange }) => {
                     label='URL'
                     handleChange={handleChange}
                     value={state.value}
+                    placeholder='Enter URL'
                 />
             </OptionContainer>
             <OptionContainer>
@@ -50,6 +51,8 @@ const MainOptions: React.FC<MainOptionsProps> = ({ state, handleChange }) => {
                     qrSize={state.size}
                     logoFile={state.logoFile}
                     custom={state.custom}
+                    logoTab={state.logoTab}
+                    logoImage={state.logoImage}
                 />
             </OptionContainer>
             <OptionContainer>

@@ -10,6 +10,7 @@ import AdvancedOptions from './components/AdvancedOptions';
 const defaultSettings = {
 	size: 300,
 	ecLevel: 'M',
+	enableCORS: true,
 	quietZone: 20,
 	bgColor: '#FFFFFF',
 	fgColor: '#000000',
@@ -22,6 +23,7 @@ const defaultSettings = {
 	maintainAspectRatio: true,
 	custom: false,
 	removeQrCodeBehindLogo: true,
+	logoTab: 'file'
 };
 
 const App: React.FC = () => {
@@ -83,7 +85,14 @@ const App: React.FC = () => {
 					<Card style={{ margin: '0.7rem', backgroundColor: '#F9FAFB' }}>
 						<CardContent>
 							<div style={{ display: 'flex', justifyContent: 'space-between' }}>
-								<Tabs activeTab={activeTab} setActiveTab={setActiveTab} />
+								<Tabs
+									activeTab={activeTab}
+									setActiveTab={setActiveTab}
+									tabs={[
+										{ label: 'Main Options', value: 'main' },
+										{ label: 'Advanced Options', value: 'advanced' }
+									]}
+								/>								
 								<ResetButton onClick={handleReset}>Reset Settings</ResetButton>
 							</div>
 							{activeTab === 'main' && <MainOptions state={state} handleChange={handleChange} />}

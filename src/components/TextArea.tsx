@@ -9,9 +9,10 @@ type ITextAreaProps = {
 	hideLabel?: boolean;
 	label?: string;
 	value?: string | number;
+	placeholder: string;
 };
 
-const TextArea = ({ name, handleChange, role, rows, cols, defaultValue, hideLabel, value, label }: ITextAreaProps) => {
+const TextArea = ({ name, handleChange, role, rows, cols, defaultValue, hideLabel, value, label, placeholder }: ITextAreaProps) => {
 
 	const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
 		handleChange(e);
@@ -24,7 +25,7 @@ const TextArea = ({ name, handleChange, role, rows, cols, defaultValue, hideLabe
 
 
 	return (
-		<div style={{ display: 'flex', flexDirection: 'column', marginBottom: '6px', whiteSpace:'pre-line' }}>
+		<div style={{ display: 'flex', flexDirection: 'column', marginBottom: '6px', whiteSpace:'pre-line', width: '100%' }}>
 			{!hideLabel && <Label>{label}</Label>}
 			<textarea
 				style={{ padding: '0.5rem', marginBottom: '0.5rem', borderRadius: '0.3rem', border: '1px solid #ccc' }}
@@ -36,6 +37,7 @@ const TextArea = ({ name, handleChange, role, rows, cols, defaultValue, hideLabe
                 role={role}
 				defaultValue={defaultValue}
 				value={value}
+				placeholder={placeholder}
 			/>
 		</div>
 	);

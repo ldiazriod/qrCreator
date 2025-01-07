@@ -4,23 +4,21 @@ import styled from 'styled-components';
 interface TabsProps {
   activeTab: string;
   setActiveTab: (tab: string) => void;
+  tabs: { label: string; value: string }[];
 }
 
-const Tabs: React.FC<TabsProps> = ({ activeTab, setActiveTab }) => {
+const Tabs: React.FC<TabsProps> = ({ activeTab, setActiveTab, tabs }) => {
   return (
     <TabContainer>
-      <TabButton
-        $active={activeTab === 'main'}
-        onClick={() => setActiveTab('main')}
-      >
-        Main Options
-      </TabButton>
-      <TabButton
-        $active={activeTab === 'advanced'}
-        onClick={() => setActiveTab('advanced')}
-      >
-        Advanced Options
-      </TabButton>
+      {tabs.map(tab => (
+        <TabButton
+          key={tab.value}
+          $active={activeTab === tab.value}
+          onClick={() => setActiveTab(tab.value)}
+        >
+          {tab.label}
+        </TabButton>
+      ))}
     </TabContainer>
   );
 };
