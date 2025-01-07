@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import Tabs from './Tabs';
 import calculateErrorCorrectionLevel from '../utils/calcErrorCorrectionLevel';
@@ -16,7 +16,6 @@ interface IImageUploadFieldProps {
 }
 
 const ImageUploadField: React.FC<IImageUploadFieldProps> = ({ name, handleChange, maintainAspectRatio, qrSize, logoFile, custom, logoTab, logoImage }) => {
-    const [logoUrl, setLogoUrl] = useState('');
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
@@ -85,7 +84,6 @@ const ImageUploadField: React.FC<IImageUploadFieldProps> = ({ name, handleChange
         handleChange({ target: { name: 'logoName', value: '' } });
         handleChange({ target: { name: 'logoImage', value: '' } });
         handleChange({ target: { name: 'logoFile', value: null } });
-        setLogoUrl(''); // Reset the URL input field
     };
 
     const handleTabChange = (tab: string) => {
