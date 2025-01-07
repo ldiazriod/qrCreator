@@ -39,6 +39,7 @@ const TabButton = styled.button<{ $active: boolean }>`
   border: none;
   cursor: pointer;
   transition: background-color 0.3s;
+  height: 100%;
 
   &:first-child {
     border-top-left-radius: 0.5rem;

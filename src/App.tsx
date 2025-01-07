@@ -7,26 +7,29 @@ import MainOptions from './components/MainOptions';
 import AdvancedOptions from './components/AdvancedOptions';
 
 
+const defaultSettings = {
+	size: 300,
+	ecLevel: 'M',
+	quietZone: 20,
+	bgColor: '#FFFFFF',
+	fgColor: '#000000',
+	logoImage: '',
+	logoName: '',
+	logoWidth: 50,
+	logoHeight: 50,
+	logoOpacity: 1,
+	qrStyle: 'squares',
+	maintainAspectRatio: true,
+	custom: false,
+	removeQrCodeBehindLogo: true,
+};
+
 const App: React.FC = () => {
 	const [activeTab, setActiveTab] = useState('main')
 	const [state, setState] = useState<{ [key: string]: any }>(() => {
 		if (typeof window !== 'undefined') {
 			const saved = localStorage.getItem('qrPreferences');
-			return saved ? JSON.parse(saved) : {
-				size: 300,
-				ecLevel: 'M',
-				quietZone: 20,
-				bgColor: '#FFFFFF',
-				fgColor: '#000000',
-				logoImage: '',
-				logoWidth: 50,
-				logoHeight: 50,
-				logoOpacity: 1,
-				qrStyle: 'squares',
-				maintainAspectRatio: true,
-				custom: false,
-				removeQrCodeBehindLogo: true,
-			};
+			return saved ? JSON.parse(saved) : defaultSettings;
 		}
 		return {}
 	});
@@ -38,24 +41,28 @@ const App: React.FC = () => {
 
 	useEffect(() => {
 		if (state.logoImage && state.logoName) {
-		  // Convert base64 back to File object
-		  fetch(state.logoImage)
-			.then(res => res.blob())
-			.then(blob => {
-			  const file = new File([blob], state.logoName, { type: blob.type });
-			  const dataTransfer = new DataTransfer();
-			  dataTransfer.items.add(file);
-			  setState(prevState => ({
-				...prevState,
-				logoFile: dataTransfer.files
-			  }));
-			});
+			// Convert base64 back to File object
+			fetch(state.logoImage)
+				.then(res => res.blob())
+				.then(blob => {
+					const file = new File([blob], state.logoName, { type: blob.type });
+					const dataTransfer = new DataTransfer();
+					dataTransfer.items.add(file);
+					setState(prevState => ({
+						...prevState,
+						logoFile: dataTransfer.files
+					}));
+				});
 		}
-	  }, [state.logoImage, state.logoName]);
+	}, [state.logoImage, state.logoName]);
 
 	const handleChange = ({ target }: any) => {
 		setState(prevState => ({ ...prevState, [target.name]: target.value }))
 	}
+
+	const handleReset = () => {
+		setState(defaultSettings);
+	};
 
 	const handleDownload = () => {
 		console.log(state)
@@ -75,7 +82,10 @@ const App: React.FC = () => {
 				<div style={{ display: 'flex', flexDirection: 'column', flexWrap: 'wrap', gap: "0.7rem", flex: 1, marginBlock: '30px' }}>
 					<Card style={{ margin: '0.7rem', backgroundColor: '#F9FAFB' }}>
 						<CardContent>
-							<Tabs activeTab={activeTab} setActiveTab={setActiveTab} />
+							<div style={{ display: 'flex', justifyContent: 'space-between' }}>
+								<Tabs activeTab={activeTab} setActiveTab={setActiveTab} />
+								<ResetButton onClick={handleReset}>Reset Settings</ResetButton>
+							</div>
 							{activeTab === 'main' && <MainOptions state={state} handleChange={handleChange} />}
 							{activeTab === 'advanced' && <AdvancedOptions state={state} handleChange={handleChange} />}
 						</CardContent>
@@ -203,6 +213,20 @@ export const StyledButton = styled.button`
   &:disabled {
     background-color: #93c5fd;
     cursor: not-allowed;
+  }
+`;
+
+const ResetButton = styled.button`
+  background-color: #fb923c;
+  color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  height: 100%;
+
+  &:hover {
+    background-color: #f97316;
   }
 `;
 
