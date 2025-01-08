@@ -13,6 +13,8 @@ interface MainOptionsProps {
 
 const MainOptions: React.FC<MainOptionsProps> = ({ state, handleChange }) => {
 
+    const isLogoMissing = (state.logoTab === 'file' && !state.logoImage) || (state.logoTab === 'url' && !state.logoUrl);
+
     return (
         <div>
             <OptionContainer>
@@ -45,7 +47,7 @@ const MainOptions: React.FC<MainOptionsProps> = ({ state, handleChange }) => {
             </OptionContainer>
             <OptionContainer>
                 <ImageUploadField
-                    name='logoImage'
+                    name={['logoImage', 'logoUrl']}
                     handleChange={handleChange}
                     maintainAspectRatio={state.maintainAspectRatio}
                     qrSize={state.size}
@@ -53,6 +55,7 @@ const MainOptions: React.FC<MainOptionsProps> = ({ state, handleChange }) => {
                     custom={state.custom}
                     logoTab={state.logoTab}
                     logoImage={state.logoImage}
+                    logoUrl={state.logoUrl}
                 />
             </OptionContainer>
             <OptionContainer>
@@ -61,7 +64,7 @@ const MainOptions: React.FC<MainOptionsProps> = ({ state, handleChange }) => {
                     label="Aspect Ratio"
                     handleChange={handleChange}
                     checked={state.maintainAspectRatio}
-                    disabled={!state.logoImage}
+                    disabled={isLogoMissing}
                 />
             </OptionContainer>
             <OptionContainer>
@@ -74,7 +77,7 @@ const MainOptions: React.FC<MainOptionsProps> = ({ state, handleChange }) => {
                     step={1}
                     value={state.logoWidth}
                     handleChange={handleChange}
-                    disabled={!state.logoImage}
+                    disabled={isLogoMissing}
                     logoParams={{
                         maintainAspectRatio: state.maintainAspectRatio,
                         logoWidth: state.logoWidth,
@@ -94,7 +97,7 @@ const MainOptions: React.FC<MainOptionsProps> = ({ state, handleChange }) => {
                     step={1}
                     value={state.logoHeight}
                     handleChange={handleChange}
-                    disabled={!state.logoImage}
+                    disabled={isLogoMissing}
                     logoParams={{
                         maintainAspectRatio: state.maintainAspectRatio,
                         logoWidth: state.logoWidth,
@@ -113,7 +116,7 @@ const MainOptions: React.FC<MainOptionsProps> = ({ state, handleChange }) => {
                     step={0.1}
                     value={state.logoOpacity}
                     handleChange={handleChange}
-                    disabled={!state.logoImage}
+                    disabled={isLogoMissing}
 
                 />
             </OptionContainer>

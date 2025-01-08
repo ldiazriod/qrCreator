@@ -12,6 +12,9 @@ interface AdvancedOptionsProps {
 
 const AdvancedOptions: React.FC<AdvancedOptionsProps> = ({ state, handleChange }) => {
 
+	const isLogoMissing = (state.logoTab === 'file' && !state.logoImage) || (state.logoTab === 'url' && !state.logoUrl);
+
+
 	const buildEyeRadiusInput = (id: string) => {
 		return <InputField
 			name={id}
@@ -75,7 +78,7 @@ const AdvancedOptions: React.FC<AdvancedOptionsProps> = ({ state, handleChange }
 					label="Remove QR Code Behind Logo"
 					handleChange={handleChange}
 					checked={state.removeQrCodeBehindLogo}
-					disabled={!state.logoImage}
+					disabled={isLogoMissing}
 
 				/>
 			</OptionContainer>
@@ -89,6 +92,7 @@ const AdvancedOptions: React.FC<AdvancedOptionsProps> = ({ state, handleChange }
 					step={1}
 					value={state.logoPadding || 0}
 					handleChange={handleChange}
+					disabled={isLogoMissing}
 				/>
 			</OptionContainer>
 			<OptionContainer>
@@ -98,6 +102,7 @@ const AdvancedOptions: React.FC<AdvancedOptionsProps> = ({ state, handleChange }
 					name="logoPaddingStyle"
 					value={state.logoPaddingStyle}
 					onChange={handleChange}
+					disabled={isLogoMissing}
 				>
 					<option value="square">Square</option>
 					<option value="circle">Circle</option>

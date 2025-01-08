@@ -23,7 +23,8 @@ const defaultSettings = {
 	maintainAspectRatio: true,
 	custom: false,
 	removeQrCodeBehindLogo: true,
-	logoTab: 'file'
+	logoTab: 'file',
+	logoUrl: '',
 };
 
 const App: React.FC = () => {
@@ -107,7 +108,7 @@ const App: React.FC = () => {
 						quietZone={state.quietZone}
 						fgColor={state.fgColor}
 						bgColor={state.bgColor}
-						logoImage={state.logoImage}
+						logoImage={state.logoTab === 'file' ? state.logoImage : state.logoUrl}
 						logoWidth={state.logoWidth}
 						logoHeight={state.logoHeight}
 						logoOpacity={state.logoOpacity}

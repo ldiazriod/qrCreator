@@ -5,17 +5,18 @@ import calculateErrorCorrectionLevel from '../utils/calcErrorCorrectionLevel';
 import TextArea from './TextArea';
 
 interface IImageUploadFieldProps {
-    name: string;
+    name: [string, string];
     handleChange: ({ target }: any) => void;
     maintainAspectRatio: boolean;
     qrSize: number;
-    logoFile: FileList;
     custom: boolean;
+    logoFile: FileList;
     logoTab: string;
     logoImage: string;
+    logoUrl: string;
 }
 
-const ImageUploadField: React.FC<IImageUploadFieldProps> = ({ name, handleChange, maintainAspectRatio, qrSize, logoFile, custom, logoTab, logoImage }) => {
+const ImageUploadField: React.FC<IImageUploadFieldProps> = ({ name, handleChange, maintainAspectRatio, qrSize, logoFile, custom, logoTab, logoImage, logoUrl }) => {
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
@@ -74,7 +75,7 @@ const ImageUploadField: React.FC<IImageUploadFieldProps> = ({ name, handleChange
         }
     };
 
-    const handleDeleteLogo = () => {
+    const handleDeleteLogoFile = () => {
         if (fileInputRef.current) {
             fileInputRef.current.value = ''; // Reset the file input field
         }
@@ -86,17 +87,12 @@ const ImageUploadField: React.FC<IImageUploadFieldProps> = ({ name, handleChange
         handleChange({ target: { name: 'logoFile', value: null } });
     };
 
-    const handleTabChange = (tab: string) => {
-        handleChange({ target: { name: 'logoTab', value: tab } });
-        handleDeleteLogo();
-    };
-
     return (
         <div style={{ display: 'flex', flexDirection: 'column', marginBottom: '6px' }}>
             <Label>Logo Image</Label>
             <Tabs
                 activeTab={logoTab}
-                setActiveTab={handleTabChange}
+                setActiveTab={tab => handleChange({ target: { name: 'logoTab', value: tab } })}
                 tabs={[
                     { label: 'File', value: 'file' },
                     { label: 'URL', value: 'url' }
@@ -107,12 +103,12 @@ const ImageUploadField: React.FC<IImageUploadFieldProps> = ({ name, handleChange
                     <input
                         type='file'
                         accept='image/*'
-                        name={name}
+                        name={name[0]}
                         ref={fileInputRef}
                         onChange={e => handleImageUpload(e.target.files)}
                     />
                     {logoFile &&
-                        <DeleteButton onClick={handleDeleteLogo}>
+                        <DeleteButton onClick={handleDeleteLogoFile}>
                             <img src="/xicon.svg" alt="Delete" />
                         </DeleteButton>
                     }
@@ -121,13 +117,14 @@ const ImageUploadField: React.FC<IImageUploadFieldProps> = ({ name, handleChange
             {logoTab === 'url' && (
                 <InputContainer>
                     <TextArea
-                        name={name}
+                        name={name[1]}
                         handleChange={handleChange}
-                        value={logoImage}
+                        value={logoUrl}
                         placeholder='Enter Image URL'
                     />
-                    {logoImage &&
-                        <DeleteButton onClick={handleDeleteLogo}>
+                    {logoUrl &&
+                        <DeleteButton onClick={() => handleChange({ target: { name: 'logoUrl', value: '' } })}
+                        >
                             <img src="/xicon.svg" alt="Delete" />
                         </DeleteButton>
                     }
