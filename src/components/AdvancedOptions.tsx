@@ -164,10 +164,10 @@ const AdvancedOptions: React.FC<AdvancedOptionsProps> = ({ state, handleChange }
 							</div>
 						</div>
 					</div>
-					<div style={{ display: 'flex', flexDirection: 'column', flexWrap: 'wrap', marginLeft: '1rem' }}>
+					<div style={{ display: 'flex', flexDirection: 'column' }}>
 						<h3 style={{ fontWeight: 'bold' }}>Eye Color</h3>
-						<div style={{ display: 'flex', flexDirection: 'row' }}>
-							<div style={{ marginRight: '1rem', gap: '0.7rem' }}>
+						<div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem' }}>
+							<div style={{ gap: '0.7rem' }}>
 								<div style={{ fontSize: 15, fontWeight: 'bold', marginTop: '0.7rem', marginBottom: '0.5rem' }}>Top left eye</div>
 								<div style={{ fontSize: 12 }}>Outer</div>
 								<InputField
@@ -186,7 +186,7 @@ const AdvancedOptions: React.FC<AdvancedOptionsProps> = ({ state, handleChange }
 									hideLabel={true}
 								/>
 							</div>
-							<div style={{ marginRight: '1rem', gap: '0.7rem' }}>
+							<div style={{ gap: '0.7rem' }}>
 								<div style={{ fontSize: 15, fontWeight: 'bold', marginTop: '0.7rem', marginBottom: '0.5rem' }}>Top right eye</div>
 								<div style={{ fontSize: 12 }}>Outer</div>
 								<InputField
@@ -205,7 +205,7 @@ const AdvancedOptions: React.FC<AdvancedOptionsProps> = ({ state, handleChange }
 									hideLabel={true}
 								/>
 							</div>
-							<div>
+							<div style={{ gap: '0.7rem' }}>
 								<div style={{ fontSize: 15, fontWeight: 'bold', marginTop: '0.7rem', marginBottom: '0.5rem' }}>Bottom left eye</div>
 								<div style={{ fontSize: 12 }}>Outer</div>
 								<InputField

@@ -98,6 +98,12 @@ const RangeContainer = styled.div`
 const RangeInput = styled.input`
 	flex-grow: 1;
 	margin-right: 1rem;
+
+	&[type="color"] {
+    width: 75px;
+    height: 35px;
+    padding: 2px;
+  }
 `;
 
 const ColorLabel = styled.label`
