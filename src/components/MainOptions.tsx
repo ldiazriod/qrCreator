@@ -5,6 +5,7 @@ import SelectField from './SelectField'
 import ImageUploadField from './ImageUploadField'
 import InputField from './InputField'
 import CheckboxField from './CheckboxField'
+import { tooltipDescriptions } from '../constants/tooltips'
 
 interface MainOptionsProps {
     state: { [key: string]: any }
@@ -17,7 +18,8 @@ const MainOptions: React.FC<MainOptionsProps> = ({ state, handleChange }) => {
 
     return (
         <div>
-            <OptionContainer>
+            <OptionContainer
+                title={tooltipDescriptions.value}>
                 <TextArea
                     name='value'
                     label='URL'
@@ -26,7 +28,8 @@ const MainOptions: React.FC<MainOptionsProps> = ({ state, handleChange }) => {
                     placeholder='Enter URL'
                 />
             </OptionContainer>
-            <OptionContainer>
+            <OptionContainer
+                title={tooltipDescriptions.size}>
                 <InputField
                     type="range"
                     name="size"
@@ -45,7 +48,8 @@ const MainOptions: React.FC<MainOptionsProps> = ({ state, handleChange }) => {
                     custom={state.custom}
                 />
             </OptionContainer>
-            <OptionContainer>
+            <OptionContainer
+                title={tooltipDescriptions.logoImage}>
                 <ImageUploadField
                     name={['logoImage', 'logoUrl']}
                     handleChange={handleChange}
@@ -58,7 +62,8 @@ const MainOptions: React.FC<MainOptionsProps> = ({ state, handleChange }) => {
                     logoUrl={state.logoUrl}
                 />
             </OptionContainer>
-            <OptionContainer>
+            <OptionContainer
+                title={tooltipDescriptions.maintainAspectRatio}>
                 <CheckboxField
                     name="maintainAspectRatio"
                     label="Aspect Ratio"
@@ -67,7 +72,8 @@ const MainOptions: React.FC<MainOptionsProps> = ({ state, handleChange }) => {
                     disabled={isLogoMissing}
                 />
             </OptionContainer>
-            <OptionContainer>
+            <OptionContainer
+                title={tooltipDescriptions.logoWidth}>
                 <InputField
                     type="range"
                     name="logoWidth"
@@ -87,7 +93,8 @@ const MainOptions: React.FC<MainOptionsProps> = ({ state, handleChange }) => {
                     custom={state.custom}
                 />
             </OptionContainer>
-            <OptionContainer>
+            <OptionContainer
+                title={tooltipDescriptions.logoHeight}>
                 <InputField
                     type="range"
                     name="logoHeight"
@@ -107,7 +114,8 @@ const MainOptions: React.FC<MainOptionsProps> = ({ state, handleChange }) => {
                     custom={state.custom}
                 />
             </OptionContainer>
-            <OptionContainer>
+            <OptionContainer
+                title={tooltipDescriptions.logoOpacity}>
                 <InputField
                     type="range"
                     name="logoOpacity"
@@ -121,22 +129,29 @@ const MainOptions: React.FC<MainOptionsProps> = ({ state, handleChange }) => {
                 />
             </OptionContainer>
             <div style={{ display: 'flex', flexDirection: 'row', marginTop: '20px', marginBottom: '20px', justifyContent: 'space-around' }}>
-                <InputField
-                    name='fgColor'
-                    label='Foreground Color'
-                    type='color'
-                    value={state.fgColor}
-                    handleChange={handleChange}
-                />
-                <InputField
-                    name='bgColor'
-                    label='Background Color'
-                    type='color'
-                    value={state.bgColor}
-                    handleChange={handleChange}
-                />
+                <div style={{ display: 'flex', flexDirection: 'row', gap: '0.7rem' }}
+                    title={tooltipDescriptions.fgColor}>
+                    <InputField
+                        name='fgColor'
+                        label='Foreground Color'
+                        type='color'
+                        value={state.fgColor}
+                        handleChange={handleChange}
+                    />
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'row', gap: '0.7rem' }}
+                    title={tooltipDescriptions.bgColor}>
+                    <InputField
+                        name='bgColor'
+                        label='Background Color'
+                        type='color'
+                        value={state.bgColor}
+                        handleChange={handleChange}
+                    />
+                </div>
             </div>
-            <OptionContainer>
+            <OptionContainer
+                title={tooltipDescriptions.qrStyle}>
                 <SelectField
                     name='qrStyle'
                     options={['squares', 'dots']}
