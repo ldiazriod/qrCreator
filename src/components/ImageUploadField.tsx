@@ -27,7 +27,7 @@ const ImageUploadField: React.FC<IImageUploadFieldProps> = ({ name, handleChange
             });
             fileInputRef.current.files = dataTransfer.files;
         }
-    }, [logoFile]);
+    }, [logoFile, logoTab]);
 
     const handleImageUpload = (files: any) => {
         const file = files[0];
