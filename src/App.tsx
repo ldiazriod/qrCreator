@@ -5,27 +5,7 @@ import styled from 'styled-components';
 import Tabs from './components/Tabs';
 import MainOptions from './components/MainOptions';
 import AdvancedOptions from './components/AdvancedOptions';
-
-
-const defaultSettings = {
-	size: 300,
-	ecLevel: 'M',
-	enableCORS: true,
-	quietZone: 20,
-	bgColor: '#FFFFFF',
-	fgColor: '#000000',
-	logoImage: '',
-	logoName: '',
-	logoWidth: 50,
-	logoHeight: 50,
-	logoOpacity: 1,
-	qrStyle: 'squares',
-	maintainAspectRatio: true,
-	custom: false,
-	removeQrCodeBehindLogo: true,
-	logoTab: 'file',
-	logoUrl: '',
-};
+import { defaultSettings } from './constants/settings';
 
 const App: React.FC = () => {
 	const [activeTab, setActiveTab] = useState('main')
@@ -61,6 +41,7 @@ const App: React.FC = () => {
 
 	const handleChange = ({ target }: any) => {
 		setState(prevState => ({ ...prevState, [target.name]: target.value }))
+		console.log(state)
 	}
 
 	const handleReset = () => {
@@ -115,7 +96,7 @@ const App: React.FC = () => {
 						qrStyle={state.qrStyle}
 						removeQrCodeBehindLogo={state.removeQrCodeBehindLogo}
 						ecLevel={state.ecLevel}
-						enableCORS={state.enableCORS}
+						enableCORS= {false}
 						logoPadding={state.logoPadding}
 						logoPaddingStyle={state.logoPaddingStyle}
 						eyeRadius={[{

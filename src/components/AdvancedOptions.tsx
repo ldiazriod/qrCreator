@@ -114,7 +114,7 @@ const AdvancedOptions: React.FC<AdvancedOptionsProps> = ({ state, handleChange }
 						<h3 style={{ fontWeight: 'bold' }}>Eye Radius</h3>
 						<div style={{ fontSize: 15, fontWeight: 'bold', marginTop: '0.7rem', marginBottom: '0.5rem' }}>Top left eye</div>
 						<div style={{ display: 'flex', flexDirection: 'row' }}>
-							<div>
+							<div style={{ marginRight: '1rem' }}>
 								<div style={{ fontSize: 12 }}>Outer</div>
 								{buildEyeRadiusInput('eyeradius_0_outer_0')}
 								{buildEyeRadiusInput('eyeradius_0_outer_1')}
@@ -131,7 +131,7 @@ const AdvancedOptions: React.FC<AdvancedOptionsProps> = ({ state, handleChange }
 						</div>
 						<div style={{ fontSize: 15, fontWeight: 'bold', marginTop: '1rem', marginBottom: '0.5rem' }}>Top right eye</div>
 						<div style={{ display: 'flex', flexDirection: 'row' }}>
-							<div>
+							<div style={{ marginRight: '1rem' }}>
 								<div style={{ fontSize: 12 }}>Outer</div>
 								{buildEyeRadiusInput('eyeradius_1_outer_0')}
 								{buildEyeRadiusInput('eyeradius_1_outer_1')}
@@ -148,7 +148,7 @@ const AdvancedOptions: React.FC<AdvancedOptionsProps> = ({ state, handleChange }
 						</div>
 						<div style={{ fontSize: 15, fontWeight: 'bold', marginTop: '1rem', marginBottom: '0.5rem' }}>Bottom left eye</div>
 						<div style={{ display: 'flex', flexDirection: 'row' }}>
-							<div>
+							<div style={{ marginRight: '1rem' }}>
 								<div style={{ fontSize: 12 }}>Outer</div>
 								{buildEyeRadiusInput('eyeradius_2_outer_0')}
 								{buildEyeRadiusInput('eyeradius_2_outer_1')}
