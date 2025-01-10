@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Tabs from './Tabs';
 import calculateErrorCorrectionLevel from '../utils/calcErrorCorrectionLevel';
 import TextArea from './TextArea';
+import { tooltipDescriptions } from '../constants/tooltips';
 
 interface IImageUploadFieldProps {
     name: [string, string];
@@ -99,7 +100,8 @@ const ImageUploadField: React.FC<IImageUploadFieldProps> = ({ name, handleChange
                 ]}
             />
             {logoTab === 'file' && (
-                <InputContainer>
+                <InputContainer
+                    title={tooltipDescriptions.logoFile}>
                     <input
                         type='file'
                         accept='image/*'
@@ -115,7 +117,8 @@ const ImageUploadField: React.FC<IImageUploadFieldProps> = ({ name, handleChange
                 </InputContainer>
             )}
             {logoTab === 'url' && (
-                <InputContainer>
+                <InputContainer
+                    title={tooltipDescriptions.logoUrl}>
                     <TextArea
                         name={name[1]}
                         handleChange={handleChange}

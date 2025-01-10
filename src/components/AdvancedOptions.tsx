@@ -4,6 +4,7 @@ import CheckboxField from './CheckboxField'
 import InputField from './InputField'
 import { Label } from '../styles/styledComponents'
 import { Card, CardContent } from '../App'
+import { tooltipDescriptions } from '../constants/tooltips'
 
 interface AdvancedOptionsProps {
 	state: { [key: string]: any }
@@ -30,7 +31,8 @@ const AdvancedOptions: React.FC<AdvancedOptionsProps> = ({ state, handleChange }
 
 	return (
 		<div>
-			<OptionContainer>
+			<OptionContainer
+				title={tooltipDescriptions.custom}>
 				<CheckboxField
 					name="custom"
 					label="Customize Settings (Disable auto-adjust)"
@@ -38,7 +40,8 @@ const AdvancedOptions: React.FC<AdvancedOptionsProps> = ({ state, handleChange }
 					checked={state.custom}
 				/>
 			</OptionContainer>
-			<OptionContainer>
+			<OptionContainer
+				title={tooltipDescriptions.ecLevel}>
 				<Label htmlFor="ecLevel">Error Correction Level</Label>
 				<Select
 					id="ecLevel"
@@ -52,7 +55,8 @@ const AdvancedOptions: React.FC<AdvancedOptionsProps> = ({ state, handleChange }
 					<option value="H">H</option>
 				</Select>
 			</OptionContainer>
-			<OptionContainer>
+			<OptionContainer
+				title={tooltipDescriptions.enableCORS}>
 				<CheckboxField
 					name="enableCORS"
 					label="Enable CORS"
@@ -60,7 +64,8 @@ const AdvancedOptions: React.FC<AdvancedOptionsProps> = ({ state, handleChange }
 					checked={state.enableCORS}
 				/>
 			</OptionContainer>
-			<OptionContainer>
+			<OptionContainer
+				title={tooltipDescriptions.quietZone}>
 				<InputField
 					name='quietZone'
 					label='Quiet Zone'
@@ -72,7 +77,8 @@ const AdvancedOptions: React.FC<AdvancedOptionsProps> = ({ state, handleChange }
 					handleChange={handleChange}
 				/>
 			</OptionContainer>
-			<OptionContainer>
+			<OptionContainer
+				title={tooltipDescriptions.removeQrCodeBehindLogo}>
 				<CheckboxField
 					name="removeQrCodeBehindLogo"
 					label="Remove QR Code Behind Logo"
@@ -82,7 +88,8 @@ const AdvancedOptions: React.FC<AdvancedOptionsProps> = ({ state, handleChange }
 
 				/>
 			</OptionContainer>
-			<OptionContainer>
+			<OptionContainer
+				title={tooltipDescriptions.logoPadding}>
 				<InputField
 					name='logoPadding'
 					label='Logo Padding'
@@ -95,7 +102,8 @@ const AdvancedOptions: React.FC<AdvancedOptionsProps> = ({ state, handleChange }
 					disabled={isLogoMissing}
 				/>
 			</OptionContainer>
-			<OptionContainer>
+			<OptionContainer
+				title={tooltipDescriptions.logoPaddingStyle}>
 				<Label htmlFor="logoPaddingStyle">Logo Padding Style</Label>
 				<Select
 					id="logoPaddingStyle"
@@ -110,7 +118,8 @@ const AdvancedOptions: React.FC<AdvancedOptionsProps> = ({ state, handleChange }
 			</OptionContainer>
 			<Card>
 				<CardContent style={{ display: 'flex', flexDirection: 'row', gap: '2rem', flexWrap: 'wrap', maxWidth: '100%' }}>
-					<div>
+					<div
+						title={tooltipDescriptions.eyeRadius}>
 						<h3 style={{ fontWeight: 'bold' }}>Eye Radius</h3>
 						<div style={{ fontSize: 15, fontWeight: 'bold', marginTop: '0.7rem', marginBottom: '0.5rem' }}>Top left eye</div>
 						<div style={{ display: 'flex', flexDirection: 'row' }}>
@@ -164,7 +173,8 @@ const AdvancedOptions: React.FC<AdvancedOptionsProps> = ({ state, handleChange }
 							</div>
 						</div>
 					</div>
-					<div style={{ display: 'flex', flexDirection: 'column' }}>
+					<div style={{ display: 'flex', flexDirection: 'column' }}
+						title={tooltipDescriptions.eyeColor}>
 						<h3 style={{ fontWeight: 'bold' }}>Eye Color</h3>
 						<div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem' }}>
 							<div style={{ gap: '0.7rem' }}>
