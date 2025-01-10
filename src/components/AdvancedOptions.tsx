@@ -56,15 +56,6 @@ const AdvancedOptions: React.FC<AdvancedOptionsProps> = ({ state, handleChange }
 				</Select>
 			</OptionContainer>
 			<OptionContainer
-				title={tooltipDescriptions.enableCORS}>
-				<CheckboxField
-					name="enableCORS"
-					label="Enable CORS"
-					handleChange={handleChange}
-					checked={state.enableCORS}
-				/>
-			</OptionContainer>
-			<OptionContainer
 				title={tooltipDescriptions.quietZone}>
 				<InputField
 					name='quietZone'
