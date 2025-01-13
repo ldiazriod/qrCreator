@@ -5,6 +5,7 @@ import InputField from './InputField'
 import { Label } from '../styles/styledComponents'
 import { Card, CardContent } from '../App'
 import { tooltipDescriptions } from '../constants/tooltips'
+import { eyeRadiusCircle, eyeRadiusSquare } from '../constants/settings'
 
 interface AdvancedOptionsProps {
 	state: { [key: string]: any }
@@ -28,6 +29,14 @@ const AdvancedOptions: React.FC<AdvancedOptionsProps> = ({ state, handleChange }
 			custom={state.custom}
 		/>
 	};
+
+	const handleEyeButtonClick = () => {
+		let eyeRadius = state.eyeRadiusStyle === 'square' ? eyeRadiusCircle : eyeRadiusSquare;
+		Object.keys(eyeRadius).forEach(key => {
+			handleChange({ target: { name: key, value: eyeRadius[key as keyof typeof eyeRadius] } });
+		});
+		handleChange({ target: { name: 'eyeRadiusStyle', value: state.eyeRadiusStyle === 'square' ? 'circle' : 'square' } });
+	}
 
 	return (
 		<div>
@@ -111,7 +120,20 @@ const AdvancedOptions: React.FC<AdvancedOptionsProps> = ({ state, handleChange }
 				<CardContent style={{ display: 'flex', flexDirection: 'row', gap: '2rem', flexWrap: 'wrap', maxWidth: '100%' }}>
 					<div
 						title={tooltipDescriptions.eyeRadius}>
-						<h3 style={{ fontWeight: 'bold' }}>Eye Radius</h3>
+						<div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+							<h3 style={{ fontWeight: 'bold' }}>Eye Radius</h3>
+							<div
+								style={{ display: 'flex', flexDirection: 'row', gap: '0.3rem', alignItems: 'center' }}
+								title={state.eyeRadiusStyle === 'square' ? tooltipDescriptions.eyesCircleButton : tooltipDescriptions.eyesSquareButton}
+							>
+								<label>Eye shape: </label>
+								<CircleSquareButton
+									onClick={handleEyeButtonClick}
+								>
+									{state.eyeRadiusStyle === 'square' ? 'Circle' : 'Square'}
+								</CircleSquareButton>
+							</div>
+						</div>
 						<div style={{ fontSize: 15, fontWeight: 'bold', marginTop: '0.7rem', marginBottom: '0.5rem' }}>Top left eye</div>
 						<div style={{ display: 'flex', flexDirection: 'row' }}>
 							<div style={{ marginRight: '1rem' }}>
@@ -244,4 +266,19 @@ const Select = styled.select`
   padding: 0.5rem;
   border: 1px solid #D1D5DB;
   border-radius: 0.25rem;
+`;
+
+const CircleSquareButton = styled.button`
+  background-color: #3b82f6;
+  color: white;
+  padding: 0.5rem 0.75rem;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  //height: 100%;
+  align-self: center;
+  
+  &:hover {
+    background-color: #2563eb;
+  }
 `;

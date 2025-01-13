@@ -16,6 +16,7 @@ export const defaultSettings = {
 	logoTab: 'file',
 	logoUrl: '',
     value: '',
+    eyeRadiusStyle: 'square',
 };
 
 export const eyeRadiusCircle = {

@@ -23,5 +23,7 @@ export const tooltipDescriptions = {
   
   // Eye Customization
   eyeRadius: "Round the corners of the three square patterns in the corners",
-  eyeColor: "Customize the color of the three square patterns in the corners (inner and outer parts can be different)"
+  eyeColor: "Customize the color of the three square patterns in the corners (inner and outer parts can be different)",
+  eyesCircleButton: "Turn all the Eyes to a Circle", 
+  eyesSquareButton: "Turn all the Eyes to a Square"
 }
