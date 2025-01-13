@@ -15,6 +15,7 @@ export const defaultSettings = {
 	removeQrCodeBehindLogo: true,
 	logoTab: 'file',
 	logoUrl: '',
+    value: '',
 };
 
 export const eyeRadiusCircle = {
