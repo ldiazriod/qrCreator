@@ -156,8 +156,9 @@ const MainOptions: React.FC<MainOptionsProps> = ({ state, handleChange }) => {
                     name='qrStyle'
                     options={['squares', 'dots']}
                     handleChange={handleChange}
-                    defaultValue={'state.qrStyle'}
+                    value={state.qrStyle}
                     label="QR Style"
+                    custom={state.custom}
                 />
             </OptionContainer>
         </div>

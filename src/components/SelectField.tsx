@@ -1,18 +1,37 @@
 import React from "react";
 import { styled } from "styled-components";
+import { eyeRadiusCircle, eyeRadiusSquare } from "../constants/settings";
 type ISelectFieldProps = {
 	name: string;
 	options: string[];
 	handleChange: (target: any) => void;
 	defaultValue?: string;
 	label?: string;
+	value: string;
+	custom: boolean;
 }
 
-const SelectField = ({ name, options, handleChange, defaultValue, label }: ISelectFieldProps) => {
+const SelectField = ({ name, options, handleChange, label, value, custom }: ISelectFieldProps) => {
+	
+	const onChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+		const {name, value} = event.target;
+		handleChange(event);
+		if (name === 'qrStyle' && !custom) {
+			let eyeRadius = value === 'dots' ? eyeRadiusCircle : eyeRadiusSquare;
+			Object.keys(eyeRadius).forEach(key => {
+				handleChange({ target: { name: key, value: eyeRadius[key as keyof typeof eyeRadius] } });
+			});
+		}
+	};
+
 	return (
 		<div style={{ display: 'flex', flexDirection: 'column', marginBottom: '6px' }}>
 			<label>{label}</label>
-			<Select name={name} onChange={handleChange} defaultValue={defaultValue}>
+			<Select 
+			name={name} 
+			onChange={onChange} 
+			value={value}
+			>
 				{options.map((option: string, index: number) => (
 					<option key={index} value={option}>{option}</option>
 				))}

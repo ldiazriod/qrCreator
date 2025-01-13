@@ -14,7 +14,7 @@ export const tooltipDescriptions = {
   logoUrl: "Paste a direct link to an image on the web",
   
   // Advanced Options
-  custom: "Take full control of all settings (turn off automatic optimizations)",
+  custom: "If checked, disable automatic optimizations. Take full control of all settings (turn off automatic optimizations)",
   ecLevel: "Set how well your QR code can recover from damage or obstruction:\n• L: Basic (7% recovery)\n• M: Standard (15% recovery)\n• Q: Better (25% recovery)\n• H: Best (30% recovery)",
   quietZone: "Add white space around the borders of your QR code to make it easier to scan",
   removeQrCodeBehindLogo: "Hide QR patterns behind your logo for a cleaner look",

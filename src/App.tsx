@@ -41,8 +41,7 @@ const App: React.FC = () => {
 
 	const handleChange = ({ target }: any) => {
 		setState(prevState => ({ ...prevState, [target.name]: target.value }))
-		console.log(state)
-	}
+	};
 
 	const handleReset = () => {
 		setState(defaultSettings);
