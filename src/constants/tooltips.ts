@@ -12,6 +12,7 @@ export const tooltipDescriptions = {
   qrStyle: "Choose between classic squares or modern dots for your QR patterns",
   logoFile: "Upload a logo image from your device",
   logoUrl: "Paste a direct link to an image on the web",
+  rotate: "Rotate your QR code 90 degrees clockwise",
   
   // Advanced Options
   custom: "If checked, disable automatic optimizations. Take full control of all settings (turn off automatic optimizations)",

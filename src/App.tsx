@@ -6,6 +6,7 @@ import Tabs from './components/Tabs';
 import MainOptions from './components/MainOptions';
 import AdvancedOptions from './components/AdvancedOptions';
 import { defaultSettings } from './constants/settings';
+import { tooltipDescriptions } from './constants/tooltips';
 
 const App: React.FC = () => {
 	const [activeTab, setActiveTab] = useState('main')
@@ -134,12 +135,12 @@ const App: React.FC = () => {
 						/>
 					</QRContainer>
 					<div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px', flexDirection: 'row' }}>
-						<RotateButton onClick={handleRotate}>↻</RotateButton>
+						<RotateButton title={tooltipDescriptions.rotate} onClick={handleRotate}>↻</RotateButton>
 						<DownloadButton
 							type='button'
 							onClick={handleDownload}
 						>
-							DOWNLOAD QR
+							{'DOWNLOAD QR'}
 						</DownloadButton>
 					</div>
 				</QRWrapper>
@@ -189,6 +190,7 @@ export const QRWrapper = styled.div<{ $totalSize: number }>`
 export const QRContainer = styled.div<{ $rotation: number }>`
 	transform: rotate(${(props) => -props.$rotation}deg);
 	transition: transform 0.3s ease-in-out;
+	margin-bottom: 2rem;
 `;
 
 export const DownloadButton = styled.button`
@@ -199,13 +201,14 @@ export const DownloadButton = styled.button`
   border-radius: 0.5rem;
   border: none;
   width: 270px;
-  margin: 0; /* Changed from margin: 1rem auto */
+  height: 45px;
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
-  display: block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   font-weight: 500;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  height: 48px;
 
   &:hover {
     background-color: #2563eb;
@@ -227,8 +230,8 @@ export const DownloadButton = styled.button`
 `;
 
 const RotateButton = styled.button`
-	width: 30px;
-    height: 48px;
+	width: 45px;
+    height: 45px;
     background-color: #3b82f6;
     color: white;
     border: none;
