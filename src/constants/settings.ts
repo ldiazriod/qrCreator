@@ -17,6 +17,7 @@ export const defaultSettings = {
 	logoUrl: '',
     value: '',
     eyeRadiusStyle: 'square',
+    rotation: 0,
 };
 
 export const eyeRadiusCircle = {

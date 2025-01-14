@@ -58,6 +58,11 @@ const App: React.FC = () => {
 			});
 	}
 
+	const handleRotate = () => {
+		handleChange({ target: { name: 'rotation', value: (state.rotation + 90)%360 } });
+		console.log(state.rotation)
+	};
+
 	return (
 		<div className='app'>
 			<h1 style={{ fontSize: "2rem", margin: "1rem" }}>QR Code Generator</h1>
@@ -81,55 +86,62 @@ const App: React.FC = () => {
 						</CardContent>
 					</Card>
 				</div>
-				<QRWrapper $totalSize={state.size + state.quietZone * 2}>
-					<QRCode
-						value={state.value}
-						size={state.size}
-						quietZone={state.quietZone}
-						fgColor={state.fgColor}
-						bgColor={state.bgColor}
-						logoImage={state.logoTab === 'file' ? state.logoImage : state.logoUrl}
-						logoWidth={state.logoWidth}
-						logoHeight={state.logoHeight}
-						logoOpacity={state.logoOpacity}
-						qrStyle={state.qrStyle}
-						removeQrCodeBehindLogo={state.removeQrCodeBehindLogo}
-						ecLevel={state.ecLevel}
-						enableCORS= {false}
-						logoPadding={state.logoPadding}
-						logoPaddingStyle={state.logoPaddingStyle}
-						eyeRadius={[{
-							outer: [state.eyeradius_0_outer_0, state.eyeradius_0_outer_1, state.eyeradius_0_outer_2, state.eyeradius_0_outer_3],
-							inner: [state.eyeradius_0_inner_0, state.eyeradius_0_inner_1, state.eyeradius_0_inner_2, state.eyeradius_0_inner_3],
-						},
-						{
-							outer: [state.eyeradius_1_outer_0, state.eyeradius_1_outer_1, state.eyeradius_1_outer_2, state.eyeradius_1_outer_3],
-							inner: [state.eyeradius_1_inner_0, state.eyeradius_1_inner_1, state.eyeradius_1_inner_2, state.eyeradius_1_inner_3],
-						},
-						{
-							outer: [state.eyeradius_2_outer_0, state.eyeradius_2_outer_1, state.eyeradius_2_outer_2, state.eyeradius_2_outer_3],
-							inner: [state.eyeradius_2_inner_0, state.eyeradius_2_inner_1, state.eyeradius_2_inner_2, state.eyeradius_2_inner_3],
-						}]}
-						eyeColor={[{
-							outer: state.eyecolor_0_outer ?? state.fgColor ?? '#000000',
-							inner: state.eyecolor_0_inner ?? state.fgColor ?? '#000000'
-						},
-						{
-							outer: state.eyecolor_1_outer ?? state.fgColor ?? '#000000',
-							inner: state.eyecolor_1_inner ?? state.fgColor ?? '#000000'
-						},
-						{
-							outer: state.eyecolor_2_outer ?? state.fgColor ?? '#000000',
-							inner: state.eyecolor_2_inner ?? state.fgColor ?? '#000000'
-						}]}
+				<QRWrapper
+					$totalSize={state.size + state.quietZone * 2}
+				>
+					<QRContainer $rotation={state.rotation}>
+						<QRCode
+							value={state.value}
+							size={state.size}
+							quietZone={state.quietZone}
+							fgColor={state.fgColor}
+							bgColor={state.bgColor}
+							logoImage={state.logoTab === 'file' ? state.logoImage : state.logoUrl}
+							logoWidth={state.logoWidth}
+							logoHeight={state.logoHeight}
+							logoOpacity={state.logoOpacity}
+							qrStyle={state.qrStyle}
+							removeQrCodeBehindLogo={state.removeQrCodeBehindLogo}
+							ecLevel={state.ecLevel}
+							enableCORS={false}
+							logoPadding={state.logoPadding}
+							logoPaddingStyle={state.logoPaddingStyle}
+							eyeRadius={[{
+								outer: [state.eyeradius_0_outer_0, state.eyeradius_0_outer_1, state.eyeradius_0_outer_2, state.eyeradius_0_outer_3],
+								inner: [state.eyeradius_0_inner_0, state.eyeradius_0_inner_1, state.eyeradius_0_inner_2, state.eyeradius_0_inner_3],
+							},
+							{
+								outer: [state.eyeradius_1_outer_0, state.eyeradius_1_outer_1, state.eyeradius_1_outer_2, state.eyeradius_1_outer_3],
+								inner: [state.eyeradius_1_inner_0, state.eyeradius_1_inner_1, state.eyeradius_1_inner_2, state.eyeradius_1_inner_3],
+							},
+							{
+								outer: [state.eyeradius_2_outer_0, state.eyeradius_2_outer_1, state.eyeradius_2_outer_2, state.eyeradius_2_outer_3],
+								inner: [state.eyeradius_2_inner_0, state.eyeradius_2_inner_1, state.eyeradius_2_inner_2, state.eyeradius_2_inner_3],
+							}]}
+							eyeColor={[{
+								outer: state.eyecolor_0_outer ?? state.fgColor ?? '#000000',
+								inner: state.eyecolor_0_inner ?? state.fgColor ?? '#000000'
+							},
+							{
+								outer: state.eyecolor_1_outer ?? state.fgColor ?? '#000000',
+								inner: state.eyecolor_1_inner ?? state.fgColor ?? '#000000'
+							},
+							{
+								outer: state.eyecolor_2_outer ?? state.fgColor ?? '#000000',
+								inner: state.eyecolor_2_inner ?? state.fgColor ?? '#000000'
+							}]}
 
-					/>
-					<StyledButton
-						type='button'
-						onClick={handleDownload}
-					>
-						DOWNLOAD QR
-					</StyledButton>
+						/>
+					</QRContainer>
+					<div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+						<RotateButton onClick={handleRotate}>↻</RotateButton>
+						<DownloadButton
+							type='button'
+							onClick={handleDownload}
+						>
+							DOWNLOAD QR
+						</DownloadButton>
+					</div>
 				</QRWrapper>
 			</div>
 		</div>
@@ -165,27 +177,44 @@ export const QRWrapper = styled.div<{ $totalSize: number }>`
 	margin: 5px auto;
 	> div {
 		width: ${props => Math.min(Math.max(props.$totalSize, 400), 800)}px;
-		height: ${props => Math.min(Math.max(props.$totalSize, 550), 800)}px;
+		height: auto; /* Change from fixed height to auto */
 		display: flex;
+		flex-direction: column;
 		justify-content: center;
 		align-items: center;
+		gap: 10px;
 	}
 `;
 
-export const StyledButton = styled.button`
+export const QRContainer = styled.div<{ $rotation: number }>`
+	transform: rotate(${(props) => -props.$rotation}deg);
+	transition: transform 0.3s ease-in-out;
+`;
+
+export const ButtonContainer = styled.div`
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  //justify-content: center;
+  //width: 100%;
+  //gap: 0.5rem;
+`;
+
+export const DownloadButton = styled.button`
   background-color: #3b82f6;
   color: white;
   font-size: 1.125rem;
   padding: 1rem 2rem;
   border-radius: 0.5rem;
   border: none;
-  width: 300px;
+  width: 270px;
   margin: 1rem auto;
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
   display: block;
   font-weight: 500;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  height: 48px;
 
   &:hover {
     background-color: #2563eb;
@@ -204,6 +233,20 @@ export const StyledButton = styled.button`
     background-color: #93c5fd;
     cursor: not-allowed;
   }
+`;
+
+const RotateButton = styled.button`
+	width: 30px;
+    height: 48px;
+    background-color: #3b82f6;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.125rem;
+    &:hover {
+        background-color: #2563eb;
+    }
 `;
 
 const ResetButton = styled.button`
