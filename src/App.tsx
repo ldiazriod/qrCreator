@@ -6,10 +6,10 @@ import Tabs from './components/Tabs';
 import MainOptions from './components/MainOptions';
 import AdvancedOptions from './components/AdvancedOptions';
 import { defaultSettings } from './constants/settings';
-import { tooltipDescriptions } from './constants/tooltips';
 
 const App: React.FC = () => {
 	const [activeTab, setActiveTab] = useState('main')
+	const [fileFormat, setFileFormat] = useState('png');
 	const [state, setState] = useState<{ [key: string]: any }>(() => {
 		if (typeof window !== 'undefined') {
 			const saved = localStorage.getItem('qrPreferences');
@@ -20,12 +20,10 @@ const App: React.FC = () => {
 
 	useEffect(() => {
 		localStorage.setItem('qrPreferences', JSON.stringify(state))
-
 	}, [state]);
 
 	useEffect(() => {
 		if (state.logoImage && state.logoName) {
-			// Convert base64 back to File object
 			fetch(state.logoImage)
 				.then(res => res.blob())
 				.then(blob => {
@@ -49,19 +47,21 @@ const App: React.FC = () => {
 	};
 
 	const handleDownload = () => {
-		console.log(state)
 		html2canvas(document.querySelector('#react-qrcode-logo') as any)
 			.then(function (canvas) {
 				const link = document.createElement('a');
-				link.download = 'react-qrcode-logo.png';
-				link.href = canvas.toDataURL();
+				link.download = `react-qrcode-logo.${fileFormat}`;
+				if (fileFormat === 'jpeg') {
+					link.href = canvas.toDataURL('image/jpeg', 0.9);
+				} else {
+					link.href = canvas.toDataURL('image/png');
+				}
 				link.click();
 			});
 	}
 
 	const handleRotate = () => {
 		handleChange({ target: { name: 'rotation', value: (state.rotation + 90) } });
-		console.log(state.rotation)
 	};
 
 	return (
@@ -131,17 +131,22 @@ const App: React.FC = () => {
 								outer: state.eyecolor_2_outer ?? state.fgColor ?? '#000000',
 								inner: state.eyecolor_2_inner ?? state.fgColor ?? '#000000'
 							}]}
-
 						/>
 					</QRContainer>
-					<div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px', flexDirection: 'row' }}>
-						<RotateButton title={tooltipDescriptions.rotate} onClick={handleRotate}>↻</RotateButton>
-						<DownloadButton
-							type='button'
-							onClick={handleDownload}
-						>
-							{'DOWNLOAD QR'}
-						</DownloadButton>
+					<div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px' }}>
+						<RotateButton onClick={handleRotate}>↻</RotateButton>
+						<DownloadButtonGroup>
+							<DownloadButton
+								type='button'
+								onClick={handleDownload}
+							>
+								DOWNLOAD QR
+							</DownloadButton>
+							<FormatSelect value={fileFormat} onChange={(e) => setFileFormat(e.target.value)}>
+								<option value="png">.png</option>
+								<option value="jpeg">.jgpeg</option>
+							</FormatSelect>
+						</DownloadButtonGroup>
 					</div>
 				</QRWrapper>
 			</div>
@@ -176,9 +181,9 @@ export const QRWrapper = styled.div<{ $totalSize: number }>`
 	justify-content: center;
 	align-items: center;
 	margin: 5px auto;
-	> div {
+	> div:first-child {
 		width: ${props => Math.min(Math.max(props.$totalSize, 400), 800)}px;
-		height: auto; /* Change from fixed height to auto */
+		height: auto;
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
@@ -193,15 +198,19 @@ export const QRContainer = styled.div<{ $rotation: number }>`
 	margin-bottom: 2rem;
 `;
 
+export const DownloadButtonGroup = styled.div`
+  display: flex;
+  align-items: stretch;
+  height: 48px;
+`;
+
 export const DownloadButton = styled.button`
   background-color: #3b82f6;
   color: white;
   font-size: 1.125rem;
-  padding: 1rem 2rem;
-  border-radius: 0.5rem;
+  padding: 0 2rem;
   border: none;
-  width: 270px;
-  height: 45px;
+  border-radius: 0.5rem 0 0 0.5rem;
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
   display: flex;
@@ -229,9 +238,32 @@ export const DownloadButton = styled.button`
   }
 `;
 
+const FormatSelect = styled.select`
+  background-color: #2563eb;
+  color: white;
+  font-size: 1rem;
+  padding: 0 0.5rem;
+  border: none;
+  border-left: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 0 0.5rem 0.5rem 0;
+  cursor: pointer;
+  outline: none;
+  appearance: none;
+  min-width: 70px;
+
+  &:hover {
+    background-color: #1d4ed8;
+  }
+
+  option {
+    background-color: white;
+    color: black;
+  }
+`;
+
 const RotateButton = styled.button`
-	width: 45px;
-    height: 45px;
+	width: 48px;
+    height: 48px;
     background-color: #3b82f6;
     color: white;
     border: none;
