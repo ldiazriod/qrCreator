@@ -59,7 +59,7 @@ const App: React.FC = () => {
 	}
 
 	const handleRotate = () => {
-		handleChange({ target: { name: 'rotation', value: (state.rotation + 90)%360 } });
+		handleChange({ target: { name: 'rotation', value: (state.rotation + 90) } });
 		console.log(state.rotation)
 	};
 
@@ -133,7 +133,7 @@ const App: React.FC = () => {
 
 						/>
 					</QRContainer>
-					<div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+					<div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px', flexDirection: 'row' }}>
 						<RotateButton onClick={handleRotate}>↻</RotateButton>
 						<DownloadButton
 							type='button'
@@ -191,15 +191,6 @@ export const QRContainer = styled.div<{ $rotation: number }>`
 	transition: transform 0.3s ease-in-out;
 `;
 
-export const ButtonContainer = styled.div`
-  display: flex;
-  align-items: center;
-  flex-direction: row;
-  //justify-content: center;
-  //width: 100%;
-  //gap: 0.5rem;
-`;
-
 export const DownloadButton = styled.button`
   background-color: #3b82f6;
   color: white;
@@ -208,7 +199,7 @@ export const DownloadButton = styled.button`
   border-radius: 0.5rem;
   border: none;
   width: 270px;
-  margin: 1rem auto;
+  margin: 0; /* Changed from margin: 1rem auto */
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
   display: block;
