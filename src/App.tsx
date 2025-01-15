@@ -8,42 +8,68 @@ import AdvancedOptions from './components/AdvancedOptions';
 import { defaultSettings } from './constants/settings';
 
 const App: React.FC = () => {
-	const [activeTab, setActiveTab] = useState('main')
+	const [activeTab, setActiveTab] = useState('main');
 	const [fileFormat, setFileFormat] = useState('png');
+	const [profile, setProfile] = useState('profile1');
 	const [state, setState] = useState<{ [key: string]: any }>(() => {
 		if (typeof window !== 'undefined') {
 			const saved = localStorage.getItem('qrPreferences');
-			return saved ? JSON.parse(saved) : defaultSettings;
+			const parsed = saved ? JSON.parse(saved) : {};
+			return {
+				profile1: parsed.profile1 || defaultSettings,
+				profile2: parsed.profile2 || defaultSettings,
+				profile3: parsed.profile3 || defaultSettings
+			};
 		}
-		return {}
+		return {
+			profile1: defaultSettings,
+			profile2: defaultSettings,
+			profile3: defaultSettings
+		};
 	});
 
 	useEffect(() => {
-		localStorage.setItem('qrPreferences', JSON.stringify(state))
+		localStorage.setItem('qrPreferences', JSON.stringify(state));
 	}, [state]);
 
 	useEffect(() => {
-		if (state.logoImage && state.logoName) {
-			fetch(state.logoImage)
+		if (state[profile].logoImage && state[profile].logoName) {
+			fetch(state[profile].logoImage)
 				.then(res => res.blob())
 				.then(blob => {
-					const file = new File([blob], state.logoName, { type: blob.type });
+					const file = new File([blob], state[profile].logoName, { type: blob.type });
 					const dataTransfer = new DataTransfer();
 					dataTransfer.items.add(file);
 					setState(prevState => ({
 						...prevState,
-						logoFile: dataTransfer.files
+						[profile]: {
+							...prevState[profile],
+							logoFile: dataTransfer.files
+						}
 					}));
 				});
 		}
-	}, [state.logoImage, state.logoName]);
+	}, [profile, state]);
 
 	const handleChange = ({ target }: any) => {
-		setState(prevState => ({ ...prevState, [target.name]: target.value }))
+		setState(prevState => ({
+			...prevState,
+			[profile]: {
+				...prevState[profile],
+				[target.name]: target.value
+			}
+		}));
 	};
 
 	const handleReset = () => {
-		setState(defaultSettings);
+		setState(prevState => ({
+			...prevState,
+			[profile]: defaultSettings
+		}));
+	};
+
+	const handleProfileChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+		setProfile(event.target.value);
 	};
 
 	const handleDownload = () => {
@@ -58,10 +84,10 @@ const App: React.FC = () => {
 				}
 				link.click();
 			});
-	}
+	};
 
 	const handleRotate = () => {
-		handleChange({ target: { name: 'rotation', value: (state.rotation + 90) } });
+		handleChange({ target: { name: 'rotation', value: (state[profile].rotation + 90) } });
 	};
 
 	return (
@@ -82,54 +108,62 @@ const App: React.FC = () => {
 								/>
 								<ResetButton onClick={handleReset}>Reset Settings</ResetButton>
 							</div>
-							{activeTab === 'main' && <MainOptions state={state} handleChange={handleChange} />}
-							{activeTab === 'advanced' && <AdvancedOptions state={state} handleChange={handleChange} />}
+							<div style={{ marginTop: '1rem' }}>
+								<label htmlFor="profileSelect">Select Profile: </label>
+								<ProfileSelect id="profileSelect" value={profile} onChange={handleProfileChange}>
+									<option value="profile1">Profile 1</option>
+									<option value="profile2">Profile 2</option>
+									<option value="profile3">Profile 3</option>
+								</ProfileSelect>
+							</div>
+							{activeTab === 'main' && <MainOptions state={state[profile]} handleChange={handleChange} />}
+							{activeTab === 'advanced' && <AdvancedOptions state={state[profile]} handleChange={handleChange} />}
 						</CardContent>
 					</Card>
 				</div>
 				<QRWrapper
-					$totalSize={state.size + state.quietZone * 2}
+					$totalSize={state[profile].size + state[profile].quietZone * 2}
 				>
-					<QRContainer $rotation={state.rotation}>
+					<QRContainer $rotation={state[profile].rotation}>
 						<QRCode
-							value={state.value}
-							size={state.size}
-							quietZone={state.quietZone}
-							fgColor={state.fgColor}
-							bgColor={state.bgColor}
-							logoImage={state.logoTab === 'file' ? state.logoImage : state.logoUrl}
-							logoWidth={state.logoWidth}
-							logoHeight={state.logoHeight}
-							logoOpacity={state.logoOpacity}
-							qrStyle={state.qrStyle}
-							removeQrCodeBehindLogo={state.removeQrCodeBehindLogo}
-							ecLevel={state.ecLevel}
+							value={state[profile].value}
+							size={state[profile].size}
+							quietZone={state[profile].quietZone}
+							fgColor={state[profile].fgColor}
+							bgColor={state[profile].bgColor}
+							logoImage={state[profile].logoTab === 'file' ? state[profile].logoImage : state[profile].logoUrl}
+							logoWidth={state[profile].logoWidth}
+							logoHeight={state[profile].logoHeight}
+							logoOpacity={state[profile].logoOpacity}
+							qrStyle={state[profile].qrStyle}
+							removeQrCodeBehindLogo={state[profile].removeQrCodeBehindLogo}
+							ecLevel={state[profile].ecLevel}
 							enableCORS={false}
-							logoPadding={state.logoPadding}
-							logoPaddingStyle={state.logoPaddingStyle}
+							logoPadding={state[profile].logoPadding}
+							logoPaddingStyle={state[profile].logoPaddingStyle}
 							eyeRadius={[{
-								outer: [state.eyeradius_0_outer_0, state.eyeradius_0_outer_1, state.eyeradius_0_outer_2, state.eyeradius_0_outer_3],
-								inner: [state.eyeradius_0_inner_0, state.eyeradius_0_inner_1, state.eyeradius_0_inner_2, state.eyeradius_0_inner_3],
+								outer: [state[profile].eyeradius_0_outer_0, state[profile].eyeradius_0_outer_1, state[profile].eyeradius_0_outer_2, state[profile].eyeradius_0_outer_3],
+								inner: [state[profile].eyeradius_0_inner_0, state[profile].eyeradius_0_inner_1, state[profile].eyeradius_0_inner_2, state[profile].eyeradius_0_inner_3],
 							},
 							{
-								outer: [state.eyeradius_1_outer_0, state.eyeradius_1_outer_1, state.eyeradius_1_outer_2, state.eyeradius_1_outer_3],
-								inner: [state.eyeradius_1_inner_0, state.eyeradius_1_inner_1, state.eyeradius_1_inner_2, state.eyeradius_1_inner_3],
+								outer: [state[profile].eyeradius_1_outer_0, state[profile].eyeradius_1_outer_1, state[profile].eyeradius_1_outer_2, state[profile].eyeradius_1_outer_3],
+								inner: [state[profile].eyeradius_1_inner_0, state[profile].eyeradius_1_inner_1, state[profile].eyeradius_1_inner_2, state[profile].eyeradius_1_inner_3],
 							},
 							{
-								outer: [state.eyeradius_2_outer_0, state.eyeradius_2_outer_1, state.eyeradius_2_outer_2, state.eyeradius_2_outer_3],
-								inner: [state.eyeradius_2_inner_0, state.eyeradius_2_inner_1, state.eyeradius_2_inner_2, state.eyeradius_2_inner_3],
+								outer: [state[profile].eyeradius_2_outer_0, state[profile].eyeradius_2_outer_1, state[profile].eyeradius_2_outer_2, state[profile].eyeradius_2_outer_3],
+								inner: [state[profile].eyeradius_2_inner_0, state[profile].eyeradius_2_inner_1, state[profile].eyeradius_2_inner_2, state[profile].eyeradius_2_inner_3],
 							}]}
 							eyeColor={[{
-								outer: state.eyecolor_0_outer ?? state.fgColor ?? '#000000',
-								inner: state.eyecolor_0_inner ?? state.fgColor ?? '#000000'
+								outer: state[profile].eyecolor_0_outer ?? state[profile].fgColor ?? '#000000',
+								inner: state[profile].eyecolor_0_inner ?? state[profile].fgColor ?? '#000000'
 							},
 							{
-								outer: state.eyecolor_1_outer ?? state.fgColor ?? '#000000',
-								inner: state.eyecolor_1_inner ?? state.fgColor ?? '#000000'
+								outer: state[profile].eyecolor_1_outer ?? state[profile].fgColor ?? '#000000',
+								inner: state[profile].eyecolor_1_inner ?? state[profile].fgColor ?? '#000000'
 							},
 							{
-								outer: state.eyecolor_2_outer ?? state.fgColor ?? '#000000',
-								inner: state.eyecolor_2_inner ?? state.fgColor ?? '#000000'
+								outer: state[profile].eyecolor_2_outer ?? state[profile].fgColor ?? '#000000',
+								inner: state[profile].eyecolor_2_inner ?? state[profile].fgColor ?? '#000000'
 							}]}
 						/>
 					</QRContainer>
@@ -144,7 +178,7 @@ const App: React.FC = () => {
 							</DownloadButton>
 							<FormatSelect value={fileFormat} onChange={(e) => setFileFormat(e.target.value)}>
 								<option value="png">.png</option>
-								<option value="jpeg">.jgpeg</option>
+								<option value="jpeg">.jpeg</option>
 							</FormatSelect>
 						</DownloadButtonGroup>
 					</div>
@@ -287,5 +321,12 @@ const ResetButton = styled.button`
   &:hover {
     background-color: #f97316;
   }
+`;
+
+const ProfileSelect = styled.select`
+  margin-left: 0.5rem;
+  padding: 0.5rem;
+  border: 1px solid #D1D5DB;
+  border-radius: 0.25rem;
 `;
 
