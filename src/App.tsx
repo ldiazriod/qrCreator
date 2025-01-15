@@ -33,11 +33,12 @@ const App: React.FC = () => {
 	}, [state]);
 
 	useEffect(() => {
-		if (state[profile].logoImage && state[profile].logoName) {
-			fetch(state[profile].logoImage)
+		const { logoImage, logoName } = state[profile];
+		if (logoImage && logoName) {
+			fetch(logoImage)
 				.then(res => res.blob())
 				.then(blob => {
-					const file = new File([blob], state[profile].logoName, { type: blob.type });
+					const file = new File([blob], logoName, { type: blob.type });
 					const dataTransfer = new DataTransfer();
 					dataTransfer.items.add(file);
 					setState(prevState => ({
@@ -52,11 +53,12 @@ const App: React.FC = () => {
 	}, [profile, state]);
 
 	const handleChange = ({ target }: any) => {
+		const { name, value } = target;
 		setState(prevState => ({
 			...prevState,
 			[profile]: {
 				...prevState[profile],
-				[target.name]: target.value
+				[name]: value
 			}
 		}));
 	};
@@ -74,20 +76,16 @@ const App: React.FC = () => {
 
 	const handleDownload = () => {
 		html2canvas(document.querySelector('#react-qrcode-logo') as any)
-			.then(function (canvas) {
+			.then(canvas => {
 				const link = document.createElement('a');
 				link.download = `react-qrcode-logo.${fileFormat}`;
-				if (fileFormat === 'jpeg') {
-					link.href = canvas.toDataURL('image/jpeg', 0.9);
-				} else {
-					link.href = canvas.toDataURL('image/png');
-				}
+				link.href = fileFormat === 'jpeg' ? canvas.toDataURL('image/jpeg', 0.9) : canvas.toDataURL('image/png');
 				link.click();
 			});
 	};
 
 	const handleRotate = () => {
-		handleChange({ target: { name: 'rotation', value: (state[profile].rotation + 90) } });
+		handleChange({ target: { name: 'rotation', value: (state[profile].rotation + 90) % 360 } });
 	};
 
 	return (
@@ -121,9 +119,7 @@ const App: React.FC = () => {
 						</CardContent>
 					</Card>
 				</div>
-				<QRWrapper
-					$totalSize={state[profile].size + state[profile].quietZone * 2}
-				>
+				<QRWrapper $totalSize={state[profile].size + state[profile].quietZone * 2}>
 					<QRContainer $rotation={state[profile].rotation}>
 						<QRCode
 							value={state[profile].value}
@@ -141,39 +137,40 @@ const App: React.FC = () => {
 							enableCORS={false}
 							logoPadding={state[profile].logoPadding}
 							logoPaddingStyle={state[profile].logoPaddingStyle}
-							eyeRadius={[{
-								outer: [state[profile].eyeradius_0_outer_0, state[profile].eyeradius_0_outer_1, state[profile].eyeradius_0_outer_2, state[profile].eyeradius_0_outer_3],
-								inner: [state[profile].eyeradius_0_inner_0, state[profile].eyeradius_0_inner_1, state[profile].eyeradius_0_inner_2, state[profile].eyeradius_0_inner_3],
-							},
-							{
-								outer: [state[profile].eyeradius_1_outer_0, state[profile].eyeradius_1_outer_1, state[profile].eyeradius_1_outer_2, state[profile].eyeradius_1_outer_3],
-								inner: [state[profile].eyeradius_1_inner_0, state[profile].eyeradius_1_inner_1, state[profile].eyeradius_1_inner_2, state[profile].eyeradius_1_inner_3],
-							},
-							{
-								outer: [state[profile].eyeradius_2_outer_0, state[profile].eyeradius_2_outer_1, state[profile].eyeradius_2_outer_2, state[profile].eyeradius_2_outer_3],
-								inner: [state[profile].eyeradius_2_inner_0, state[profile].eyeradius_2_inner_1, state[profile].eyeradius_2_inner_2, state[profile].eyeradius_2_inner_3],
-							}]}
-							eyeColor={[{
-								outer: state[profile].eyecolor_0_outer ?? state[profile].fgColor ?? '#000000',
-								inner: state[profile].eyecolor_0_inner ?? state[profile].fgColor ?? '#000000'
-							},
-							{
-								outer: state[profile].eyecolor_1_outer ?? state[profile].fgColor ?? '#000000',
-								inner: state[profile].eyecolor_1_inner ?? state[profile].fgColor ?? '#000000'
-							},
-							{
-								outer: state[profile].eyecolor_2_outer ?? state[profile].fgColor ?? '#000000',
-								inner: state[profile].eyecolor_2_inner ?? state[profile].fgColor ?? '#000000'
-							}]}
+							eyeRadius={[
+								{
+									outer: [state[profile].eyeradius_0_outer_0, state[profile].eyeradius_0_outer_1, state[profile].eyeradius_0_outer_2, state[profile].eyeradius_0_outer_3],
+									inner: [state[profile].eyeradius_0_inner_0, state[profile].eyeradius_0_inner_1, state[profile].eyeradius_0_inner_2, state[profile].eyeradius_0_inner_3],
+								},
+								{
+									outer: [state[profile].eyeradius_1_outer_0, state[profile].eyeradius_1_outer_1, state[profile].eyeradius_1_outer_2, state[profile].eyeradius_1_outer_3],
+									inner: [state[profile].eyeradius_1_inner_0, state[profile].eyeradius_1_inner_1, state[profile].eyeradius_1_inner_2, state[profile].eyeradius_1_inner_3],
+								},
+								{
+									outer: [state[profile].eyeradius_2_outer_0, state[profile].eyeradius_2_outer_1, state[profile].eyeradius_2_outer_2, state[profile].eyeradius_2_outer_3],
+									inner: [state[profile].eyeradius_2_inner_0, state[profile].eyeradius_2_inner_1, state[profile].eyeradius_2_inner_2, state[profile].eyeradius_2_inner_3],
+								}
+							]}
+							eyeColor={[
+								{
+									outer: state[profile].eyecolor_0_outer ?? state[profile].fgColor ?? '#000000',
+									inner: state[profile].eyecolor_0_inner ?? state[profile].fgColor ?? '#000000'
+								},
+								{
+									outer: state[profile].eyecolor_1_outer ?? state[profile].fgColor ?? '#000000',
+									inner: state[profile].eyecolor_1_inner ?? state[profile].fgColor ?? '#000000'
+								},
+								{
+									outer: state[profile].eyecolor_2_outer ?? state[profile].fgColor ?? '#000000',
+									inner: state[profile].eyecolor_2_inner ?? state[profile].fgColor ?? '#000000'
+								}
+							]}
 						/>
 					</QRContainer>
 					<div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px' }}>
 						<RotateButton onClick={handleRotate}>↻</RotateButton>
 						<DownloadButtonGroup>
-							<DownloadButton
-								type='button'
-								onClick={handleDownload}
-							>
+							<DownloadButton type='button' onClick={handleDownload}>
 								DOWNLOAD QR
 							</DownloadButton>
 							<FormatSelect value={fileFormat} onChange={(e) => setFileFormat(e.target.value)}>
