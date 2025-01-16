@@ -114,8 +114,8 @@ const App: React.FC = () => {
 									<option value="profile3">Profile 3</option>
 								</ProfileSelect>
 							</div>
-							{activeTab === 'main' && <MainOptions state={state[profile]} handleChange={handleChange} />}
-							{activeTab === 'advanced' && <AdvancedOptions state={state[profile]} handleChange={handleChange} />}
+							{activeTab === 'main' && <MainOptions key={profile} state={state[profile]} handleChange={handleChange} />}
+							{activeTab === 'advanced' && <AdvancedOptions key={profile} state={state[profile]} handleChange={handleChange} />}
 						</CardContent>
 					</Card>
 				</div>
