@@ -28,6 +28,9 @@ const App: React.FC = () => {
 		};
 	});
 
+
+	console.log('hola :(')
+
 	useEffect(() => {
 		localStorage.setItem('qrPreferences', JSON.stringify(state));
 	}, [state]);
@@ -50,7 +53,8 @@ const App: React.FC = () => {
 					}));
 				});
 		}
-	}, [profile, state]);
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [profile]);
 
 	const handleChange = ({ target }: any) => {
 		const { name, value } = target;
@@ -120,7 +124,7 @@ const App: React.FC = () => {
 					</Card>
 				</div>
 				<QRWrapper $totalSize={state[profile].size + state[profile].quietZone * 2}>
-					<QRContainer $rotation={state[profile].rotation}>
+					<QRContainer $rotation={state[profile].rotation} $size={state[profile].size}>
 						<QRCode
 							value={state[profile].value}
 							size={state[profile].size}
@@ -223,10 +227,10 @@ export const QRWrapper = styled.div<{ $totalSize: number }>`
 	}
 `;
 
-export const QRContainer = styled.div<{ $rotation: number }>`
+export const QRContainer = styled.div<{ $rotation: number, $size: number }>`
 	transform: rotate(${(props) => -props.$rotation}deg);
 	transition: transform 0.3s ease-in-out;
-	margin-bottom: 2rem;
+	margin-bottom: ${(props) => props.$size / 3.5}px;
 `;
 
 export const DownloadButtonGroup = styled.div`
@@ -270,7 +274,7 @@ export const DownloadButton = styled.button`
 `;
 
 const FormatSelect = styled.select`
-  background-color: #2563eb;
+  background-color: #3b82f6;
   color: white;
   font-size: 1rem;
   padding: 0 0.5rem;
@@ -283,6 +287,10 @@ const FormatSelect = styled.select`
   min-width: 70px;
 
   &:hover {
+    background-color: #2563eb;
+  }
+
+  &:active {
     background-color: #1d4ed8;
   }
 

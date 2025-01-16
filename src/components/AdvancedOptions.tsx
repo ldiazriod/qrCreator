@@ -23,7 +23,7 @@ const AdvancedOptions: React.FC<AdvancedOptionsProps> = ({ state, handleChange }
 			type='range'
 			handleChange={handleChange}
 			min={0}
-			max={50}
+			max={300}
 			hideLabel
 			value={(state as any)[id] || 0}
 			custom={state.custom}
