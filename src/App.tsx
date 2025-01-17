@@ -124,64 +124,68 @@ const App: React.FC = () => {
 					</Card>
 				</div>
 				<QRWrapper $totalSize={state[profile].size + state[profile].quietZone * 2}>
-					<QRContainer $rotation={state[profile].rotation} $size={state[profile].size}>
-						<QRCode
-							value={state[profile].value}
-							size={state[profile].size}
-							quietZone={state[profile].quietZone}
-							fgColor={state[profile].fgColor}
-							bgColor={state[profile].bgColor}
-							logoImage={state[profile].logoTab === 'file' ? state[profile].logoImage : state[profile].logoUrl}
-							logoWidth={state[profile].logoWidth}
-							logoHeight={state[profile].logoHeight}
-							logoOpacity={state[profile].logoOpacity}
-							qrStyle={state[profile].qrStyle}
-							removeQrCodeBehindLogo={state[profile].removeQrCodeBehindLogo}
-							ecLevel={state[profile].ecLevel}
-							enableCORS={false}
-							logoPadding={state[profile].logoPadding}
-							logoPaddingStyle={state[profile].logoPaddingStyle}
-							eyeRadius={[
-								{
-									outer: [state[profile].eyeradius_0_outer_0, state[profile].eyeradius_0_outer_1, state[profile].eyeradius_0_outer_2, state[profile].eyeradius_0_outer_3],
-									inner: [state[profile].eyeradius_0_inner_0, state[profile].eyeradius_0_inner_1, state[profile].eyeradius_0_inner_2, state[profile].eyeradius_0_inner_3],
-								},
-								{
-									outer: [state[profile].eyeradius_1_outer_0, state[profile].eyeradius_1_outer_1, state[profile].eyeradius_1_outer_2, state[profile].eyeradius_1_outer_3],
-									inner: [state[profile].eyeradius_1_inner_0, state[profile].eyeradius_1_inner_1, state[profile].eyeradius_1_inner_2, state[profile].eyeradius_1_inner_3],
-								},
-								{
-									outer: [state[profile].eyeradius_2_outer_0, state[profile].eyeradius_2_outer_1, state[profile].eyeradius_2_outer_2, state[profile].eyeradius_2_outer_3],
-									inner: [state[profile].eyeradius_2_inner_0, state[profile].eyeradius_2_inner_1, state[profile].eyeradius_2_inner_2, state[profile].eyeradius_2_inner_3],
-								}
-							]}
-							eyeColor={[
-								{
-									outer: state[profile].eyecolor_0_outer ?? state[profile].fgColor ?? '#000000',
-									inner: state[profile].eyecolor_0_inner ?? state[profile].fgColor ?? '#000000'
-								},
-								{
-									outer: state[profile].eyecolor_1_outer ?? state[profile].fgColor ?? '#000000',
-									inner: state[profile].eyecolor_1_inner ?? state[profile].fgColor ?? '#000000'
-								},
-								{
-									outer: state[profile].eyecolor_2_outer ?? state[profile].fgColor ?? '#000000',
-									inner: state[profile].eyecolor_2_inner ?? state[profile].fgColor ?? '#000000'
-								}
-							]}
-						/>
-					</QRContainer>
-					<div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px' }}>
-						<RotateButton onClick={handleRotate}>↻</RotateButton>
-						<DownloadButtonGroup>
-							<DownloadButton type='button' onClick={handleDownload}>
-								DOWNLOAD QR
-							</DownloadButton>
-							<FormatSelect value={fileFormat} onChange={(e) => setFileFormat(e.target.value)}>
-								<option value="png">.png</option>
-								<option value="jpeg">.jpeg</option>
-							</FormatSelect>
-						</DownloadButtonGroup>
+					<div className="qr-content">
+						<QRContainer $rotation={state[profile].rotation}>
+							<div>
+								<QRCode
+									value={state[profile].value}
+									size={state[profile].size}
+									quietZone={state[profile].quietZone}
+									fgColor={state[profile].fgColor}
+									bgColor={state[profile].bgColor}
+									logoImage={state[profile].logoTab === 'file' ? state[profile].logoImage : state[profile].logoUrl}
+									logoWidth={state[profile].logoWidth}
+									logoHeight={state[profile].logoHeight}
+									logoOpacity={state[profile].logoOpacity}
+									qrStyle={state[profile].qrStyle}
+									removeQrCodeBehindLogo={state[profile].removeQrCodeBehindLogo}
+									ecLevel={state[profile].ecLevel}
+									enableCORS={false}
+									logoPadding={state[profile].logoPadding}
+									logoPaddingStyle={state[profile].logoPaddingStyle}
+									eyeRadius={[
+										{
+											outer: [state[profile].eyeradius_0_outer_0, state[profile].eyeradius_0_outer_1, state[profile].eyeradius_0_outer_2, state[profile].eyeradius_0_outer_3],
+											inner: [state[profile].eyeradius_0_inner_0, state[profile].eyeradius_0_inner_1, state[profile].eyeradius_0_inner_2, state[profile].eyeradius_0_inner_3],
+										},
+										{
+											outer: [state[profile].eyeradius_1_outer_0, state[profile].eyeradius_1_outer_1, state[profile].eyeradius_1_outer_2, state[profile].eyeradius_1_outer_3],
+											inner: [state[profile].eyeradius_1_inner_0, state[profile].eyeradius_1_inner_1, state[profile].eyeradius_1_inner_2, state[profile].eyeradius_1_inner_3],
+										},
+										{
+											outer: [state[profile].eyeradius_2_outer_0, state[profile].eyeradius_2_outer_1, state[profile].eyeradius_2_outer_2, state[profile].eyeradius_2_outer_3],
+											inner: [state[profile].eyeradius_2_inner_0, state[profile].eyeradius_2_inner_1, state[profile].eyeradius_2_inner_2, state[profile].eyeradius_2_inner_3],
+										}
+									]}
+									eyeColor={[
+										{
+											outer: state[profile].eyecolor_0_outer ?? state[profile].fgColor ?? '#000000',
+											inner: state[profile].eyecolor_0_inner ?? state[profile].fgColor ?? '#000000'
+										},
+										{
+											outer: state[profile].eyecolor_1_outer ?? state[profile].fgColor ?? '#000000',
+											inner: state[profile].eyecolor_1_inner ?? state[profile].fgColor ?? '#000000'
+										},
+										{
+											outer: state[profile].eyecolor_2_outer ?? state[profile].fgColor ?? '#000000',
+											inner: state[profile].eyecolor_2_inner ?? state[profile].fgColor ?? '#000000'
+										}
+									]}
+								/>
+							</div>
+						</QRContainer>
+						<div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px' }}>
+							<RotateButton onClick={handleRotate}>↻</RotateButton>
+							<DownloadButtonGroup>
+								<DownloadButton type='button' onClick={handleDownload}>
+									DOWNLOAD QR
+								</DownloadButton>
+								<FormatSelect value={fileFormat} onChange={(e) => setFileFormat(e.target.value)}>
+									<option value="png">.png</option>
+									<option value="jpeg">.jpeg</option>
+								</FormatSelect>
+							</DownloadButtonGroup>
+						</div>
 					</div>
 				</QRWrapper>
 			</div>
@@ -216,7 +220,8 @@ export const QRWrapper = styled.div<{ $totalSize: number }>`
 	justify-content: center;
 	align-items: center;
 	margin: 5px auto;
-	> div:first-child {
+	
+	.qr-content {
 		width: ${props => Math.min(Math.max(props.$totalSize, 400), 800)}px;
 		height: auto;
 		display: flex;
@@ -227,10 +232,16 @@ export const QRWrapper = styled.div<{ $totalSize: number }>`
 	}
 `;
 
-export const QRContainer = styled.div<{ $rotation: number, $size: number }>`
-	transform: rotate(${(props) => -props.$rotation}deg);
-	transition: transform 0.3s ease-in-out;
-	margin-bottom: ${(props) => props.$size / 3.5}px;
+export const QRContainer = styled.div<{ $rotation: number}>`
+	position: relative;
+	width: fit-content;
+	height: fit-content;
+	
+	> div {
+		transform: rotate(${(props) => -props.$rotation}deg);
+		transition: transform 0.3s ease-in-out;
+	}
+	margin-bottom: 2rem;
 `;
 
 export const DownloadButtonGroup = styled.div`
