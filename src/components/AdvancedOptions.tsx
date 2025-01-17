@@ -117,7 +117,7 @@ const AdvancedOptions: React.FC<AdvancedOptionsProps> = ({ state, handleChange }
 				</Select>
 			</OptionContainer>
 			<Card>
-				<CardContent style={{ display: 'flex', flexDirection: 'row', gap: '2rem', flexWrap: 'wrap', maxWidth: '100%' }}>
+				<CardContent style={{ display: 'flex', flexDirection: 'column', gap: '2rem', flexWrap: 'wrap', maxWidth: '100%' }}>
 					<div
 						title={tooltipDescriptions.eyeRadius}>
 						<div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>

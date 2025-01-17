@@ -28,9 +28,6 @@ const App: React.FC = () => {
 		};
 	});
 
-
-	console.log('hola :(')
-
 	useEffect(() => {
 		localStorage.setItem('qrPreferences', JSON.stringify(state));
 	}, [state]);
@@ -123,7 +120,7 @@ const App: React.FC = () => {
 						</CardContent>
 					</Card>
 				</div>
-				<QRWrapper $totalSize={state[profile].size + state[profile].quietZone * 2}>
+				<QRWrapper $totalSize={Number(state[profile].size) + (Number(state[profile].quietZone) * 2)}>
 					<div className="qr-content">
 						<QRContainer $rotation={state[profile].rotation}>
 							<div>
@@ -210,16 +207,16 @@ export const CardContent = styled.div`
 
 export const QRWrapper = styled.div<{ $totalSize: number }>`
 	position: sticky;
-	top: 2rem;
+	top: 1rem;
 	min-width: 400px;
   	max-width: 800px;
-	width: 100%;
+	//width: 100%;
 	height: calc(100% - 80px);
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	margin: 5px auto;
+	margin: 10px;
 	
 	.qr-content {
 		width: ${props => Math.min(Math.max(props.$totalSize, 400), 800)}px;
@@ -228,7 +225,6 @@ export const QRWrapper = styled.div<{ $totalSize: number }>`
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
-		gap: 10px;
 	}
 `;
 
