@@ -6,6 +6,7 @@ export const defaultSettings = {
 	fgColor: '#000000',
 	logoImage: '',
 	logoName: '',
+    logoFile: null,
 	logoWidth: 50,
 	logoHeight: 50,
 	logoOpacity: 1,

@@ -30,6 +30,12 @@ const ImageUploadField: React.FC<IImageUploadFieldProps> = ({ name, handleChange
         }
     }, [logoFile, logoTab]);
 
+    useEffect(() => {
+        if (logoFile === null && fileInputRef.current) {
+            fileInputRef.current.value = ''; // Reset the file input field
+        }
+    }, [logoFile]);
+
     const handleImageUpload = (files: any) => {
         const file = files[0];
         if (file.type !== 'image/png' && file.type !== 'image/jpeg') {
