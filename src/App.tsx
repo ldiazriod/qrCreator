@@ -210,7 +210,7 @@ export const QRWrapper = styled.div<{ $totalSize: number }>`
 	top: 1rem;
 	min-width: 400px;
   	max-width: 800px;
-	//width: 100%;
+	width: 100%;
 	height: calc(100% - 80px);
 	display: flex;
 	flex-direction: column;

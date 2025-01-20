@@ -21,20 +21,18 @@ const ImageUploadField: React.FC<IImageUploadFieldProps> = ({ name, handleChange
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
-        if (fileInputRef.current && logoFile) {
-            const dataTransfer = new DataTransfer();
-            Array.from(logoFile).forEach(file => {
+        if (fileInputRef.current) {
+            if (logoFile) {
+                const dataTransfer = new DataTransfer();
+                Array.from(logoFile).forEach(file => {
                 dataTransfer.items.add(file);
-            });
-            fileInputRef.current.files = dataTransfer.files;
+                });
+                fileInputRef.current.files = dataTransfer.files;
+            } else if (logoFile === null) {
+                fileInputRef.current.value = ''; // Reset the file input field
+            }
         }
     }, [logoFile, logoTab]);
-
-    useEffect(() => {
-        if (logoFile === null && fileInputRef.current) {
-            fileInputRef.current.value = ''; // Reset the file input field
-        }
-    }, [logoFile]);
 
     const handleImageUpload = (files: any) => {
         const file = files[0];
