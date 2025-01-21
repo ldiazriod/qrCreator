@@ -287,6 +287,6 @@ const OuterEyeRadiusContainer = styled.div`
 	margin-right: 1rem;
 
 	@media (max-width: 1330px) {
-		margin-right: 0.2rem;
+		margin-right: 0;
   	}
 `;
