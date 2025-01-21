@@ -103,7 +103,11 @@ const RangeInput = styled.input`
     width: 75px;
     height: 35px;
     padding: 2px;
-  }
+	}
+
+	@media (max-width: 1330px) {
+		margin-right: 0.2rem;
+  	}
 `;
 
 const ColorLabel = styled.label`

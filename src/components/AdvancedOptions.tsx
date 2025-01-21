@@ -136,13 +136,13 @@ const AdvancedOptions: React.FC<AdvancedOptionsProps> = ({ state, handleChange }
 						</div>
 						<div style={{ fontSize: 15, fontWeight: 'bold', marginTop: '0.7rem', marginBottom: '0.5rem' }}>Top left eye</div>
 						<div style={{ display: 'flex', flexDirection: 'row' }}>
-							<div style={{ marginRight: '1rem' }}>
+							<OuterEyeRadiusContainer>
 								<div style={{ fontSize: 12 }}>Outer</div>
 								{buildEyeRadiusInput('eyeradius_0_outer_0')}
 								{buildEyeRadiusInput('eyeradius_0_outer_1')}
 								{buildEyeRadiusInput('eyeradius_0_outer_2')}
 								{buildEyeRadiusInput('eyeradius_0_outer_3')}
-							</div>
+							</OuterEyeRadiusContainer>
 							<div>
 								<div style={{ fontSize: 12 }}>Inner</div>
 								{buildEyeRadiusInput('eyeradius_0_inner_0')}
@@ -153,13 +153,13 @@ const AdvancedOptions: React.FC<AdvancedOptionsProps> = ({ state, handleChange }
 						</div>
 						<div style={{ fontSize: 15, fontWeight: 'bold', marginTop: '1rem', marginBottom: '0.5rem' }}>Top right eye</div>
 						<div style={{ display: 'flex', flexDirection: 'row' }}>
-							<div style={{ marginRight: '1rem' }}>
+							<OuterEyeRadiusContainer>
 								<div style={{ fontSize: 12 }}>Outer</div>
 								{buildEyeRadiusInput('eyeradius_1_outer_0')}
 								{buildEyeRadiusInput('eyeradius_1_outer_1')}
 								{buildEyeRadiusInput('eyeradius_1_outer_2')}
 								{buildEyeRadiusInput('eyeradius_1_outer_3')}
-							</div>
+							</OuterEyeRadiusContainer>
 							<div>
 								<div style={{ fontSize: 12 }}>Inner</div>
 								{buildEyeRadiusInput('eyeradius_1_inner_0')}
@@ -170,13 +170,13 @@ const AdvancedOptions: React.FC<AdvancedOptionsProps> = ({ state, handleChange }
 						</div>
 						<div style={{ fontSize: 15, fontWeight: 'bold', marginTop: '1rem', marginBottom: '0.5rem' }}>Bottom left eye</div>
 						<div style={{ display: 'flex', flexDirection: 'row' }}>
-							<div style={{ marginRight: '1rem' }}>
+							<OuterEyeRadiusContainer>
 								<div style={{ fontSize: 12 }}>Outer</div>
 								{buildEyeRadiusInput('eyeradius_2_outer_0')}
 								{buildEyeRadiusInput('eyeradius_2_outer_1')}
 								{buildEyeRadiusInput('eyeradius_2_outer_2')}
 								{buildEyeRadiusInput('eyeradius_2_outer_3')}
-							</div>
+							</OuterEyeRadiusContainer>
 							<div>
 								<div style={{ fontSize: 12 }}>Inner</div>
 								{buildEyeRadiusInput('eyeradius_2_inner_0')}
@@ -281,4 +281,12 @@ const CircleSquareButton = styled.button`
   &:hover {
     background-color: #2563eb;
   }
+`;
+
+const OuterEyeRadiusContainer = styled.div`
+	margin-right: 1rem;
+
+	@media (max-width: 1330px) {
+		margin-right: 0.2rem;
+  	}
 `;
