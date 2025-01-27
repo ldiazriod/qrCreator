@@ -6,6 +6,7 @@ import { Label } from '../styles/styledComponents'
 import { Card, CardContent } from '../App'
 import { tooltipDescriptions } from '../constants/tooltips'
 import { eyeRadiusCircle, eyeRadiusSquare } from '../constants/settings'
+import calcMaxEyeRadius from '../utils/calcMaxEyeRadius'
 
 interface AdvancedOptionsProps {
 	state: { [key: string]: any }
@@ -16,14 +17,14 @@ const AdvancedOptions: React.FC<AdvancedOptionsProps> = ({ state, handleChange }
 
 	const isLogoMissing = (state.logoTab === 'file' && !state.logoImage) || (state.logoTab === 'url' && !state.logoUrl);
 
-
 	const buildEyeRadiusInput = (id: string) => {
+		const maxRadius = calcMaxEyeRadius(state.size, state.ecLevel, state.value);
 		return <InputField
 			name={id}
 			type='range'
 			handleChange={handleChange}
 			min={0}
-			max={300}
+			max={maxRadius}
 			hideLabel
 			value={(state as any)[id] || 0}
 			custom={state.custom}
@@ -31,7 +32,10 @@ const AdvancedOptions: React.FC<AdvancedOptionsProps> = ({ state, handleChange }
 	};
 
 	const handleEyeButtonClick = () => {
-		let eyeRadius = state.eyeRadiusStyle === 'square' ? eyeRadiusCircle : eyeRadiusSquare;
+		const maxRadius = calcMaxEyeRadius(state.size, state.ecLevel, state.value);
+		console.log(maxRadius);
+		let eyeRadius = state.eyeRadiusStyle === 'square' ? eyeRadiusCircle(maxRadius) : eyeRadiusSquare(maxRadius);
+		console.log(eyeRadius);
 		Object.keys(eyeRadius).forEach(key => {
 			handleChange({ target: { name: key, value: eyeRadius[key as keyof typeof eyeRadius] } });
 		});
@@ -191,7 +195,7 @@ const AdvancedOptions: React.FC<AdvancedOptionsProps> = ({ state, handleChange }
 						<h3 style={{ fontWeight: 'bold' }}>Eye Color</h3>
 						<div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem' }}>
 							<div style={{ gap: '0.7rem' }}>
-								<div style={{ fontSize: 15, fontWeight: 'bold', marginTop: '0.7rem', marginBottom: '0.5rem' }}>Top left eye</div>
+								<EyeNameDiv>Top left eye</EyeNameDiv>
 								<div style={{ fontSize: 12 }}>Outer</div>
 								<InputField
 									name='eyecolor_0_outer'
@@ -210,7 +214,7 @@ const AdvancedOptions: React.FC<AdvancedOptionsProps> = ({ state, handleChange }
 								/>
 							</div>
 							<div style={{ gap: '0.7rem' }}>
-								<div style={{ fontSize: 15, fontWeight: 'bold', marginTop: '0.7rem', marginBottom: '0.5rem' }}>Top right eye</div>
+								<EyeNameDiv>Top right eye</EyeNameDiv>
 								<div style={{ fontSize: 12 }}>Outer</div>
 								<InputField
 									name='eyecolor_1_outer'
@@ -229,7 +233,7 @@ const AdvancedOptions: React.FC<AdvancedOptionsProps> = ({ state, handleChange }
 								/>
 							</div>
 							<div style={{ gap: '0.7rem' }}>
-								<div style={{ fontSize: 15, fontWeight: 'bold', marginTop: '0.7rem', marginBottom: '0.5rem' }}>Bottom left eye</div>
+								<EyeNameDiv>Bottom left eye</EyeNameDiv>
 								<div style={{ fontSize: 12 }}>Outer</div>
 								<InputField
 									name='eyecolor_2_outer'
@@ -289,4 +293,16 @@ const OuterEyeRadiusContainer = styled.div`
 	@media (max-width: 1330px) {
 		margin-right: 0;
   	}
+`;
+
+const EyeNameDiv = styled.div`
+	font-size: 15px;
+	font-weight: bold;
+	margin-top: 0.7rem;
+	margin-bottom: 0.5rem;
+
+	@media (max-width: 1330px) {
+		font-size: 12.5px;
+  	}
+
 `;
