@@ -19,6 +19,7 @@ export const defaultSettings = {
     value: '',
     eyeRadiusStyle: 'square',
     rotation: 0,
+    maxEyeRadius: 42,
 };
 
 export const eyeRadiusCircle = (maxRadius: number): { [key: string]: number } => {

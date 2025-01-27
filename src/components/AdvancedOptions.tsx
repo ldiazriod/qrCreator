@@ -28,14 +28,13 @@ const AdvancedOptions: React.FC<AdvancedOptionsProps> = ({ state, handleChange }
 			hideLabel
 			value={(state as any)[id] || 0}
 			custom={state.custom}
+			qrvalue={state.value}
 		/>
 	};
 
 	const handleEyeButtonClick = () => {
 		const maxRadius = calcMaxEyeRadius(state.size, state.ecLevel, state.value);
-		console.log(maxRadius);
 		let eyeRadius = state.eyeRadiusStyle === 'square' ? eyeRadiusCircle(maxRadius) : eyeRadiusSquare(maxRadius);
-		console.log(eyeRadius);
 		Object.keys(eyeRadius).forEach(key => {
 			handleChange({ target: { name: key, value: eyeRadius[key as keyof typeof eyeRadius] } });
 		});
@@ -79,6 +78,7 @@ const AdvancedOptions: React.FC<AdvancedOptionsProps> = ({ state, handleChange }
 					step={1}
 					value={state.quietZone}
 					handleChange={handleChange}
+					qrvalue={state.value}
 				/>
 			</OptionContainer>
 			<OptionContainer
@@ -104,6 +104,7 @@ const AdvancedOptions: React.FC<AdvancedOptionsProps> = ({ state, handleChange }
 					value={state.logoPadding || 0}
 					handleChange={handleChange}
 					disabled={isLogoMissing}
+					qrvalue={state.value}
 				/>
 			</OptionContainer>
 			<OptionContainer
@@ -203,6 +204,7 @@ const AdvancedOptions: React.FC<AdvancedOptionsProps> = ({ state, handleChange }
 									value={state.eyecolor_0_outer ?? state.fgColor}
 									handleChange={handleChange}
 									hideLabel={true}
+									qrvalue={state.value}
 								/>
 								<div style={{ fontSize: 12, marginTop: '0.7rem' }}>Inner</div>
 								<InputField
@@ -211,6 +213,7 @@ const AdvancedOptions: React.FC<AdvancedOptionsProps> = ({ state, handleChange }
 									value={state.eyecolor_0_inner ?? state.fgColor}
 									handleChange={handleChange}
 									hideLabel={true}
+									qrvalue={state.value}
 								/>
 							</div>
 							<div style={{ gap: '0.7rem' }}>
@@ -222,6 +225,7 @@ const AdvancedOptions: React.FC<AdvancedOptionsProps> = ({ state, handleChange }
 									value={state.eyecolor_1_outer ?? state.fgColor}
 									handleChange={handleChange}
 									hideLabel={true}
+									qrvalue={state.value}
 								/>
 								<div style={{ fontSize: 12, marginTop: '0.7rem' }}>Inner</div>
 								<InputField
@@ -230,6 +234,7 @@ const AdvancedOptions: React.FC<AdvancedOptionsProps> = ({ state, handleChange }
 									value={state.eyecolor_1_inner ?? state.fgColor}
 									handleChange={handleChange}
 									hideLabel={true}
+									qrvalue={state.value}
 								/>
 							</div>
 							<div style={{ gap: '0.7rem' }}>
@@ -241,6 +246,7 @@ const AdvancedOptions: React.FC<AdvancedOptionsProps> = ({ state, handleChange }
 									value={state.eyecolor_2_outer ?? state.fgColor}
 									handleChange={handleChange}
 									hideLabel={true}
+									qrvalue={state.value}
 								/>
 								<div style={{ fontSize: 12, marginTop: '0.7rem' }}>Inner</div>
 								<InputField
@@ -249,6 +255,7 @@ const AdvancedOptions: React.FC<AdvancedOptionsProps> = ({ state, handleChange }
 									value={state.eyecolor_2_inner ?? state.fgColor}
 									handleChange={handleChange}
 									hideLabel={true}
+									qrvalue={state.value}
 								/>
 							</div>
 						</div>

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { styled } from "styled-components";
 import { Label } from "../styles/styledComponents";
 import calculateErrorCorrectionLevel from "../utils/calcErrorCorrectionLevel";
+import calcMaxEyeRadius from "../utils/calcMaxEyeRadius";
 
 type IInputFieldProps = {
 	name: string;
@@ -21,9 +22,10 @@ type IInputFieldProps = {
 		logoHeight: number;
 	}
 	custom?: boolean;
+	qrvalue: string;
 };
 
-const InputField: React.FC<IInputFieldProps> = ({ name, type, handleChange, min, max, step, hideLabel, value, label, disabled, logoParams, custom }) => {
+const InputField: React.FC<IInputFieldProps> = ({ name, type, handleChange, min, max, step, hideLabel, value, label, disabled, logoParams, custom, qrvalue }) => {
 	const [inputValue, setInputValue] = useState<string | number | undefined>(value);
 
 	useEffect(() => {
@@ -43,9 +45,12 @@ const InputField: React.FC<IInputFieldProps> = ({ name, type, handleChange, min,
 				const height = (Number(value) * (logoHeight / qrSize));
 				handleChange({ target: { name: 'logoWidth', value: width } });
 				handleChange({ target: { name: 'logoHeight', value: height } });
+				const newEcLevel = calculateErrorCorrectionLevel(width, height, Number(value));
 				if (!custom) {
-					handleChange({ target: { name: 'ecLevel', value: calculateErrorCorrectionLevel(width, height, Number(value)) } });
+					handleChange({ target: { name: 'ecLevel', value: newEcLevel } });
 				}
+				// Update maxEyeRadius with the new size
+				handleChange({ target: { name: 'maxEyeRadius', value: calcMaxEyeRadius(Number(value), newEcLevel, qrvalue) } });
 
 			} else if (e.target.name === 'logoWidth' && maintainAspectRatio) {
 				handleChange({ target: { name: 'logoHeight', value: Math.round(Number(value) / (logoWidth / logoHeight)) } });
