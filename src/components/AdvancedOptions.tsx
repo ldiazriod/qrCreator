@@ -19,14 +19,17 @@ const AdvancedOptions: React.FC<AdvancedOptionsProps> = ({ state, handleChange }
 
 	const buildEyeRadiusInput = (id: string) => {
 		const maxRadius = calcMaxEyeRadius(state.size, state.ecLevel, state.value);
+
+
+
 		return <InputField
-			name={id}
+			name={`eyeRadius.${id}`}
 			type='range'
 			handleChange={handleChange}
 			min={0}
 			max={maxRadius}
 			hideLabel
-			value={(state as any)[id] || 0}
+			value={state.eyeRadius[id] || 0}
 			custom={state.custom}
 			qrvalue={state.value}
 		/>

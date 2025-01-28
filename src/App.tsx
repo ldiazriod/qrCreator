@@ -50,19 +50,33 @@ const App: React.FC = () => {
 					}));
 				});
 		}
-	// eslint-disable-next-line react-hooks/exhaustive-deps
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [profile]);
 
 	const handleChange = ({ target }: any) => {
 		const { name, value } = target;
-		setState(prevState => ({
+		const keys = name.split('.');
+		if (keys.length === 2 && keys[0] === 'eyeRadius') {
+		  setState(prevState => ({
 			...prevState,
 			[profile]: {
-				...prevState[profile],
-				[name]: value
-			}
-		}));
-	};
+			  ...prevState[profile],
+			  eyeRadius: {
+				...prevState[profile].eyeRadius,
+				[keys[1]]: value,
+			  },
+			},
+		  }));
+		} else {
+		  setState(prevState => ({
+			...prevState,
+			[profile]: {
+			  ...prevState[profile],
+			  [name]: value,
+			},
+		  }));
+		}
+	  };
 
 	const handleReset = () => {
 		setState(prevState => ({
@@ -143,16 +157,16 @@ const App: React.FC = () => {
 									logoPaddingStyle={state[profile].logoPaddingStyle}
 									eyeRadius={[
 										{
-											outer: [state[profile].eyeradius_0_outer_0, state[profile].eyeradius_0_outer_1, state[profile].eyeradius_0_outer_2, state[profile].eyeradius_0_outer_3],
-											inner: [state[profile].eyeradius_0_inner_0, state[profile].eyeradius_0_inner_1, state[profile].eyeradius_0_inner_2, state[profile].eyeradius_0_inner_3],
+											outer: [state[profile].eyeRadius.eyeradius_0_outer_0, state[profile].eyeRadius.eyeradius_0_outer_1, state[profile].eyeRadius.eyeradius_0_outer_2, state[profile].eyeRadius.eyeradius_0_outer_3],
+											inner: [state[profile].eyeRadius.eyeradius_0_inner_0, state[profile].eyeRadius.eyeradius_0_inner_1, state[profile].eyeRadius.eyeradius_0_inner_2, state[profile].eyeRadius.eyeradius_0_inner_3],
 										},
 										{
-											outer: [state[profile].eyeradius_1_outer_0, state[profile].eyeradius_1_outer_1, state[profile].eyeradius_1_outer_2, state[profile].eyeradius_1_outer_3],
-											inner: [state[profile].eyeradius_1_inner_0, state[profile].eyeradius_1_inner_1, state[profile].eyeradius_1_inner_2, state[profile].eyeradius_1_inner_3],
+											outer: [state[profile].eyeRadius.eyeradius_1_outer_0, state[profile].eyeRadius.eyeradius_1_outer_1, state[profile].eyeRadius.eyeradius_1_outer_2, state[profile].eyeRadius.eyeradius_1_outer_3],
+											inner: [state[profile].eyeRadius.eyeradius_1_inner_0, state[profile].eyeRadius.eyeradius_1_inner_1, state[profile].eyeRadius.eyeradius_1_inner_2, state[profile].eyeRadius.eyeradius_1_inner_3],
 										},
 										{
-											outer: [state[profile].eyeradius_2_outer_0, state[profile].eyeradius_2_outer_1, state[profile].eyeradius_2_outer_2, state[profile].eyeradius_2_outer_3],
-											inner: [state[profile].eyeradius_2_inner_0, state[profile].eyeradius_2_inner_1, state[profile].eyeradius_2_inner_2, state[profile].eyeradius_2_inner_3],
+											outer: [state[profile].eyeRadius.eyeradius_2_outer_0, state[profile].eyeRadius.eyeradius_2_outer_1, state[profile].eyeRadius.eyeradius_2_outer_2, state[profile].eyeRadius.eyeradius_2_outer_3],
+											inner: [state[profile].eyeRadius.eyeradius_2_inner_0, state[profile].eyeRadius.eyeradius_2_inner_1, state[profile].eyeRadius.eyeradius_2_inner_2, state[profile].eyeRadius.eyeradius_2_inner_3],
 										}
 									]}
 									eyeColor={[
@@ -229,7 +243,7 @@ export const QRWrapper = styled.div<{ $totalSize: number }>`
 	}
 `;
 
-export const QRContainer = styled.div<{ $rotation: number}>`
+export const QRContainer = styled.div<{ $rotation: number }>`
 	position: relative;
 	width: fit-content;
 	height: fit-content;

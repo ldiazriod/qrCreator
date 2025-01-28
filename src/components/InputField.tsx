@@ -67,6 +67,7 @@ const InputField: React.FC<IInputFieldProps> = ({
 				if (!custom) {
 					handleChange({ target: { name: 'ecLevel', value: newEcLevel } });
 				}
+				//TODO: Revisar, sacar de logoParams.
 				// Update EyeRadius and maxRadius with the new size
 				const newMaxRadius = calcMaxEyeRadius(Number(value), newEcLevel, qrvalue);
 				handleChange({ target: { name: 'maxEyeRadius', value: newMaxRadius } });
