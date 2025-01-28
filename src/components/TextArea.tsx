@@ -14,6 +14,8 @@ type ITextAreaProps = {
 
 const TextArea = ({ name, handleChange, role, rows, cols, defaultValue, hideLabel, value, label, placeholder }: ITextAreaProps) => {
 
+	//ToDo - add eyeRadius automatization.
+
 	return (
 		<div style={{ display: 'flex', flexDirection: 'column', marginBottom: '6px', whiteSpace:'pre-line', width: '100%' }}>
 			{!hideLabel && <Label>{label}</Label>}

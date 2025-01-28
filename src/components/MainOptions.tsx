@@ -164,7 +164,8 @@ const MainOptions: React.FC<MainOptionsProps> = ({ state, handleChange }) => {
                     value={state.qrStyle}
                     label="QR Style"
                     custom={state.custom}
-                    maxEyeRadius={state.maxEyeRadius}
+                    maxEyeRadius={state.maxEyeRadius} 
+                    qrvalue={state.value}
                 />
             </OptionContainer>
         </div>

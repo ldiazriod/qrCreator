@@ -24,6 +24,7 @@ type IInputFieldProps = {
 	custom?: boolean;
 	qrvalue: string;
 	maxEyeRadius?: number;
+	eyeRadius?: any;
 };
 
 const InputField: React.FC<IInputFieldProps> = ({
@@ -41,6 +42,7 @@ const InputField: React.FC<IInputFieldProps> = ({
 	custom,
 	qrvalue,
 	maxEyeRadius,
+	eyeRadius
 }) => {
 	const [inputValue, setInputValue] = useState<string | number | undefined>(value);
 
@@ -67,11 +69,10 @@ const InputField: React.FC<IInputFieldProps> = ({
 				if (!custom) {
 					handleChange({ target: { name: 'ecLevel', value: newEcLevel } });
 				}
-				//TODO: Revisar, sacar de logoParams.
 				// Update EyeRadius and maxRadius with the new size
-				const newMaxRadius = calcMaxEyeRadius(Number(value), newEcLevel, qrvalue);
+				/*const newMaxRadius = calcMaxEyeRadius(Number(value), newEcLevel, qrvalue);
 				handleChange({ target: { name: 'maxEyeRadius', value: newMaxRadius } });
-				/*Object.keys(eyeRadiusCustom).forEach(key => {
+				Object.keys(eyeRadius).forEach(key => {
 					handleChange({ target: { name: key, value: eyeRadius[key as keyof typeof eyeRadius] } });
 				});*/
 
@@ -88,6 +89,9 @@ const InputField: React.FC<IInputFieldProps> = ({
 				}
 
 			}
+		}
+		if (e.target.name === 'size') {
+			
 		}
 	};
 

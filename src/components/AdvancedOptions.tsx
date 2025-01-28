@@ -7,6 +7,7 @@ import { Card, CardContent } from '../App'
 import { tooltipDescriptions } from '../constants/tooltips'
 import { eyeRadiusCustom, eyeRadiusSquare } from '../constants/settings'
 import { calcMaxEyeRadius } from '../utils/calcEyeRadius'
+import SelectField from './SelectField'
 
 interface AdvancedOptionsProps {
 	state: { [key: string]: any }
@@ -37,12 +38,14 @@ const AdvancedOptions: React.FC<AdvancedOptionsProps> = ({ state, handleChange }
 
 	const handleEyeButtonClick = () => {
 		const maxRadius = calcMaxEyeRadius(state.size, state.ecLevel, state.value);
-		let eyeRadius = state.eyeRadiusStyle === 'square' ? eyeRadiusCustom(maxRadius) : eyeRadiusSquare;
+		const eyeRadius = state.eyeRadiusStyle === 'square' ? eyeRadiusCustom(maxRadius) : eyeRadiusSquare;
+	  
 		Object.keys(eyeRadius).forEach(key => {
-			handleChange({ target: { name: key, value: eyeRadius[key as keyof typeof eyeRadius] } });
+		  handleChange({ target: { name: `eyeRadius.${key}`, value: eyeRadius[key as keyof typeof eyeRadius] } });
 		});
+	  
 		handleChange({ target: { name: 'eyeRadiusStyle', value: state.eyeRadiusStyle === 'square' ? 'circle' : 'square' } });
-	}
+	  };
 
 	return (
 		<div>
@@ -57,18 +60,16 @@ const AdvancedOptions: React.FC<AdvancedOptionsProps> = ({ state, handleChange }
 			</OptionContainer>
 			<OptionContainer
 				title={tooltipDescriptions.ecLevel}>
-				<Label htmlFor="ecLevel">Error Correction Level</Label>
-				<Select
-					id="ecLevel"
-					name="ecLevel"
-					value={state.ecLevel}
-					onChange={handleChange}
-				>
-					<option value="L">L</option>
-					<option value="M">M</option>
-					<option value="Q">Q</option>
-					<option value="H">H</option>
-				</Select>
+				<SelectField
+                    name='ecLevel'
+                    options={['L', 'M', 'Q', 'H']}
+                    handleChange={handleChange}
+                    value={state.ecLevel}
+                    label="Error Correction Level"
+                    custom={state.custom}
+                    maxEyeRadius={state.maxEyeRadius} 
+                    qrvalue={state.value}
+                />
 			</OptionContainer>
 			<OptionContainer
 				title={tooltipDescriptions.quietZone}>

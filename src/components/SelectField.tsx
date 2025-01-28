@@ -1,6 +1,7 @@
 import React from "react";
 import { styled } from "styled-components";
 import { eyeRadiusCustom, eyeRadiusSquare } from "../constants/settings";
+import { calcMaxEyeRadius } from "../utils/calcEyeRadius";
 type ISelectFieldProps = {
 	name: string;
 	options: string[];
@@ -10,9 +11,10 @@ type ISelectFieldProps = {
 	value: string;
 	custom: boolean;
 	maxEyeRadius?: number;
+	qrvalue: string;
 }
 
-const SelectField = ({ name, options, handleChange, label, value, custom, maxEyeRadius }: ISelectFieldProps) => {
+const SelectField = ({ name, options, handleChange, label, value, custom, maxEyeRadius, qrvalue }: ISelectFieldProps) => {
 	
 	const onChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
 		const {name, value} = event.target;
@@ -20,8 +22,12 @@ const SelectField = ({ name, options, handleChange, label, value, custom, maxEye
 		if (name === 'qrStyle' && !custom) {
 			let eyeRadius = value === 'dots' ? eyeRadiusCustom(maxEyeRadius || 100) : eyeRadiusSquare;
 			Object.keys(eyeRadius).forEach(key => {
-				handleChange({ target: { name: key, value: eyeRadius[key as keyof typeof eyeRadius] } });
+				handleChange({ target: { name: `eyeRadius.${key}`, value: eyeRadius[key as keyof typeof eyeRadius] } });
 			});
+		} else if (name === 'ecLevel') {
+			const newMaxRadius = calcMaxEyeRadius(maxEyeRadius || 100, value, qrvalue);
+			handleChange({ target: { name: 'maxEyeRadius', value: newMaxRadius } });
+			//ToDo - update eyeRadius values
 		}
 	};
 
