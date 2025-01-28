@@ -86,6 +86,7 @@ const App: React.FC = () => {
 	};
 
 	const handleRotate = () => {
+		console.log(state[profile]);
 		handleChange({ target: { name: 'rotation', value: (state[profile].rotation + 90) % 360 } });
 	};
 

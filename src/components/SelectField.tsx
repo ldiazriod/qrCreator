@@ -1,6 +1,6 @@
 import React from "react";
 import { styled } from "styled-components";
-import { eyeRadiusCircle, eyeRadiusSquare } from "../constants/settings";
+import { eyeRadiusCustom, eyeRadiusSquare } from "../constants/settings";
 type ISelectFieldProps = {
 	name: string;
 	options: string[];
@@ -9,15 +9,16 @@ type ISelectFieldProps = {
 	label?: string;
 	value: string;
 	custom: boolean;
+	maxEyeRadius?: number;
 }
 
-const SelectField = ({ name, options, handleChange, label, value, custom }: ISelectFieldProps) => {
+const SelectField = ({ name, options, handleChange, label, value, custom, maxEyeRadius }: ISelectFieldProps) => {
 	
 	const onChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
 		const {name, value} = event.target;
 		handleChange(event);
 		if (name === 'qrStyle' && !custom) {
-			let eyeRadius = value === 'dots' ? eyeRadiusCircle : eyeRadiusSquare;
+			let eyeRadius = value === 'dots' ? eyeRadiusCustom(maxEyeRadius || 100) : eyeRadiusSquare;
 			Object.keys(eyeRadius).forEach(key => {
 				handleChange({ target: { name: key, value: eyeRadius[key as keyof typeof eyeRadius] } });
 			});

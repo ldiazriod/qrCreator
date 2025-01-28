@@ -20,39 +20,7 @@ export const defaultSettings = {
     eyeRadiusStyle: 'square',
     rotation: 0,
     maxEyeRadius: 42,
-};
-
-export const eyeRadiusCircle = (maxRadius: number): { [key: string]: number } => {
-    return {
-        eyeradius_0_outer_0: maxRadius,
-        eyeradius_0_outer_1: maxRadius,
-        eyeradius_0_outer_2: maxRadius,
-        eyeradius_0_outer_3: maxRadius,
-        eyeradius_0_inner_0: maxRadius,
-        eyeradius_0_inner_1: maxRadius,
-        eyeradius_0_inner_2: maxRadius,
-        eyeradius_0_inner_3: maxRadius,
-        eyeradius_1_outer_0: maxRadius,
-        eyeradius_1_outer_1: maxRadius,
-        eyeradius_1_outer_2: maxRadius,
-        eyeradius_1_outer_3: maxRadius,
-        eyeradius_1_inner_0: maxRadius,
-        eyeradius_1_inner_1: maxRadius,
-        eyeradius_1_inner_2: maxRadius,
-        eyeradius_1_inner_3: maxRadius,
-        eyeradius_2_outer_0: maxRadius,
-        eyeradius_2_outer_1: maxRadius,
-        eyeradius_2_outer_2: maxRadius,
-        eyeradius_2_outer_3: maxRadius,
-        eyeradius_2_inner_0: maxRadius,
-        eyeradius_2_inner_1: maxRadius,
-        eyeradius_2_inner_2: maxRadius,
-        eyeradius_2_inner_3: maxRadius,
-    };
-}
-
-export const eyeRadiusSquare = (maxRadius: number): { [key: string]: number } => {
-    return {
+    eyeRadius: {
         eyeradius_0_outer_0: 0,
         eyeradius_0_outer_1: 0,
         eyeradius_0_outer_2: 0,
@@ -77,5 +45,61 @@ export const eyeRadiusSquare = (maxRadius: number): { [key: string]: number } =>
         eyeradius_2_inner_1: 0,
         eyeradius_2_inner_2: 0,
         eyeradius_2_inner_3: 0,
-      };
+      },
+};
+
+export const eyeRadiusCustom = (radius: number): { [key: string]: number } => {
+    return {
+        eyeradius_0_outer_0: radius,
+        eyeradius_0_outer_1: radius,
+        eyeradius_0_outer_2: radius,
+        eyeradius_0_outer_3: radius,
+        eyeradius_0_inner_0: radius,
+        eyeradius_0_inner_1: radius,
+        eyeradius_0_inner_2: radius,
+        eyeradius_0_inner_3: radius,
+        eyeradius_1_outer_0: radius,
+        eyeradius_1_outer_1: radius,
+        eyeradius_1_outer_2: radius,
+        eyeradius_1_outer_3: radius,
+        eyeradius_1_inner_0: radius,
+        eyeradius_1_inner_1: radius,
+        eyeradius_1_inner_2: radius,
+        eyeradius_1_inner_3: radius,
+        eyeradius_2_outer_0: radius,
+        eyeradius_2_outer_1: radius,
+        eyeradius_2_outer_2: radius,
+        eyeradius_2_outer_3: radius,
+        eyeradius_2_inner_0: radius,
+        eyeradius_2_inner_1: radius,
+        eyeradius_2_inner_2: radius,
+        eyeradius_2_inner_3: radius,
+    };
+}
+
+export const eyeRadiusSquare: { [key: string]: number } = {
+    eyeradius_0_outer_0: 0,
+    eyeradius_0_outer_1: 0,
+    eyeradius_0_outer_2: 0,
+    eyeradius_0_outer_3: 0,
+    eyeradius_0_inner_0: 0,
+    eyeradius_0_inner_1: 0,
+    eyeradius_0_inner_2: 0,
+    eyeradius_0_inner_3: 0,
+    eyeradius_1_outer_0: 0,
+    eyeradius_1_outer_1: 0,
+    eyeradius_1_outer_2: 0,
+    eyeradius_1_outer_3: 0,
+    eyeradius_1_inner_0: 0,
+    eyeradius_1_inner_1: 0,
+    eyeradius_1_inner_2: 0,
+    eyeradius_1_inner_3: 0,
+    eyeradius_2_outer_0: 0,
+    eyeradius_2_outer_1: 0,
+    eyeradius_2_outer_2: 0,
+    eyeradius_2_outer_3: 0,
+    eyeradius_2_inner_0: 0,
+    eyeradius_2_inner_1: 0,
+    eyeradius_2_inner_2: 0,
+    eyeradius_2_inner_3: 0,
 }

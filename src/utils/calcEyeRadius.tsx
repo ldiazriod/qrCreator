@@ -1,4 +1,4 @@
-const calcMaxEyeRadius = (size: number, ecLevel: string, value: string): number => {
+export const calcMaxEyeRadius = (size: number, ecLevel: string, value: string): number => {
     let ecLevelNum = 1;
     switch (ecLevel) {
         case 'L': 
@@ -22,4 +22,6 @@ const calcMaxEyeRadius = (size: number, ecLevel: string, value: string): number 
     return Math.round((7 * moduleSize) / 2);
 }
 
-export default calcMaxEyeRadius;
+export const calcRadius = (oldMaxEyeRadius: number, newMaxEyeRadius: number, oldRadius: number): number => {
+    return oldMaxEyeRadius === 0 ? 0 : (newMaxEyeRadius / oldMaxEyeRadius) * oldRadius;
+}

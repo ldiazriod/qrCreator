@@ -5,8 +5,8 @@ import InputField from './InputField'
 import { Label } from '../styles/styledComponents'
 import { Card, CardContent } from '../App'
 import { tooltipDescriptions } from '../constants/tooltips'
-import { eyeRadiusCircle, eyeRadiusSquare } from '../constants/settings'
-import calcMaxEyeRadius from '../utils/calcMaxEyeRadius'
+import { eyeRadiusCustom, eyeRadiusSquare } from '../constants/settings'
+import { calcMaxEyeRadius } from '../utils/calcEyeRadius'
 
 interface AdvancedOptionsProps {
 	state: { [key: string]: any }
@@ -34,7 +34,7 @@ const AdvancedOptions: React.FC<AdvancedOptionsProps> = ({ state, handleChange }
 
 	const handleEyeButtonClick = () => {
 		const maxRadius = calcMaxEyeRadius(state.size, state.ecLevel, state.value);
-		let eyeRadius = state.eyeRadiusStyle === 'square' ? eyeRadiusCircle(maxRadius) : eyeRadiusSquare(maxRadius);
+		let eyeRadius = state.eyeRadiusStyle === 'square' ? eyeRadiusCustom(maxRadius) : eyeRadiusSquare;
 		Object.keys(eyeRadius).forEach(key => {
 			handleChange({ target: { name: key, value: eyeRadius[key as keyof typeof eyeRadius] } });
 		});
