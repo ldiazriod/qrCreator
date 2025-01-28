@@ -70,11 +70,21 @@ const InputField: React.FC<IInputFieldProps> = ({
 					handleChange({ target: { name: 'ecLevel', value: newEcLevel } });
 				}
 				// Update EyeRadius and maxRadius with the new size
-				/*const newMaxRadius = calcMaxEyeRadius(Number(value), newEcLevel, qrvalue);
+				//ToDo: Arreglar
+				const newMaxRadius = calcMaxEyeRadius(Number(value), newEcLevel, qrvalue);
+				/*if (maxEyeRadius && eyeRadius) {
+					const updatedEyeRadius = Object.keys(eyeRadius).reduce((acc, key) => {
+						acc[`eyeRadius.${key}`] = calcRadius(maxEyeRadius, newMaxRadius, eyeRadius[key as keyof typeof eyeRadius]);
+						return acc;
+					}, {} as { [key: string]: number });
+					
+					Object.keys(updatedEyeRadius).forEach(key => {
+						handleChange({ target: { name: key, value: updatedEyeRadius[key] } });
+					});
+				}*/
+				
 				handleChange({ target: { name: 'maxEyeRadius', value: newMaxRadius } });
-				Object.keys(eyeRadius).forEach(key => {
-					handleChange({ target: { name: key, value: eyeRadius[key as keyof typeof eyeRadius] } });
-				});*/
+
 
 			} else if (e.target.name === 'logoWidth' && maintainAspectRatio) {
 				handleChange({ target: { name: 'logoHeight', value: Math.round(Number(value) / (logoWidth / logoHeight)) } });
