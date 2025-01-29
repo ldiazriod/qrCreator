@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { styled } from "styled-components";
 import { Label } from "../styles/styledComponents";
-import calculateErrorCorrectionLevel from "../utils/calcErrorCorrectionLevel";
-import { calcMaxEyeRadius, updateEyeRadius, updateLogoSize } from "../utils/qr-helpers";
+import { calcMaxEyeRadius, calculateErrorCorrectionLevel, updateEyeRadius, updateLogoSize } from "../utils/qr-helpers";
 
 type IInputFieldProps = {
 	name: string;
@@ -63,19 +62,20 @@ const InputField: React.FC<IInputFieldProps> = ({
 			const { name, value } = e.target;
 
 			if (name === 'size') {
+				//Handle size change
 				updateLogoSize(Number(value), logoWidth, logoHeight, qrSize, handleChange);
 				if (ecLevel && qrvalue && maxEyeRadius && eyeRadius) {
 					const newMaxRadius = calcMaxEyeRadius(Number(value), ecLevel, qrvalue);
 					updateEyeRadius(maxEyeRadius, newMaxRadius, eyeRadius, handleChange);
 					handleChange({ target: { name: 'maxEyeRadius', value: newMaxRadius } });
 				}
-			} else if (name === 'logoWidth' && maintainAspectRatio) {
+			} else if (name === 'logoWidth' && maintainAspectRatio) {	//Handle logo width change
 				handleChange({ target: { name: 'logoHeight', value: Math.round(Number(value) / (logoWidth / logoHeight)) } });
-			} else if (name === 'logoHeight' && maintainAspectRatio) {
+			} else if (name === 'logoHeight' && maintainAspectRatio) {	//Handle logo height change
 				handleChange({ target: { name: 'logoWidth', value: Math.round(Number(value) * (logoWidth / logoHeight)) } });
 			}
 			
-			if (!custom && (name === 'logoWidth' || name === 'logoHeight')) {
+			if (!custom && (name === 'logoWidth' || name === 'logoHeight')) {	//Update error correction level based on logo size
 				handleChange({ target: { name: 'ecLevel', value: calculateErrorCorrectionLevel(Number(value), logoHeight, qrSize) } });
 			}
 		}

@@ -1,9 +1,9 @@
 import React, { useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import Tabs from './Tabs';
-import calculateErrorCorrectionLevel from '../utils/calcErrorCorrectionLevel';
 import TextArea from './TextArea';
 import { tooltipDescriptions } from '../constants/tooltips';
+import { calculateErrorCorrectionLevel } from '../utils/qr-helpers';
 
 interface IImageUploadFieldProps {
     name: [string, string];

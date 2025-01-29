@@ -1,4 +1,19 @@
-import calculateErrorCorrectionLevel from "./calcErrorCorrectionLevel";
+export const calculateErrorCorrectionLevel = (logoWidth: number, logoHeight: number, qrSize: number): 'L' | 'M' | 'Q' | 'H' => {
+    if (!logoWidth || !logoHeight) return 'M';
+  
+    // Calculate the logo area percentage
+    const logoArea = logoWidth * logoHeight;
+    const qrArea = qrSize * qrSize;
+    const logoPercentage = (logoArea / qrArea) * 100;
+    // Determine error correction level based on logo size
+    if (logoPercentage > 15) {
+      return 'H';  // 30% error correction for large logos
+    } else if (logoPercentage > 10) {
+      return 'Q';  // 25% error correction for medium logos
+    } else {
+      return 'M';  // 15% error correction for smaller logos
+    }
+  };
 
 export const calcMaxEyeRadius = (size: number, ecLevel: string, value: string): number => {
     let ecLevelNum = 1;
@@ -35,21 +50,11 @@ export const updateLogoSize = (value: number, logoWidth: number, logoHeight: num
     handleChange({ target: { name: 'logoHeight', value: height } });
 };
 
-/*export const updateErrorCorrectionLevel = (width: number, height: number, value: number, custom: boolean, handleChange: any) => {
-    const newEcLevel = calculateErrorCorrectionLevel(width, height, value);
-    if (!custom) {
-        handleChange({ target: { name: 'ecLevel', value: newEcLevel } });
-    }
-    return newEcLevel;
-};*/
-
 export const updateEyeRadius = (maxEyeRadius: number, newMaxRadius: number, eyeRadius: { [key: string]: number }, handleChange: any) => {
     const updatedEyeRadius = Object.keys(eyeRadius).reduce((acc, key) => {
-        acc[`eyeRadius.${key}`] = calcRadius(maxEyeRadius, newMaxRadius, eyeRadius[key as keyof typeof eyeRadius]);
+        acc[key] = calcRadius(maxEyeRadius, newMaxRadius, eyeRadius[key as keyof typeof eyeRadius]);
         return acc;
     }, {} as { [key: string]: number });
 
-    Object.keys(updatedEyeRadius).forEach(key => {
-        handleChange({ target: { name: key, value: updatedEyeRadius[key] } });
-    });
+    handleChange({ target: { name: 'eyeRadius', value: updatedEyeRadius } });
 };
