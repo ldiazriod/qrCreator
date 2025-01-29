@@ -46,10 +46,12 @@ const MainOptions: React.FC<MainOptionsProps> = ({ state, handleChange }) => {
                         qrSize: state.size
                     }}
                     custom={state.custom}
-                    ecLevel={state.ecLevel}
-                    qrvalue={state.value}
-                    maxEyeRadius={state.maxEyeRadius}
-                    eyeRadius={state.eyeRadius}
+                    eyeRadiusParams={{
+                        maxEyeRadius: state.maxEyeRadius,
+                        eyeRadius: state.eyeRadius,
+                        ecLevel: state.ecLevel,
+                        qrvalue: state.value
+                    }}
                 />
             </OptionContainer>
             <OptionContainer

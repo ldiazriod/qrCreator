@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { styled } from "styled-components";
 import { Label } from "../styles/styledComponents";
 import { calcMaxEyeRadius, calculateErrorCorrectionLevel, updateEyeRadius, updateLogoSize } from "../utils/qr-helpers";
+import { EyeRadiusUpdateParams, LogoUpdateParams } from "../types/input";
 
 type IInputFieldProps = {
 	name: string;
@@ -14,17 +15,9 @@ type IInputFieldProps = {
 	value?: string | number;
 	label?: string;
 	disabled?: boolean;
-	logoParams?: {
-		qrSize: number;
-		maintainAspectRatio: boolean;
-		logoWidth: number;
-		logoHeight: number;
-	}
 	custom?: boolean;
-	ecLevel?: string;
-	qrvalue?: string;
-	maxEyeRadius?: number;
-	eyeRadius?: any;
+	logoParams?: LogoUpdateParams
+	eyeRadiusParams?: EyeRadiusUpdateParams
 };
 
 const InputField: React.FC<IInputFieldProps> = ({
@@ -38,12 +31,9 @@ const InputField: React.FC<IInputFieldProps> = ({
 	value,
 	label,
 	disabled,
-	logoParams,
 	custom,
-	ecLevel,
-	qrvalue,
-	maxEyeRadius,
-	eyeRadius
+	logoParams,
+	eyeRadiusParams
 }) => {
 	const [inputValue, setInputValue] = useState<string | number | undefined>(value);
 
@@ -64,7 +54,8 @@ const InputField: React.FC<IInputFieldProps> = ({
 			if (name === 'size') {
 				//Handle size change
 				updateLogoSize(Number(value), logoWidth, logoHeight, qrSize, handleChange);
-				if (ecLevel && qrvalue && maxEyeRadius && eyeRadius) {
+				if (eyeRadiusParams) {
+					const { maxEyeRadius, eyeRadius, ecLevel, qrvalue } = eyeRadiusParams;
 					const newMaxRadius = calcMaxEyeRadius(Number(value), ecLevel, qrvalue);
 					updateEyeRadius(maxEyeRadius, newMaxRadius, eyeRadius, handleChange);
 					handleChange({ target: { name: 'maxEyeRadius', value: newMaxRadius } });
