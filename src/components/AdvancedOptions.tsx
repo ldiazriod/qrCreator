@@ -6,7 +6,7 @@ import { Label } from '../styles/styledComponents'
 import { Card, CardContent } from '../App'
 import { tooltipDescriptions } from '../constants/tooltips'
 import { eyeRadiusCustom, eyeRadiusSquare } from '../constants/settings'
-import { calcMaxEyeRadius } from '../utils/calcEyeRadius'
+import { calcMaxEyeRadius } from '../utils/qr-helpers'
 import SelectField from './SelectField'
 
 interface AdvancedOptionsProps {

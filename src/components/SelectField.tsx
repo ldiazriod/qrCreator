@@ -1,7 +1,7 @@
 import React from "react";
 import { styled } from "styled-components";
 import { eyeRadiusCustom, eyeRadiusSquare } from "../constants/settings";
-import { calcMaxEyeRadius } from "../utils/calcEyeRadius";
+import { calcMaxEyeRadius } from "../utils/qr-helpers";
 type ISelectFieldProps = {
 	name: string;
 	options: string[];

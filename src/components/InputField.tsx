@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { styled } from "styled-components";
 import { Label } from "../styles/styledComponents";
 import calculateErrorCorrectionLevel from "../utils/calcErrorCorrectionLevel";
-import { calcMaxEyeRadius, calcRadius } from "../utils/calcEyeRadius";
+import { calcMaxEyeRadius, updateEyeRadius, updateLogoSize } from "../utils/qr-helpers";
 
 type IInputFieldProps = {
 	name: string;
@@ -22,7 +22,8 @@ type IInputFieldProps = {
 		logoHeight: number;
 	}
 	custom?: boolean;
-	qrvalue: string;
+	ecLevel?: string;
+	qrvalue?: string;
 	maxEyeRadius?: number;
 	eyeRadius?: any;
 };
@@ -40,6 +41,7 @@ const InputField: React.FC<IInputFieldProps> = ({
 	disabled,
 	logoParams,
 	custom,
+	ecLevel,
 	qrvalue,
 	maxEyeRadius,
 	eyeRadius
@@ -58,50 +60,24 @@ const InputField: React.FC<IInputFieldProps> = ({
 		handleChange(e);
 		if (logoParams) {
 			const { maintainAspectRatio, logoWidth, logoHeight, qrSize } = logoParams;
-			if (e.target.name === 'size') {  //If size is what we just changed
-				//Update new logo size so it maintains aspect ratio
-				const width = (Number(value) * (logoWidth / qrSize));
-				const height = (Number(value) * (logoHeight / qrSize));
-				handleChange({ target: { name: 'logoWidth', value: width } });
-				handleChange({ target: { name: 'logoHeight', value: height } });
-				// Update error correction level
-				const newEcLevel = calculateErrorCorrectionLevel(width, height, Number(value));
-				if (!custom) {
-					handleChange({ target: { name: 'ecLevel', value: newEcLevel } });
+			const { name, value } = e.target;
+
+			if (name === 'size') {
+				updateLogoSize(Number(value), logoWidth, logoHeight, qrSize, handleChange);
+				if (ecLevel && qrvalue && maxEyeRadius && eyeRadius) {
+					const newMaxRadius = calcMaxEyeRadius(Number(value), ecLevel, qrvalue);
+					updateEyeRadius(maxEyeRadius, newMaxRadius, eyeRadius, handleChange);
+					handleChange({ target: { name: 'maxEyeRadius', value: newMaxRadius } });
 				}
-				// Update EyeRadius and maxRadius with the new size
-				//ToDo: Arreglar
-				const newMaxRadius = calcMaxEyeRadius(Number(value), newEcLevel, qrvalue);
-				/*if (maxEyeRadius && eyeRadius) {
-					const updatedEyeRadius = Object.keys(eyeRadius).reduce((acc, key) => {
-						acc[`eyeRadius.${key}`] = calcRadius(maxEyeRadius, newMaxRadius, eyeRadius[key as keyof typeof eyeRadius]);
-						return acc;
-					}, {} as { [key: string]: number });
-					
-					Object.keys(updatedEyeRadius).forEach(key => {
-						handleChange({ target: { name: key, value: updatedEyeRadius[key] } });
-					});
-				}*/
-				
-				handleChange({ target: { name: 'maxEyeRadius', value: newMaxRadius } });
-
-
-			} else if (e.target.name === 'logoWidth' && maintainAspectRatio) {
+			} else if (name === 'logoWidth' && maintainAspectRatio) {
 				handleChange({ target: { name: 'logoHeight', value: Math.round(Number(value) / (logoWidth / logoHeight)) } });
-				if (!custom) {
-					handleChange({ target: { name: 'ecLevel', value: calculateErrorCorrectionLevel(Number(value), logoHeight, qrSize) } });
-				}
-			} else if (e.target.name === 'logoHeight' && maintainAspectRatio) {
-				calculateErrorCorrectionLevel(logoWidth, Number(value), qrSize);
+			} else if (name === 'logoHeight' && maintainAspectRatio) {
 				handleChange({ target: { name: 'logoWidth', value: Math.round(Number(value) * (logoWidth / logoHeight)) } });
-				if (!custom) {
-					handleChange({ target: { name: 'ecLevel', value: calculateErrorCorrectionLevel(logoWidth, Number(value), qrSize) } });
-				}
-
 			}
-		}
-		if (e.target.name === 'size') {
 			
+			if (!custom && (name === 'logoWidth' || name === 'logoHeight')) {
+				handleChange({ target: { name: 'ecLevel', value: calculateErrorCorrectionLevel(Number(value), logoHeight, qrSize) } });
+			}
 		}
 	};
 

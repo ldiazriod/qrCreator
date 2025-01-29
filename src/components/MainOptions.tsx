@@ -46,7 +46,10 @@ const MainOptions: React.FC<MainOptionsProps> = ({ state, handleChange }) => {
                         qrSize: state.size
                     }}
                     custom={state.custom}
+                    ecLevel={state.ecLevel}
                     qrvalue={state.value}
+                    maxEyeRadius={state.maxEyeRadius}
+                    eyeRadius={state.eyeRadius}
                 />
             </OptionContainer>
             <OptionContainer
@@ -92,7 +95,6 @@ const MainOptions: React.FC<MainOptionsProps> = ({ state, handleChange }) => {
                         qrSize: state.size
                     }}
                     custom={state.custom}
-                    qrvalue={state.value}
                 />
             </OptionContainer>
             <OptionContainer
@@ -114,7 +116,6 @@ const MainOptions: React.FC<MainOptionsProps> = ({ state, handleChange }) => {
                         qrSize: state.size
                     }}
                     custom={state.custom}
-                    qrvalue={state.value}
                 />
             </OptionContainer>
             <OptionContainer
@@ -128,7 +129,6 @@ const MainOptions: React.FC<MainOptionsProps> = ({ state, handleChange }) => {
                     value={state.logoOpacity}
                     handleChange={handleChange}
                     disabled={isLogoMissing}
-                    qrvalue={state.value}
                 />
             </OptionContainer>
             <div style={{ display: 'flex', flexDirection: 'row', marginTop: '20px', marginBottom: '20px', justifyContent: 'space-around' }}>
@@ -140,7 +140,6 @@ const MainOptions: React.FC<MainOptionsProps> = ({ state, handleChange }) => {
                         type='color'
                         value={state.fgColor}
                         handleChange={handleChange}
-                        qrvalue={state.value}
                     />
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'row', gap: '0.7rem' }}
@@ -151,7 +150,6 @@ const MainOptions: React.FC<MainOptionsProps> = ({ state, handleChange }) => {
                         type='color'
                         value={state.bgColor}
                         handleChange={handleChange}
-                        qrvalue={state.value}
                     />
                 </div>
             </div>
