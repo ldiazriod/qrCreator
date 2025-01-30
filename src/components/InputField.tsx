@@ -44,9 +44,8 @@ const InputField: React.FC<IInputFieldProps> = ({
 	}, [value]);
 
 	const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const value = e.target.value;
-		setInputValue(value);
-		handleChange(e);
+
+
 		if (logoParams) {
 			const { maintainAspectRatio, logoWidth, logoHeight, qrSize } = logoParams;
 			const { name, value } = e.target;
@@ -55,21 +54,37 @@ const InputField: React.FC<IInputFieldProps> = ({
 				//Handle size change
 				updateLogoSize(Number(value), logoWidth, logoHeight, qrSize, handleChange);
 				if (eyeRadiusParams) {
+					//Update eyeRadius based on QR size modification
 					const { maxEyeRadius, eyeRadius, ecLevel, qrvalue } = eyeRadiusParams;
 					const newMaxRadius = calcMaxEyeRadius(Number(value), ecLevel, qrvalue);
 					updateEyeRadius(maxEyeRadius, newMaxRadius, eyeRadius, handleChange);
 					handleChange({ target: { name: 'maxEyeRadius', value: newMaxRadius } });
 				}
 			} else if (name === 'logoWidth' && maintainAspectRatio) {	//Handle logo width change
-				handleChange({ target: { name: 'logoHeight', value: Math.round(Number(value) / (logoWidth / logoHeight)) } });
+				const newHeight = Math.round(Number(value) / (logoWidth / logoHeight));
+				if (max && newHeight > max) {
+					alert(`Height (${newHeight}px) has reached the max value (${max}px)`);
+					return;
+				} else {
+					handleChange({ target: { name: 'logoHeight', value: Math.round(Number(value) / (logoWidth / logoHeight)) } });
+				}
 			} else if (name === 'logoHeight' && maintainAspectRatio) {	//Handle logo height change
-				handleChange({ target: { name: 'logoWidth', value: Math.round(Number(value) * (logoWidth / logoHeight)) } });
+				const newWidth = Math.round(Number(value) * (logoWidth / logoHeight));
+				if (max && newWidth > max) {
+					alert(`Width (${newWidth}px) has reached the max value (${max}px)`);
+					return;
+				} else {
+					handleChange({ target: { name: 'logoWidth', value: Math.round(Number(value) * (logoWidth / logoHeight)) } });
+				}
 			}
-			
+
 			if (!custom && (name === 'logoWidth' || name === 'logoHeight')) {	//Update error correction level based on logo size
 				handleChange({ target: { name: 'ecLevel', value: calculateErrorCorrectionLevel(Number(value), logoHeight, qrSize) } });
 			}
+
 		}
+		setInputValue(e.target.value);
+		handleChange(e);
 	};
 
 	return (
