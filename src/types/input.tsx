@@ -10,4 +10,5 @@ export interface EyeRadiusUpdateParams {
     qrvalue: string
     maxEyeRadius: number
     eyeRadius: Record<string, number>
+    qrSize: number
 }

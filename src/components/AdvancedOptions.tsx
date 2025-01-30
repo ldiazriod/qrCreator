@@ -20,7 +20,7 @@ const AdvancedOptions: React.FC<AdvancedOptionsProps> = ({ state, handleChange }
 
 	const buildEyeRadiusInput = (id: string) => {
 		const maxRadius = calcMaxEyeRadius(state.size, state.ecLevel, state.value);
-		
+
 		return <InputField
 			name={`eyeRadius.${id}`}
 			type='range'
@@ -36,13 +36,13 @@ const AdvancedOptions: React.FC<AdvancedOptionsProps> = ({ state, handleChange }
 	const handleEyeButtonClick = () => {
 		const maxRadius = calcMaxEyeRadius(state.size, state.ecLevel, state.value);
 		const eyeRadius = state.eyeRadiusStyle === 'square' ? eyeRadiusCustom(maxRadius) : eyeRadiusSquare;
-	  
+
 		Object.keys(eyeRadius).forEach(key => {
-		  handleChange({ target: { name: `eyeRadius.${key}`, value: eyeRadius[key as keyof typeof eyeRadius] } });
+			handleChange({ target: { name: `eyeRadius.${key}`, value: eyeRadius[key as keyof typeof eyeRadius] } });
 		});
-	  
+
 		handleChange({ target: { name: 'eyeRadiusStyle', value: state.eyeRadiusStyle === 'square' ? 'circle' : 'square' } });
-	  };
+	};
 
 	return (
 		<div>
@@ -58,15 +58,20 @@ const AdvancedOptions: React.FC<AdvancedOptionsProps> = ({ state, handleChange }
 			<OptionContainer
 				title={tooltipDescriptions.ecLevel}>
 				<SelectField
-                    name='ecLevel'
-                    options={['L', 'M', 'Q', 'H']}
-                    handleChange={handleChange}
-                    value={state.ecLevel}
-                    label="Error Correction Level"
-                    custom={state.custom}
-                    maxEyeRadius={state.maxEyeRadius} 
-                    qrvalue={state.value}
-                />
+					name='ecLevel'
+					options={['L', 'M', 'Q', 'H']}
+					handleChange={handleChange}
+					value={state.ecLevel}
+					label="Error Correction Level"
+					custom={state.custom}
+					eyeRadiusParams={{
+						maxEyeRadius: state.maxEyeRadius,
+						eyeRadius: state.eyeRadius,
+						ecLevel: state.ecLevel,
+						qrvalue: state.value, 
+						qrSize: state.size
+					}}
+				/>
 			</OptionContainer>
 			<OptionContainer
 				title={tooltipDescriptions.quietZone}>

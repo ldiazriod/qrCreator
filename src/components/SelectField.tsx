@@ -1,7 +1,8 @@
 import React from "react";
 import { styled } from "styled-components";
 import { eyeRadiusCustom, eyeRadiusSquare } from "../constants/settings";
-import { calcMaxEyeRadius } from "../utils/qr-helpers";
+import { calcMaxEyeRadius, updateEyeRadius } from "../utils/qr-helpers";
+import { EyeRadiusUpdateParams } from "../types/input";
 type ISelectFieldProps = {
 	name: string;
 	options: string[];
@@ -10,34 +11,37 @@ type ISelectFieldProps = {
 	label?: string;
 	value: string;
 	custom: boolean;
-	maxEyeRadius?: number;
-	qrvalue: string;
+	eyeRadiusParams?: EyeRadiusUpdateParams
 }
 
-const SelectField = ({ name, options, handleChange, label, value, custom, maxEyeRadius, qrvalue }: ISelectFieldProps) => {
-	
+const SelectField = ({ name, options, handleChange, label, value, custom, eyeRadiusParams }: ISelectFieldProps) => {
+
 	const onChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-		const {name, value} = event.target;
+		const { name, value } = event.target;
 		handleChange(event);
-		if (name === 'qrStyle' && !custom) {
-			let eyeRadius = value === 'dots' ? eyeRadiusCustom(maxEyeRadius || 100) : eyeRadiusSquare;
-			Object.keys(eyeRadius).forEach(key => {
-				handleChange({ target: { name: `eyeRadius.${key}`, value: eyeRadius[key as keyof typeof eyeRadius] } });
-			});
-		} else if (name === 'ecLevel') {
-			const newMaxRadius = calcMaxEyeRadius(maxEyeRadius || 100, value, qrvalue);
-			handleChange({ target: { name: 'maxEyeRadius', value: newMaxRadius } });
-			//ToDo - update eyeRadius values
+		if (eyeRadiusParams) {
+			const { maxEyeRadius, eyeRadius, qrvalue, qrSize } = eyeRadiusParams;
+			if (name === 'qrStyle' && !custom && maxEyeRadius) {
+				let eyeRadius = value === 'dots' ? eyeRadiusCustom(maxEyeRadius || 100) : eyeRadiusSquare;
+				Object.keys(eyeRadius).forEach(key => {
+					handleChange({ target: { name: `eyeRadius.${key}`, value: eyeRadius[key as keyof typeof eyeRadius] } });
+				});
+			} else if (name === 'ecLevel') {
+				//Update eyeRadius based on error correction level modification
+				const newMaxRadius = calcMaxEyeRadius(qrSize, value, qrvalue);
+				updateEyeRadius(maxEyeRadius, newMaxRadius, eyeRadius, handleChange);
+				handleChange({ target: { name: 'maxEyeRadius', value: newMaxRadius } });
+			}
 		}
 	};
 
 	return (
 		<div style={{ display: 'flex', flexDirection: 'column', marginBottom: '6px' }}>
 			<label>{label}</label>
-			<Select 
-			name={name} 
-			onChange={onChange} 
-			value={value}
+			<Select
+				name={name}
+				onChange={onChange}
+				value={value}
 			>
 				{options.map((option: string, index: number) => (
 					<option key={index} value={option}>{option}</option>
