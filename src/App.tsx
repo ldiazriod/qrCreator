@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { QRCode } from 'react-qrcode-logo';
-import html2canvas from 'html2canvas';
 import styled from 'styled-components';
 import Tabs from './components/Tabs';
 import MainOptions from './components/MainOptions';
 import AdvancedOptions from './components/AdvancedOptions';
 import { defaultSettings } from './constants/settings';
+import { QRCodeDisplay } from './components/QRCodeDisplay';
 
 const App: React.FC = () => {
 	const [activeTab, setActiveTab] = useState('main');
-	const [fileFormat, setFileFormat] = useState('png');
 	const [profile, setProfile] = useState('profile1');
 	const [state, setState] = useState<{ [key: string]: any }>(() => {
 		if (typeof window !== 'undefined') {
@@ -97,20 +95,6 @@ const App: React.FC = () => {
 		setProfile(event.target.value);
 	};
 
-	const handleDownload = () => {
-		html2canvas(document.querySelector('#react-qrcode-logo') as any)
-			.then(canvas => {
-				const link = document.createElement('a');
-				link.download = `react-qrcode-logo.${fileFormat}`;
-				link.href = fileFormat === 'jpeg' ? canvas.toDataURL('image/jpeg', 0.9) : canvas.toDataURL('image/png');
-				link.click();
-			});
-	};
-
-	const handleRotate = () => {
-		handleChange({ target: { name: 'rotation', value: (state[profile].rotation + 90) % 360 } });
-	};
-
 	return (
 		<div className='app'>
 			<h1 style={{ fontSize: "2rem", margin: "1rem" }}>QR Code Generator</h1>
@@ -142,71 +126,7 @@ const App: React.FC = () => {
 						</CardContent>
 					</Card>
 				</div>
-				<QRWrapper $totalSize={Number(state[profile].size) + (Number(state[profile].quietZone) * 2)}>
-					<div className="qr-content">
-						<QRContainer $rotation={state[profile].rotation}>
-							<div>
-								<QRCode
-									value={state[profile].value}
-									size={state[profile].size}
-									quietZone={state[profile].quietZone}
-									fgColor={state[profile].fgColor}
-									bgColor={state[profile].bgColor}
-									logoImage={state[profile].logoTab === 'file' ? state[profile].logoImage : state[profile].logoUrl}
-									logoWidth={state[profile].logoWidth}
-									logoHeight={state[profile].logoHeight}
-									logoOpacity={state[profile].logoOpacity}
-									qrStyle={state[profile].qrStyle}
-									removeQrCodeBehindLogo={state[profile].removeQrCodeBehindLogo}
-									ecLevel={state[profile].ecLevel}
-									enableCORS={false}
-									logoPadding={state[profile].logoPadding}
-									logoPaddingStyle={state[profile].logoPaddingStyle}
-									eyeRadius={[
-										{
-											outer: [state[profile].eyeRadius.eyeradius_0_outer_0, state[profile].eyeRadius.eyeradius_0_outer_1, state[profile].eyeRadius.eyeradius_0_outer_2, state[profile].eyeRadius.eyeradius_0_outer_3],
-											inner: [state[profile].eyeRadius.eyeradius_0_inner_0, state[profile].eyeRadius.eyeradius_0_inner_1, state[profile].eyeRadius.eyeradius_0_inner_2, state[profile].eyeRadius.eyeradius_0_inner_3],
-										},
-										{
-											outer: [state[profile].eyeRadius.eyeradius_1_outer_0, state[profile].eyeRadius.eyeradius_1_outer_1, state[profile].eyeRadius.eyeradius_1_outer_2, state[profile].eyeRadius.eyeradius_1_outer_3],
-											inner: [state[profile].eyeRadius.eyeradius_1_inner_0, state[profile].eyeRadius.eyeradius_1_inner_1, state[profile].eyeRadius.eyeradius_1_inner_2, state[profile].eyeRadius.eyeradius_1_inner_3],
-										},
-										{
-											outer: [state[profile].eyeRadius.eyeradius_2_outer_0, state[profile].eyeRadius.eyeradius_2_outer_1, state[profile].eyeRadius.eyeradius_2_outer_2, state[profile].eyeRadius.eyeradius_2_outer_3],
-											inner: [state[profile].eyeRadius.eyeradius_2_inner_0, state[profile].eyeRadius.eyeradius_2_inner_1, state[profile].eyeRadius.eyeradius_2_inner_2, state[profile].eyeRadius.eyeradius_2_inner_3],
-										}
-									]}
-									eyeColor={[
-										{
-											outer: state[profile].eyecolor_0_outer ?? state[profile].fgColor ?? '#000000',
-											inner: state[profile].eyecolor_0_inner ?? state[profile].fgColor ?? '#000000'
-										},
-										{
-											outer: state[profile].eyecolor_1_outer ?? state[profile].fgColor ?? '#000000',
-											inner: state[profile].eyecolor_1_inner ?? state[profile].fgColor ?? '#000000'
-										},
-										{
-											outer: state[profile].eyecolor_2_outer ?? state[profile].fgColor ?? '#000000',
-											inner: state[profile].eyecolor_2_inner ?? state[profile].fgColor ?? '#000000'
-										}
-									]}
-								/>
-							</div>
-						</QRContainer>
-						<div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px' }}>
-							<RotateButton onClick={handleRotate}>↻</RotateButton>
-							<DownloadButtonGroup>
-								<DownloadButton type='button' onClick={handleDownload}>
-									DOWNLOAD QR
-								</DownloadButton>
-								<FormatSelect value={fileFormat} onChange={(e) => setFileFormat(e.target.value)}>
-									<option value="png">.png</option>
-									<option value="jpeg">.jpeg</option>
-								</FormatSelect>
-							</DownloadButtonGroup>
-						</div>
-					</div>
-				</QRWrapper>
+				<QRCodeDisplay profileState={state[profile]} />
 			</div>
 		</div>
 	);
@@ -300,47 +220,6 @@ export const DownloadButton = styled.button`
     background-color: #93c5fd;
     cursor: not-allowed;
   }
-`;
-
-const FormatSelect = styled.select`
-  background-color: #3b82f6;
-  color: white;
-  font-size: 1rem;
-  padding: 0 0.5rem;
-  border: none;
-  border-left: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 0 0.5rem 0.5rem 0;
-  cursor: pointer;
-  outline: none;
-  appearance: none;
-  min-width: 70px;
-
-  &:hover {
-    background-color: #2563eb;
-  }
-
-  &:active {
-    background-color: #1d4ed8;
-  }
-
-  option {
-    background-color: white;
-    color: black;
-  }
-`;
-
-const RotateButton = styled.button`
-	width: 48px;
-    height: 48px;
-    background-color: #3b82f6;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1.125rem;
-    &:hover {
-        background-color: #2563eb;
-    }
 `;
 
 const ResetButton = styled.button`
