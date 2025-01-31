@@ -47,49 +47,32 @@ const App: React.FC = () => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [profile]);
 
+	const updateStateAndLocalStorage = (newState: any) => {
+		setState(newState);
+		localStorage.setItem("qrPreferences", JSON.stringify(newState));
+	};
+
 	const handleChange = ({ target }: any) => {
-		const { name, value } = target
-		const keys = name.split(".")
+		const { name, value } = target;
+		const keys = name.split(".");
+		const newState = { ...state };
+
 		if (keys.length === 2 && keys[0] === "eyeRadius") {
-			setState((prevState) => {
-				const newState = {
-					...prevState,
-					[profile]: {
-						...prevState[profile],
-						eyeRadius: {
-							...prevState[profile].eyeRadius,
-							[keys[1]]: value,
-						},
-					},
-				}
-				localStorage.setItem("qrPreferences", JSON.stringify(newState))
-				return newState
-			})
+			newState[profile].eyeRadius[keys[1]] = value;
 		} else {
-			setState((prevState) => {
-				const newState = {
-					...prevState,
-					[profile]: {
-						...prevState[profile],
-						[name]: value,
-					},
-				}
-				localStorage.setItem("qrPreferences", JSON.stringify(newState))
-				return newState
-			})
+			newState[profile][name] = value;
 		}
-	}
+
+		updateStateAndLocalStorage(newState);
+	};
 
 	const handleReset = () => {
-		setState((prevState) => {
-			const newState = {
-				...prevState,
-				[profile]: defaultSettings,
-			}
-			localStorage.setItem("qrPreferences", JSON.stringify(newState))
-			return newState
-		})
-	}
+		const newState = {
+			...state,
+			[profile]: defaultSettings,
+		};
+		updateStateAndLocalStorage(newState);
+	};
 
 	const handleProfileChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
 		setProfile(event.target.value);
@@ -97,12 +80,12 @@ const App: React.FC = () => {
 
 	const handleRotate = () => {
 		handleChange({
-		  target: {
-			name: "rotation",
-			value: ((state[profile].rotation || 0) + 90) % 360,
-		  },
-		})
-	}
+			target: {
+				name: "rotation",
+				value: ((state[profile].rotation || 0) + 90) % 360,
+			},
+		});
+	};
 
 	return (
 		<div className='app'>
@@ -135,11 +118,11 @@ const App: React.FC = () => {
 						</CardContent>
 					</Card>
 				</div>
-				<QRCodeDisplay profileState={state[profile]} onRotate={handleRotate}/>
+				<QRCodeDisplay profileState={state[profile]} onRotate={handleRotate} />
 			</div>
 		</div>
 	);
-}
+};
 
 export default App;
 
@@ -157,38 +140,38 @@ export const CardContent = styled.div`
 `;
 
 export const QRWrapper = styled.div<{ $totalSize: number }>`
-	position: sticky;
-	top: 1rem;
-	min-width: 400px;
-  	max-width: 800px;
-	width: 100%;
-	height: calc(100% - 80px);
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	margin: 10px;
-	
-	.qr-content {
-		width: ${props => Math.min(Math.max(props.$totalSize, 400), 800)}px;
-		height: auto;
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-	}
+    position: sticky;
+    top: 1rem;
+    min-width: 400px;
+      max-width: 800px;
+    width: 100%;
+    height: calc(100% - 80px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+    
+    .qr-content {
+        width: ${props => Math.min(Math.max(props.$totalSize, 400), 800)}px;
+        height: auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
 `;
 
 export const QRContainer = styled.div<{ $rotation: number }>`
-	position: relative;
-	width: fit-content;
-	height: fit-content;
-	
-	> div {
-		transform: rotate(${(props) => -props.$rotation}deg);
-		transition: transform 0.3s ease-in-out;
-	}
-	margin-bottom: 2rem;
+    position: relative;
+    width: fit-content;
+    height: fit-content;
+    
+    > div {
+        transform: rotate(${(props) => -props.$rotation}deg);
+        transition: transform 0.3s ease-in-out;
+    }
+    margin-bottom: 2rem;
 `;
 
 export const DownloadButtonGroup = styled.div`
@@ -251,4 +234,3 @@ const ProfileSelect = styled.select`
   border: 1px solid #D1D5DB;
   border-radius: 0.25rem;
 `;
-
