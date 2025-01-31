@@ -29,10 +29,6 @@ const App: React.FC = () => {
 	});
 
 	useEffect(() => {
-		localStorage.setItem('qrPreferences', JSON.stringify(state));
-	}, [state]);
-
-	useEffect(() => {
 		const { logoImage, logoName } = state[profile];
 		if (logoImage && logoName) {
 			fetch(logoImage)
@@ -54,36 +50,48 @@ const App: React.FC = () => {
 	}, [profile]);
 
 	const handleChange = ({ target }: any) => {
-		const { name, value } = target;
-		const keys = name.split('.');
-		if (keys.length === 2 && keys[0] === 'eyeRadius') {
-		  setState(prevState => ({
-			...prevState,
-			[profile]: {
-			  ...prevState[profile],
-			  eyeRadius: {
-				...prevState[profile].eyeRadius,
-				[keys[1]]: value,
-			  },
-			},
-		  }));
+		const { name, value } = target
+		const keys = name.split(".")
+		if (keys.length === 2 && keys[0] === "eyeRadius") {
+			setState((prevState) => {
+				const newState = {
+					...prevState,
+					[profile]: {
+						...prevState[profile],
+						eyeRadius: {
+							...prevState[profile].eyeRadius,
+							[keys[1]]: value,
+						},
+					},
+				}
+				localStorage.setItem("qrPreferences", JSON.stringify(newState))
+				return newState
+			})
 		} else {
-		  setState(prevState => ({
-			...prevState,
-			[profile]: {
-			  ...prevState[profile],
-			  [name]: value,
-			},
-		  }));
+			setState((prevState) => {
+				const newState = {
+					...prevState,
+					[profile]: {
+						...prevState[profile],
+						[name]: value,
+					},
+				}
+				localStorage.setItem("qrPreferences", JSON.stringify(newState))
+				return newState
+			})
 		}
-	  };
+	}
 
 	const handleReset = () => {
-		setState(prevState => ({
-			...prevState,
-			[profile]: defaultSettings
-		}));
-	};
+		setState((prevState) => {
+			const newState = {
+				...prevState,
+				[profile]: defaultSettings,
+			}
+			localStorage.setItem("qrPreferences", JSON.stringify(newState))
+			return newState
+		})
+	}
 
 	const handleProfileChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
 		setProfile(event.target.value);
