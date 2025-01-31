@@ -5,15 +5,11 @@ import html2canvas from "html2canvas"
 
 interface QRCodeDisplayProps {
   profileState: any
+  onRotate: () => void
 }
 
-export function QRCodeDisplay({ profileState }: QRCodeDisplayProps) {
+export function QRCodeDisplay({ profileState, onRotate }: QRCodeDisplayProps) {
   const [fileFormat, setFileFormat] = useState("png")
-  const [rotation, setRotation] = useState(profileState.rotation || 0)
-
-  const handleRotate = () => {
-    setRotation((prev: number) => (prev + 90) % 360)
-  }
 
   const handleDownload = () => {
     html2canvas(document.querySelector("#react-qrcode-logo") as any).then((canvas) => {
@@ -27,7 +23,7 @@ export function QRCodeDisplay({ profileState }: QRCodeDisplayProps) {
   return (
     <QRWrapper $totalSize={Number(profileState.size) + Number(profileState.quietZone) * 2}>
       <div className="qr-content">
-        <QRContainer $rotation={rotation}>
+        <QRContainer $rotation={profileState.rotation || 0}>
           <div>
             <QRCode
               value={profileState.value}
@@ -107,7 +103,7 @@ export function QRCodeDisplay({ profileState }: QRCodeDisplayProps) {
           </div>
         </QRContainer>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "4px" }}>
-          <RotateButton onClick={handleRotate}>↻</RotateButton>
+          <RotateButton onClick={onRotate}>↻</RotateButton>
           <DownloadButtonGroup>
             <DownloadButton type="button" onClick={handleDownload}>
               DOWNLOAD QR

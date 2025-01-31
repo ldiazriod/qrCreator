@@ -95,6 +95,15 @@ const App: React.FC = () => {
 		setProfile(event.target.value);
 	};
 
+	const handleRotate = () => {
+		handleChange({
+		  target: {
+			name: "rotation",
+			value: ((state[profile].rotation || 0) + 90) % 360,
+		  },
+		})
+	}
+
 	return (
 		<div className='app'>
 			<h1 style={{ fontSize: "2rem", margin: "1rem" }}>QR Code Generator</h1>
@@ -126,7 +135,7 @@ const App: React.FC = () => {
 						</CardContent>
 					</Card>
 				</div>
-				<QRCodeDisplay profileState={state[profile]} />
+				<QRCodeDisplay profileState={state[profile]} onRotate={handleRotate}/>
 			</div>
 		</div>
 	);
