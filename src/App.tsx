@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Tabs from './components/Tabs';
 import MainOptions from './components/MainOptions';
@@ -52,19 +52,22 @@ const App: React.FC = () => {
 		localStorage.setItem("qrPreferences", JSON.stringify(newState));
 	};
 
-	const handleChange = ({ target }: any) => {
-		const { name, value } = target;
-		const keys = name.split(".");
-		const newState = { ...state };
+	const handleChange = useCallback(
+		({ target }: any) => {
+			const { name, value } = target;
+			const keys = name.split(".");
+			const newState = { ...state };
 
-		if (keys.length === 2 && keys[0] === "eyeRadius") {
-			newState[profile].eyeRadius[keys[1]] = value;
-		} else {
-			newState[profile][name] = value;
-		}
+			if (keys.length === 2 && keys[0] === "eyeRadius") {
+				newState[profile].eyeRadius[keys[1]] = value;
+			} else {
+				newState[profile][name] = value;
+			}
 
-		updateStateAndLocalStorage(newState);
-	};
+			updateStateAndLocalStorage(newState);
+		},
+		[profile, state]
+	);
 
 	const handleReset = () => {
 		const newState = {
