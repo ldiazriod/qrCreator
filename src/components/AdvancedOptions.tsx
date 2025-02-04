@@ -198,7 +198,7 @@ const AdvancedOptions: React.FC<AdvancedOptionsProps> = ({ state, handleChange }
 					<div style={{ display: 'flex', flexDirection: 'column' }}
 						title={tooltipDescriptions.eyeColor}>
 						<h3 style={{ fontWeight: 'bold' }}>Eye Color</h3>
-						<div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem' }}>
+						<EyeColorGrid>
 							<div style={{ gap: '0.7rem' }}>
 								<EyeNameDiv>Top left eye</EyeNameDiv>
 								<div style={{ fontSize: 12 }}>Outer</div>
@@ -256,7 +256,7 @@ const AdvancedOptions: React.FC<AdvancedOptionsProps> = ({ state, handleChange }
 									hideLabel={true}
 								/>
 							</div>
-						</div>
+						</EyeColorGrid>
 					</div>
 				</CardContent>
 			</Card>
@@ -310,4 +310,10 @@ const EyeNameDiv = styled.div`
 		font-size: 12.5px;
   	}
 
+`;
+
+const EyeColorGrid = styled.div`
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 1rem;
 `;
